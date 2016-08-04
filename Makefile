@@ -3,7 +3,7 @@ NAME = Gbmu
 
 CFLAGS = -Wall -Wextra -Werror -c
 
-LFLAGS = -lncurses -Wall -std=c11
+LFLAGS = -Wall -std=c99
 
 INC = -I includes/
 

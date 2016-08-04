@@ -4,4 +4,5 @@
 # include <iostream>
 # include <fstream>
 # include "includes/Gb.class.hpp"
+
 #endif // !GBMU_HPP

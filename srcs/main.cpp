@@ -1,9 +1,8 @@
 #include "../Gbmu.class.hpp"
 
-int			main(void)
+int				main(void)
 {
-	Gb		gb;
-
-	gb.run();
+	Gb			gb;
+	
 	return(0);
 }
