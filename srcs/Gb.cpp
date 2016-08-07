@@ -1,9 +1,10 @@
+static bool status = false;//remove this static var for singleton
+
 #include "Gb.class.hpp"
 
 Gb::Gb (void)
 {
-	std::cout << "Create gb" << std::endl;
-	this->run();
+	std::cout << "Gb Default constructor" << std::endl;
 }
 
 Gb::Gb (Gb const & src)
@@ -13,7 +14,7 @@ Gb::Gb (Gb const & src)
 
 Gb::~Gb (void)
 {
-	std::cout << "Destroy gb" << std::endl;
+	std::cout << "Gb Default destructor" << std::endl;
 }
 
 Gb & Gb::operator=(Gb const & rhs)
@@ -25,32 +26,35 @@ Gb & Gb::operator=(Gb const & rhs)
 void Gb::load (std::string const& cartridgePath)
 {
 	/*
-	** Test if the cartridge is correct
-	** Actually i just check the cartridge name but i think
+	** Test if the cartridge is correct actually i just check
+	** the cartridge name and path but i think
 	** we need to implement an other way to check if the 
 	** cartridge is correct
 	*/
 
-	int cartridge_is_correct;
+    FILE* fp;
 	
-	cartridge_is_correct = 0;
+	fp = std::fopen(cartridgePath.c_str(), "r");
+	if(!fp)
+		throw std::exception();
+	else
+		this->isLoaded();
 	if (cartridgePath.find(".gbc") != std::string::npos)
 	{
-		std::cout << "gbc cartridge " << std::endl;
+		std::cout << "gbc cartridge Load" << std::endl;
 		this->setModel(CGB);
-		cartridge_is_correct = 1;
 	}
 	else if (cartridgePath.find(".gb")  != std::string::npos)
 	{
-		std::cout << "gb cartridge " << std::endl;
+		std::cout << "gb cartridge Load" << std::endl;
 		this->setModel(DMG);
-		cartridge_is_correct = 1;
 	}
 	else
 	{
 		this->setModel(Auto);
 		std::cout << "Not found " << std::endl;
 	}
+	this->run();//faire un try catch
 }
 
 void Gb::setModel (Gb::Model const& model)
@@ -58,17 +62,15 @@ void Gb::setModel (Gb::Model const& model)
 	this->_model = model;
 }
 
+
 bool Gb::isLoaded (void) const
 {
-	/*if Gb::load throw an error return false otherwhise return true*/
-
-	return (true);
+	return (status = true);
 }
 
 bool Gb::isRunning (void) const
 {
-	/*si run throw an error return false otherwhise return true*/
-	return (true);
+	return (status = true);
 }
 
 Gb::Model Gb::model (void) const

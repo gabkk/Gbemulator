@@ -6,9 +6,17 @@ int				main(int argc, const char **argv)
 	
 	if (argc != 2)
 	{
-		std::cout << "Gbmu can't take more than 1 cartridge" << std::endl;
+		std::cout << "Gbmu Should take a cartridge as parameter and can't take more than 1 cartridge" << std::endl;
 		return(0);
 	}
-	gb.load(argv[1]);
+	try
+	{
+		gb.load(argv[1]);
+	}
+	catch (std::exception& e)
+	{
+		std::perror("File opening failed");
+		return (false);
+	}
 	return(0);
 }
