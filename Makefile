@@ -11,6 +11,7 @@ SRCSDIR = srcs/
 
 SRCS =  main.cpp \
 		Gb.cpp \
+		Cartridge.cpp \
 
 OBJ = $(SRCS:.cpp=.o)
 
