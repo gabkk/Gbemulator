@@ -99,9 +99,25 @@ void Cartridge::loadState ( std::fstream& file)
 	(void)file;
 }
 
-void Cartridge::load ( void )
+
+std::string ToHex(const std::string& s, bool upper_case)
 {
-	Gb			gb;
+	std::ostringstream ret;
+
+	for (std::string::size_type i = 0; i < s.length(); ++i)
+	{
+		int z = s[i]&0xff;
+		ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << z;
+	}
+
+	return ret.str();
+}
+
+void						Cartridge::load ( void )
+{
+	std::ifstream::pos_type size;
+	Gb						gb;
+	char 					*memblock;
 	
 	try
 	{
@@ -111,5 +127,24 @@ void Cartridge::load ( void )
 	{
 		std::perror("File opening failed");
 	}
-	
+
+	std::ifstream file(this->path().c_str(), std::ios::in|std::ios::binary|std::ios::ate);
+	if (file.is_open())
+	{
+		size = file.tellg();
+		memblock = new char [size];
+		file.seekg (0, std::ios::beg);
+		file.read (memblock, size);
+		file.close();
+
+		std::cout << "the complete file content is in memory" << std::endl;
+
+		std::string tohexed = ToHex(std::string(memblock, size), true);
+
+
+		std::cout << tohexed << std::endl;
+		
+	}
+	else
+		throw std::exception();
 }

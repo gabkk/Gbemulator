@@ -29,18 +29,6 @@ Gb & Gb::operator=(Gb const & rhs)
 ** Load a cartridge
 */
 
-std::string ToHex(const std::string& s, bool upper_case)
-{
-    std::ostringstream ret;
-
-    for (std::string::size_type i = 0; i < s.length(); ++i)
-    {
-        int z = s[i]&0xff;
-        ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << z;
-    }
-
-    return ret.str();
-}
 
 void Gb::load (std::string const& cartridgePath)
 {
@@ -50,30 +38,6 @@ void Gb::load (std::string const& cartridgePath)
 	** we need to implement an other way to check if the 
 	** cartridge is correct
 	*/
-
-	std::ifstream::pos_type size;
-	char *memblock;
-
-	std::ifstream file(cartridgePath.c_str(), std::ios::in|std::ios::binary|std::ios::ate);
-	if (file.is_open())
-	{
-		size = file.tellg();
-		memblock = new char [size];
-		file.seekg (0, std::ios::beg);
-		file.read (memblock, size);
-		file.close();
-
-		std::cout << "the complete file content is in memory" << std::endl;
-
-		std::string tohexed = ToHex(std::string(memblock, size), true);
-
-
-		std::cout << tohexed << std::endl;
-		
-		this->isLoaded();
-	}
-	else
-		throw std::exception();
 	
 //	fp = std::fopen(cartridgePath.c_str(), "r");
 
@@ -92,6 +56,9 @@ void Gb::load (std::string const& cartridgePath)
 		this->setModel(Auto);
 		std::cout << "Not found " << std::endl;
 	}
+
+	this->isLoaded();
+
 	this->_run();//faire un try catch
 
 
