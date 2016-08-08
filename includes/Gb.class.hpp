@@ -22,6 +22,9 @@ class Gb
 
 	private:
 		Gb::Model 		_model;			// Gb model
+			// Cpu*			_cpu;			// the gameboy CPU
+			// Debugger*		_debugger;		// the gameboy debugger
+			// std::thread*	_thread;		// running thread
 		bool			_play;			// playing flag
 		/*
 		** CPU Speed
@@ -42,19 +45,32 @@ class Gb
 
 		// Load a cartridge
 		void			load ( std::string const& cartridgePath );
+			// bool			saveState ( std::string const& path );
+			// bool			loadState ( std::string const& path );
+			
+			// // set your gui screen to gameBoy screen
+			// void			setScreen ( IScreen* screen );
 
 		// the the GameBoy model to use
 		void			setModel ( Gb::Model const& model);
 
 		// Controls
 		void			play ( void );
+//			void			pause ( void );
+//			void			reset ( void );
 		void			setSpeed ( size_t const& speed); // x1 , x2, ........
+//			void			mute ( bool const& b );
 
 		// Infos
 		bool			isLoaded ( void ) const; //Singelton to check-is the current cartridge is load
 		bool			isRunning ( void ) const; //Singelton to check-is the current cartridge is run
+//			size_t			speed ( void ) const;		
 		Gb::Model		model ( void ) const;//Getter to _Model
 		std::string		gameTitle ( void ) const;
+
+			// // components
+			// IDebugger*		debugger ( void ) const;
+			// IKeyPad*		keyPad ( void ) const;
 
 	private:
 		void			run ( void );

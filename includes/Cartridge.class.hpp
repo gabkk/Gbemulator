@@ -77,7 +77,7 @@ class Cartridge
 
 
 	public:
-		Cartridge ( /*Cpu* cpu, std::string const& path, */Gb::Model const& model );
+		Cartridge ( /*Cpu* cpu,*/ std::string const& path, Gb::Model const& model );
 		virtual ~Cartridge ( void );
 		Cartridge(Cartridge const & src);
 		Cartridge & operator=(Cartridge const & rhs);

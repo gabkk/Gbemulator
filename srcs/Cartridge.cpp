@@ -1,7 +1,9 @@
-#include "Cartridge.class.hpp"
+# include "Cartridge.class.hpp"
 
-Cartridge::Cartridge (/*Cpu* cpu, std::string const& path , */Gb::Model const& model)
+Cartridge::Cartridge (/*Cpu* cpu,*/ std::string const& path , Gb::Model const& model)
 {
+	this->_path = path;
+	this->load();
 	(void)model;
 }
 
@@ -81,6 +83,7 @@ std::string const& Cartridge::path (void) const
 	std::string const *path;
 
 	path = new std::string;
+	path = &this->_path;
 	return (*path);
 }
 
@@ -97,5 +100,14 @@ void Cartridge::loadState ( std::fstream& file)
 
 void Cartridge::load ( void )
 {
-
+	Gb			gb;
+	
+	try
+	{
+		gb.load(this->path());
+	}
+	catch (std::exception& e)
+	{
+		std::perror("File opening failed");
+	}
 }
