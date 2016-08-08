@@ -9,6 +9,8 @@
 # include <fstream>
 # include <string>
 # include <cstring>
+#include <sstream> //for osstringstream
+#include <iomanip>      // std::setfill, std::setw
 
 class Gb
 {
@@ -23,7 +25,7 @@ class Gb
 	private:
 		Gb::Model 		_model;			// Gb model
 			// Cpu*			_cpu;			// the gameboy CPU
-			// Debugger*		_debugger;		// the gameboy debugger
+			// Debugger*	_debugger;		// the gameboy debugger
 			// std::thread*	_thread;		// running thread
 		bool			_play;			// playing flag
 		/*
@@ -73,7 +75,7 @@ class Gb
 			// IKeyPad*		keyPad ( void ) const;
 
 	private:
-		void			run ( void );
+		void			_run ( void );
 };
 
 std::ostream & operator<<(std::ostream & o, Gb const & i);

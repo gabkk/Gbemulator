@@ -75,6 +75,7 @@ struct Cartridge::Header const& Cartridge::header (void) const
 
 uint8_t *Cartridge::data (void) const
 {
+
 	return (0);
 }
 
@@ -110,4 +111,5 @@ void Cartridge::load ( void )
 	{
 		std::perror("File opening failed");
 	}
+	
 }

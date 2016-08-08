@@ -25,6 +25,23 @@ Gb & Gb::operator=(Gb const & rhs)
 	return *this;
 }
 
+/*
+** Load a cartridge
+*/
+
+std::string ToHex(const std::string& s, bool upper_case)
+{
+    std::ostringstream ret;
+
+    for (std::string::size_type i = 0; i < s.length(); ++i)
+    {
+        int z = s[i]&0xff;
+        ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << z;
+    }
+
+    return ret.str();
+}
+
 void Gb::load (std::string const& cartridgePath)
 {
 	/*
@@ -34,13 +51,31 @@ void Gb::load (std::string const& cartridgePath)
 	** cartridge is correct
 	*/
 
-    FILE* fp;
-	
-	fp = std::fopen(cartridgePath.c_str(), "r");
-	if(!fp)
-		throw std::exception();
-	else
+	std::ifstream::pos_type size;
+	char *memblock;
+
+	std::ifstream file(cartridgePath.c_str(), std::ios::in|std::ios::binary|std::ios::ate);
+	if (file.is_open())
+	{
+		size = file.tellg();
+		memblock = new char [size];
+		file.seekg (0, std::ios::beg);
+		file.read (memblock, size);
+		file.close();
+
+		std::cout << "the complete file content is in memory" << std::endl;
+
+		std::string tohexed = ToHex(std::string(memblock, size), true);
+
+
+		std::cout << tohexed << std::endl;
+		
 		this->isLoaded();
+	}
+	else
+		throw std::exception();
+	
+//	fp = std::fopen(cartridgePath.c_str(), "r");
 
 	if (cartridgePath.find(".gbc") != std::string::npos)
 	{
@@ -57,18 +92,42 @@ void Gb::load (std::string const& cartridgePath)
 		this->setModel(Auto);
 		std::cout << "Not found " << std::endl;
 	}
-	this->run();//faire un try catch
+	this->_run();//faire un try catch
+
+
+	
+	// char data[65000];
+	// infile >> data;
+	// std::cout << "Voila les data " << std::endl << data << std::endl;
 }
+
+/* 
+** The GameBoy model to use
+*/
 
 void Gb::setModel (Gb::Model const& model)
 {
 	this->_model = model;
 }
 
+/*
+** Controls
+*/
+
 void Gb::play (void)
 {
 	this->_play = true;
+
 }
+
+void Gb::setSpeed(size_t const& speed)
+{
+	(void)speed; // TODO
+}
+
+/*
+** Infos
+*/
 
 bool Gb::isLoaded (void) const
 {
@@ -96,7 +155,11 @@ std::string Gb::gameTitle (void) const
 	return ("loll");
 }
 
-void Gb::run (void)
+/*
+** Private
+*/
+
+void Gb::_run (void)
 {
 	std::cout << "Run gb" << std::endl;
 	if (this->model() == DMG)
