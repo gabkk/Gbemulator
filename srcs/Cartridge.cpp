@@ -127,7 +127,6 @@ void						Cartridge::load ( void )
 	{
 		std::perror("File opening failed");
 	}
-
 	std::ifstream file(this->path().c_str(), std::ios::in|std::ios::binary|std::ios::ate);
 	if (file.is_open())
 	{
@@ -136,14 +135,10 @@ void						Cartridge::load ( void )
 		file.seekg (0, std::ios::beg);
 		file.read (memblock, size);
 		file.close();
-
 		std::cout << "the complete file content is in memory" << std::endl;
-
 		std::string tohexed = ToHex(std::string(memblock, size), true);
-
-
-		std::cout << tohexed << std::endl;
-		
+		this->_data = reinterpret_cast<uint8_t*>(&tohexed[0]);
+		std::cout << this->_data << std::endl;
 	}
 	else
 		throw std::exception();

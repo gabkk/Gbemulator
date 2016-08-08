@@ -71,7 +71,7 @@ class Cartridge
 //		Cpu*						_cpu;		// get pointer to CPU ( parent )
 		std::string					_path;		// ROM file path
 //		Gb::Model					_model;		// GB forced model
-//		uint8_t*					_data;		// pointer on cartridge data
+		uint8_t*					_data;		// pointer on cartridge data
 //		struct Header				_header;	// cartridge header
 //		IMBController*				_mbc;		// MBC ( Controller for extended data of cartridge )
 
