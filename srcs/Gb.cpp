@@ -39,8 +39,6 @@ void Gb::load (std::string const& cartridgePath)
 	** cartridge is correct
 	*/
 	
-//	fp = std::fopen(cartridgePath.c_str(), "r");
-
 	if (cartridgePath.find(".gbc") != std::string::npos)
 	{
 		std::cout << "Cartridge Model CGB" << std::endl;
@@ -58,14 +56,7 @@ void Gb::load (std::string const& cartridgePath)
 	}
 
 	this->isLoaded();
-
 	this->_run();//faire un try catch
-
-
-	
-	// char data[65000];
-	// infile >> data;
-	// std::cout << "Voila les data " << std::endl << data << std::endl;
 }
 
 /* 
