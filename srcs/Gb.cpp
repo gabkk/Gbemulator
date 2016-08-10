@@ -128,9 +128,3 @@ void Gb::_run (void)
 	if (*status_running == true)
 		this->play();
 }
-
-std::ostream & operator<<(std::ostream & o, Gb const & i)
-{
-	(void)i;
-	return o;
-}

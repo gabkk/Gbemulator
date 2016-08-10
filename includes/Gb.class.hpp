@@ -9,8 +9,8 @@
 # include <fstream>
 # include <string>
 # include <cstring>
-#include <sstream> //for osstringstream
-#include <iomanip>      // std::setfill, std::setw
+# include <sstream> //for osstringstream
+# include <iomanip>      // std::setfill, std::setw
 
 class Cpu;
 
@@ -79,7 +79,5 @@ class Gb
 	private:
 		void			_run ( void );
 };
-
-std::ostream & operator<<(std::ostream & o, Gb const & i);
 
 #endif /*GB_CLASS_HPP*/

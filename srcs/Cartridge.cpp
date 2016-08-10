@@ -1,7 +1,8 @@
 # include "Cartridge.class.hpp"
 
-Cartridge::Cartridge (/*Cpu* cpu,*/ std::string const& path , Gb::Model const& model)
+Cartridge::Cartridge (Cpu* cpu, std::string const& path , Gb::Model const& model)
 {
+	this->_cpu = cpu;
 	this->_path = path;
 	this->load();	
 	(void)model;
@@ -130,7 +131,6 @@ struct Cartridge::Header const& Cartridge::header (void) const
 */
 	length = 0;
 	position = Get_pos(0x100);
-	std::cout << "Adresse of header->entry_point[length] : " << &header->entry_point << std::endl;
 	while (length < 8)
 	{
 		header->entry_point[length] = (this->data())[position + length];
@@ -145,7 +145,6 @@ struct Cartridge::Header const& Cartridge::header (void) const
 */
 	length = 0;
 	position = Get_pos(0x104);
-	std::cout << "Adresse of header->nintendo_logo : " << &header->nintendo_logo << std::endl;
 	while (length < 96)
 	{
 		header->nintendo_logo[length] = ((this->data())[position + length]);
@@ -163,7 +162,6 @@ struct Cartridge::Header const& Cartridge::header (void) const
 	uint8_t *tmp2;
 	tmp2 = new uint8_t[2];
 	int cmpt = 0;
-	std::cout << "Adresse of header->title : " << &header->title << std::endl;
 	while (length < 30)
 	{
 		tmp2[0] = ((this->data())[position + length]);
@@ -175,7 +173,8 @@ struct Cartridge::Header const& Cartridge::header (void) const
 	}
 	header->title[cmpt] = '\0';
 	delete tmp2;
-	std::cout << "header->title : " << header->title << std::endl;
+	std::cout << "header.title" << std::endl;
+	std::cout << header->title << std::endl;
 
 	return (*header);
 }
@@ -260,10 +259,18 @@ void						Cartridge::load ( void )
 
 	std::string tohexed = ToHex(std::string(memblock, size_of_file), true);
 	this->_data = reinterpret_cast<uint8_t*>(&tohexed[0]);
+
+	std::cout << "Infos recuper dans Cartridge::load && Cartridge::header" << std::endl;
+
 	this->_header = this->header();
 
-	std::cout << std::endl;
-	std::cout << std::endl;
 	/*Test if the header title value is set correctly*/
-	std::cout << this->title() <<std::endl;
+	/*
+	** std::cout << this->title() <<std::endl;
+	*/
+
+	/*Display data available inside this->data*/
+	/*
+	** std::cout << this->data() <<std::endl;
+	*/
 }

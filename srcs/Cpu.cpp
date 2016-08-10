@@ -21,12 +21,18 @@ Cpu & Cpu::operator=(Cpu const & rhs)
 	return *this;
 }
 
-Memory	*Memory(void) const
-{
+// void Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
+// {
 
+// }
+
+
+Memory	*Cpu::memory(void) const
+{
+	return (this->_memory);
 }
 
-Cartridge	*cartridge(void) const
+Cartridge	*Cpu::cartridge(void) const
 {
-
+	return (this->_cartridge);
 }

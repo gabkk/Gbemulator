@@ -44,7 +44,9 @@
 	ample a pocket gameboy) verify all 30h bytes. 
 
 */
-	
+
+class Cpu;
+
 class Cartridge
 {
 	public:
@@ -68,7 +70,7 @@ class Cartridge
 		};
 
 	private:
-//		Cpu*						_cpu;		// get pointer to CPU ( parent )
+		Cpu*						_cpu;		// get pointer to CPU ( parent )
 		std::string					_path;		// ROM file path
 //		Gb::Model					_model;		// GB forced model
 		uint8_t*					_data;		// pointer on cartridge data
@@ -77,7 +79,7 @@ class Cartridge
 
 
 	public:
-		Cartridge ( /*Cpu* cpu,*/ std::string const& path, Gb::Model const& model );
+		Cartridge ( Cpu* cpu, std::string const& path, Gb::Model const& model );
 		virtual ~Cartridge ( void );
 		Cartridge(Cartridge const & src);
 		Cartridge & operator=(Cartridge const & rhs);
