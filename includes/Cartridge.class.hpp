@@ -82,26 +82,26 @@ class Cartridge
 		Cartridge(Cartridge const & src);
 		Cartridge & operator=(Cartridge const & rhs);
 		
-		void							reset ( void );
+/*NI*/	void							reset ( void );
 
-		void							setModel ( Gb::Model const& model );
+/*NI*/	void							setModel ( Gb::Model const& model );
 
 		std::string						title ( void ) const;
-		bool							colorGB ( void ) const;
-		bool							colorCart ( void ) const;
+/*NI*/	bool							colorGB ( void ) const;
+/*NI*/	bool							colorCart ( void ) const;
 
-		uint8_t	const&					getByteAt ( uint16_t const& addr );
-		void							setByteAt ( uint16_t const& addr, uint8_t const& value );
+/*NWI*/	uint8_t	const&					getByteAt ( uint16_t const& addr );
+/*NI*/	void							setByteAt ( uint16_t const& addr, uint8_t const& value );
 
-		struct Cartridge::Header const&	header ( void ) const;
+/*NWI*/	struct Cartridge::Header const&	header ( void ) const;
 		uint8_t*						data ( void ) const;
-		std::string const&				path ( void ) const;
+/*NI*/	std::string const&				path ( void ) const;
 
-		void							saveState ( std::fstream& file );
-		void							loadState ( std::fstream& file );
+/*NI*/	void							saveState ( std::fstream& file );
+/*NI*/	void							loadState ( std::fstream& file );
 
 	private:
-		void							load( void );
+/*NWI*/	void							load( void );
 };
 
 #endif // !CARTRIDGE_CLASS_HPP

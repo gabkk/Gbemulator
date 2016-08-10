@@ -12,6 +12,8 @@
 #include <sstream> //for osstringstream
 #include <iomanip>      // std::setfill, std::setw
 
+class Cpu;
+
 class Gb
 {
 	public:
