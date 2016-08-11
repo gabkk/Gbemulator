@@ -101,7 +101,7 @@ int Get_pos(uint16_t const& addr)
 // 	return (this->data()[out]);
 // }
 
-char HexToCharpos(uint8_t * addr)
+char HexToCharpos(int addr)
 {
 
     std::stringstream ss;
@@ -121,59 +121,6 @@ struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
 
 	struct Gbmu::Cartridge::Header *header;
 	header = new struct Gbmu::Cartridge::Header;
-
-	int position;
-	int length;
-
-/*
-** Entry point
-*/
-	length = 0;
-	position = Get_pos(0x100);
-	while (length < 8)
-	{
-		header->entry_point[length] = (this->data())[position + length];
-		length++;
-	}
-	header->entry_point[length] = '\0';
-	std::cout << "header.entry_point" << std::endl;
-	std::cout << header->entry_point << std::endl;
-
-/*
-** Nintendo_logo
-*/
-	length = 0;
-	position = Get_pos(0x104);
-	while (length < 96)
-	{
-		header->nintendo_logo[length] = ((this->data())[position + length]);
-		length++;
-	}
-	header->nintendo_logo[length] = '\0';
-	std::cout << "header.nintendo_logo" << std::endl;
-	std::cout << header->nintendo_logo << std::endl;
-
-/*
-** Title
-*/
-	length = 0;
-	position = Get_pos(0x134);
-	uint8_t *tmp2;
-	tmp2 = new uint8_t[2];
-	int cmpt = 0;
-	while (length < 30)
-	{
-		tmp2[0] = ((this->data())[position + length]);
-		tmp2[1] = ((this->data())[position + length + 1]);
-		tmp2[2] = '\0';
-	header->title[cmpt] = HexToCharpos(tmp2);
-		length+=2;
-		cmpt++;
-	}
-	header->title[cmpt] = '\0';
-	delete tmp2;
-	std::cout << "header.title" << std::endl;
-	std::cout << header->title << std::endl;
 
 	return (*header);
 }
@@ -218,6 +165,28 @@ std::string ToHex(const std::string& s, bool upper_case)
 		ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << z;
 	}
 	return ret.str();
+}
+
+/*
+** Trick to show hex on std::cout
+**
+*/
+
+
+struct HexCharStruct
+{
+  unsigned char c;
+  HexCharStruct(unsigned char _c) : c(_c) { }
+};
+
+inline std::ostream& operator<<(std::ostream& o, const HexCharStruct& hs)
+{
+  return (o << std::hex << (int)hs.c);
+}
+
+inline HexCharStruct hex(uint8_t _c)
+{
+  return HexCharStruct(_c);
 }
 
 /*
@@ -285,20 +254,85 @@ void						Gbmu::Cartridge::load ( void )
 		convertStream.clear();
 	}
 
-	int test = 0x104;
+	this->_header = this->header();
 
-	if ( this->getByteAt(test++) == 0xce
-		&& this->getByteAt(test++) == 0xed
-		&& this->getByteAt(test++) == 0x66
-		&& this->getByteAt(test++) == 0x66)
-		std::cout << "Works" << '\n';
-	else // the 0c value
-		std::cout << "No" << '\n';
+	int position = 0;
+	int length;
 
+/*
+** Entry point
+*/
+	length = 0;
+	position = 0x0100;
+	while (length < 0x4)
+	{
+		this->_header.entry_point[length] = this->getByteAt(position + length);
+		length++;
+	}
+	this->_header.entry_point[length] = '\0';
+	std::cout << "header.entry_point" << std::endl;
+	
+	int j;
 
-		// std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
+	j=0;
+	while (j < 0x4)
+	{
+		std::cout << hex(this->_header.entry_point[j]);
+		j++;
+	}
+	std::cout << std::endl;
 
-//	this->_header = this->header();
+/*
+** Nintendo_logo
+*/
+	length = 0;
+	position = 0x104;
+	while (length < 0x30)
+	{
+		this->_header.nintendo_logo[length] = this->getByteAt(position + length);
+		length++;
+	}
+	this->_header.nintendo_logo[length] = '\0';
+	std::cout << "header.nintendo_logo" << std::endl;
+
+	j=0;
+	while (j < 0x30)
+	{
+		std::cout << hex(this->_header.nintendo_logo[j]);
+		j++;
+	}
+	std::cout << std::endl;
+
+/*
+** Title
+*/
+	length = 0;
+	position = 0x134;
+	while (length < 0x0F)
+	{
+		this->_header.title[length] = HexToCharpos(this->getByteAt(position + length));
+		length++;
+	}
+	this->_header.title[length] = '\0';
+	std::cout << "header.title" << std::endl;
+	std::cout << this->_header.title << std::endl;
+
+/*
+** CGB_flag
+*/
+	this->_header.CGB_flag = this->getByteAt(0x143);
+	std::cout << "header.CGB_flag" << std::endl;
+	std::cout << hex(this->_header.CGB_flag);
+
+/*
+** new_license_code
+*/
+	// this->_header.new_license_code = 
+	// this->getByteAt(0x144) << 8 + this->getByteAt(0x145);
+	// std::cout << "header.new_license_code" << std::endl;
+	// std::cout << hex(this->_header.new_license_code);
+
+	// std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
 
 	/*Test if the header title value is set correctly*/
 	/*

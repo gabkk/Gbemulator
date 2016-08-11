@@ -55,9 +55,9 @@ namespace Gbmu
 		// Header Area (0x100 <-> 0x14F)
 			struct Header
 			{
-				uint8_t		entry_point[8]; /*0x4*/ 		// usually NOP - JUMP NZ 16bits immediate value 	| 0x0100 - 0x0103
-				uint8_t		nintendo_logo[97];/*0x30*/	// nintendo scrolling logo 							| 0x0104 - 0x0133
-				char		title[15];/*0x0F*/			// Upercase game title 								| 0x0134 - 0x0142
+				uint8_t		entry_point[0x4]; /*0x4*/ 		// usually NOP - JUMP NZ 16bits immediate value 	| 0x0100 - 0x0103
+				uint8_t		nintendo_logo[0x30];/*0x30*/	// nintendo scrolling logo 							| 0x0104 - 0x0133
+				char		title[0x0F];/*0x0F*/			// Upercase game title 								| 0x0134 - 0x0142
 				uint8_t		CGB_flag;				// $80 = CGB-DMG | $C0 CGB | $00 or $other = DMG 	| 0x0143
 				uint16_t	new_license_code;		//													| 0x0144
 				uint8_t		SGB_flag;				// $00 = false | $03 = true 						| 0x0146
