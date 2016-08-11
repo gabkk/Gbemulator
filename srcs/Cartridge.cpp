@@ -181,8 +181,8 @@ void						Gbmu::Cartridge::load ( void )
 	else
 		std::perror("File opening failed");
 
-	delete memblock;
 	std::string stringOfHex = ToHex(std::string(memblock, size_of_file), true);
+	delete memblock;
 
 	std::stringstream convertStream;
 	size_t offset = 0, i = 0;
