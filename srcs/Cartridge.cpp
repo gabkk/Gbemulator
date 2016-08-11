@@ -31,8 +31,7 @@ void Gbmu::Cartridge::reset (void)
 
 void Gbmu::Cartridge::setModel (Gb::Model const& model )
 {
-	(void)model;
-
+	this->_model = model;
 }
 
 std::string Gbmu::Cartridge::title (void) const
@@ -52,18 +51,15 @@ bool Gbmu::Cartridge::colorCart (void) const
 
 uint8_t const& Gbmu::Cartridge::getByteAt ( uint16_t const& addr )
 {
-	uint8_t *byte;
 	std::stringstream ss;
 	unsigned int x;
 	unsigned int out;
 
-	byte = new uint8_t;
 	ss << std::hex << addr;
 	ss >> x;
 	out = static_cast<int>(x);
-	*byte = this->data()[out];
 
-	return (*byte);
+	return (this->data()[out]);
 }
 
 void Gbmu::Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
@@ -73,56 +69,21 @@ void Gbmu::Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
 
 }
 
-int Get_pos(uint16_t const& addr)
-{
-
-    std::stringstream ss;
-    unsigned int x;
-    unsigned int out;
-
-    ss << std::hex << addr;
-    ss >> x;
-	out = static_cast<int>(x)*2;
-
-	return out;
-}
-
-// uint8_t Get_pos_in_tab(uint16_t const& addr)
-// {
-
-//     std::stringstream ss;
-//     unsigned int x;
-//     unsigned int out;
-
-//     ss << std::hex << addr;
-//     ss >> x;
-// 	out = static_cast<int>(x);
-
-// 	return (this->data()[out]);
-// }
-
 char HexToCharpos(int addr)
 {
 
-    std::stringstream ss;
-    unsigned int x;
+	std::stringstream ss;
+	unsigned int x;
 
-    ss << std::hex << addr;
-    ss >> x;
+	ss << std::hex << addr;
+	ss >> x;
 
 	return x;
 }
 
 struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
 {
-/*
-**	Header Temporaire 
-*/
-
-	struct Gbmu::Cartridge::Header *header;
-	header = new struct Gbmu::Cartridge::Header;
-
-	return (*header);
+	return (this->_header);
 }
 
 uint8_t *Gbmu::Cartridge::data (void) const
@@ -132,11 +93,7 @@ uint8_t *Gbmu::Cartridge::data (void) const
 
 std::string const& Gbmu::Cartridge::path (void) const
 {
-	std::string const *path;
-
-	path = new std::string;
-	path = &this->_path;
-	return (*path);
+	return (this->_path);
 }
 
 void Gbmu::Cartridge::saveState ( std::fstream& file)
@@ -213,7 +170,6 @@ void						Gbmu::Cartridge::load ( void )
 	}
 
 	std::ifstream file(this->path().c_str(), std::ios::in|std::ios::binary|std::ios::ate);
-
 	if (file.is_open())
 	{
 		size_of_file = file.tellg();
@@ -225,13 +181,14 @@ void						Gbmu::Cartridge::load ( void )
 	else
 		std::perror("File opening failed");
 
+	delete memblock;
 	std::string stringOfHex = ToHex(std::string(memblock, size_of_file), true);
 
 	std::stringstream convertStream;
 	size_t offset = 0, i = 0;
 	
 	/*
-	** Allocate the tab
+	** Allocate the data tab
 	*/
 	this->_data = new uint8_t[stringOfHex.length()/2];
 
@@ -253,8 +210,6 @@ void						Gbmu::Cartridge::load ( void )
 		convertStream.str(std::string());
 		convertStream.clear();
 	}
-
-	this->_header = this->header();
 
 	int position = 0;
 	int length;
@@ -322,15 +277,83 @@ void						Gbmu::Cartridge::load ( void )
 */
 	this->_header.CGB_flag = this->getByteAt(0x143);
 	std::cout << "header.CGB_flag" << std::endl;
-	std::cout << hex(this->_header.CGB_flag);
+	std::cout << hex(this->_header.CGB_flag) << std::endl;
+	if (this->_header.CGB_flag == 0x80)
+		this->setModel(Gbmu::Gb::Auto);
+	else if (this->_header.CGB_flag == 0xC0)
+		this->setModel(Gbmu::Gb::CGB);
+	else if (this->_header.CGB_flag == 0x00)
+		this->setModel(Gbmu::Gb::DMG);
 
 /*
 ** new_license_code
 */
-	// this->_header.new_license_code = 
-	// this->getByteAt(0x144) << 8 + this->getByteAt(0x145);
-	// std::cout << "header.new_license_code" << std::endl;
-	// std::cout << hex(this->_header.new_license_code);
+	this->_header.new_license_code = ((this->getByteAt(0x144) << 8 )+ this->getByteAt(0x145));
+	std::cout << "header.new_license_code" << std::endl;
+	std::cout << hex(this->_header.new_license_code) << std::endl;
+
+/*
+** SGB_flag
+*/
+	this->_header.SGB_flag = this->getByteAt(0x146);
+	std::cout << "header.SGB_flag" << std::endl;
+	std::cout << hex(this->_header.SGB_flag) << std::endl;
+
+/*
+** cartridge_type
+*/
+	this->_header.cartridge_type = this->getByteAt(0x147);
+	std::cout << "header.cartridge_type" << std::endl;
+	std::cout << hex(this->_header.cartridge_type) << std::endl;
+
+/*
+** rom_size
+*/
+	this->_header.rom_size = this->getByteAt(0x148);
+	std::cout << "header.rom_size" << std::endl;
+	std::cout << hex(this->_header.rom_size) << std::endl;
+
+/*
+** ram_size
+*/
+	this->_header.ram_size = this->getByteAt(0x149);
+	std::cout << "header.ram_size" << std::endl;
+	std::cout << hex(this->_header.ram_size) << std::endl;
+
+/*
+** destination_code
+*/
+	this->_header.destination_code = this->getByteAt(0x14A);
+	std::cout << "header.destination_code" << std::endl;
+	std::cout << hex(this->_header.destination_code) << std::endl;
+
+/*
+** old_license_code
+*/
+	this->_header.old_license_code = this->getByteAt(0x14B);
+	std::cout << "header.old_license_code" << std::endl;
+	std::cout << hex(this->_header.old_license_code) << std::endl;
+
+/*
+** rom_version
+*/
+	this->_header.rom_version = this->getByteAt(0x14C);
+	std::cout << "header.rom_version" << std::endl;
+	std::cout << hex(this->_header.rom_version) << std::endl;
+
+/*
+** header_checksum
+*/
+	this->_header.header_checksum = this->getByteAt(0x14D);
+	std::cout << "header.header_checksum" << std::endl;
+	std::cout << hex(this->_header.header_checksum) << std::endl;
+
+/*
+** global_checksum
+*/
+	this->_header.global_checksum = ((this->getByteAt(0x14E) << 8 )+ this->getByteAt(0x14F));
+	std::cout << "header.global_checksum" << std::endl;
+	std::cout << hex(this->_header.global_checksum) << std::endl;
 
 	// std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
 

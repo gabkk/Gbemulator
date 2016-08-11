@@ -28,7 +28,7 @@ namespace Gbmu
 
 		private:
 			Gb::Model 		_model;			// Gb model
-				// Cpu*			_cpu;			// the gameboy CPU
+			Cpu*			_cpu;			// the gameboy CPU
 				// Debugger*	_debugger;		// the gameboy debugger
 				// std::thread*	_thread;		// running thread
 			bool			_play;			// playing flag

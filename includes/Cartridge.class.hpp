@@ -74,7 +74,7 @@ namespace Gbmu
 		private:
 			Cpu*						_cpu;		// get pointer to CPU ( parent )
 			std::string					_path;		// ROM file path
-	//		Gb::Model					_model;		// GB forced model
+			Gb::Model					_model;		// GB forced model
 			uint8_t*					_data;		// pointer on cartridge data
 			struct Header				_header;	// cartridge header
 	//		IMBController*				_mbc;		// MBC ( Controller for extended data of cartridge )
@@ -88,13 +88,13 @@ namespace Gbmu
 			
 	/*NI*/	void							reset ( void );
 
-	/*NI*/	void							setModel ( Gb::Model const& model );
+			void							setModel ( Gb::Model const& model );
 
 			std::string						title ( void ) const;
 	/*NI*/	bool							colorGB ( void ) const;
 	/*NI*/	bool							colorCart ( void ) const;
 
-	/*NWI*/	uint8_t	const&					getByteAt ( uint16_t const& addr );
+			uint8_t	const&					getByteAt ( uint16_t const& addr );
 	/*NI*/	void							setByteAt ( uint16_t const& addr, uint8_t const& value );
 
 	/*NWI*/	struct Cartridge::Header const&	header ( void ) const;

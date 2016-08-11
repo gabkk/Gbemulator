@@ -120,6 +120,7 @@ std::string Gbmu::Gb::gameTitle (void) const
 void Gbmu::Gb::_run (void)
 {
 //	std::cout << "Run gb" << std::endl;
+	(void)this->_cpu;
 	if (this->model() == DMG)
 		this->_speed = 1;
 	else if (this->model() == CGB)
