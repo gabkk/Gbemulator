@@ -102,6 +102,20 @@ int Get_pos(uint16_t const& addr)
 	return out;
 }
 
+int Get_pos_in_tab(uint16_t const& addr)
+{
+
+    std::stringstream ss;
+    unsigned int x;
+    unsigned int out;
+
+    ss << std::hex << addr;
+    ss >> x;
+	out = static_cast<int>(x);
+
+	return out;
+}
+
 char HexToCharpos(uint8_t * addr)
 {
 
@@ -257,12 +271,49 @@ void						Gbmu::Cartridge::load ( void )
 	else
 		std::perror("File opening failed");
 
-	std::string tohexed = ToHex(std::string(memblock, size_of_file), true);
-	this->_data = reinterpret_cast<uint8_t*>(&tohexed[0]);
+	std::string stringOfHex = ToHex(std::string(memblock, size_of_file), true);
 
-	std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
+	std::stringstream convertStream;
+	size_t offset = 0, i = 0;
+	
+	/*
+	** Allocate the tab
+	*/
+	this->_data = new uint8_t[stringOfHex.length()/2];
 
-	this->_header = this->header();
+	while (offset < (stringOfHex.length()/2)) 
+	{
+		unsigned int buffer;
+
+		convertStream << std::hex << stringOfHex.substr(offset, 2);         
+		convertStream >> std::hex >> buffer;
+
+		this->_data[i] = static_cast<uint8_t>(buffer);
+		
+//		std::cout << this->_data[i] << std::endl;
+
+		offset += 2;
+		i++;
+
+		// empty the stringstream
+		convertStream.str(std::string());
+		convertStream.clear();
+	}
+
+
+
+	if ( this->_data[Get_pos_in_tab(0x104)] == 0xce
+		&& this->_data[Get_pos_in_tab(0x105)] == 0xed //260 Car 520char donc 
+		&& this->_data[Get_pos_in_tab(0x106)] == 0x66 //260 Car 520char donc 
+		&& this->_data[Get_pos_in_tab(0x107)] == 0x66) //260 Car 520char donc 
+		std::cout << "Works" << '\n';
+	else // the 0c value
+		std::cout << "No" << '\n';
+
+
+		// std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
+
+//	this->_header = this->header();
 
 	/*Test if the header title value is set correctly*/
 	/*

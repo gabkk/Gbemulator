@@ -41,12 +41,12 @@ void Gbmu::Gb::load (std::string const& cartridgePath)
 	
 	if (cartridgePath.find(".gbc") != std::string::npos)
 	{
-		std::cout << "Cartridge Model CGB" << std::endl;
+//		std::cout << "Cartridge Model CGB" << std::endl;
 		this->setModel(CGB);
 	}
 	else if (cartridgePath.find(".gb")  != std::string::npos)
 	{
-		std::cout << "Cartridge Model DMG" << std::endl;
+//		std::cout << "Cartridge Model DMG" << std::endl;
 		this->setModel(DMG);
 	}
 	else
@@ -119,7 +119,7 @@ std::string Gbmu::Gb::gameTitle (void) const
 
 void Gbmu::Gb::_run (void)
 {
-	std::cout << "Run gb" << std::endl;
+//	std::cout << "Run gb" << std::endl;
 	if (this->model() == DMG)
 		this->_speed = 1;
 	else if (this->model() == CGB)
