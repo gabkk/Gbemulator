@@ -3,23 +3,23 @@ static bool *status_running = 0;
 
 #include "Gb.class.hpp"
 
-Gb::Gb (void) : _model(Auto), _play(false)
+Gbmu::Gb::Gb (void) : _model(Auto), _play(false)
 {
 
 }
 
-Gb::Gb (Gb const & src)
+Gbmu::Gb::Gb (Gb const & src)
 {
 	(void)src;
 }
 
-Gb::~Gb (void)
+Gbmu::Gb::~Gb (void)
 {
 	delete status_load;
 	delete status_running;
 }
 
-Gb & Gb::operator=(Gb const & rhs)
+Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
 {
 	(void)rhs;
 	return *this;
@@ -30,7 +30,7 @@ Gb & Gb::operator=(Gb const & rhs)
 */
 
 
-void Gb::load (std::string const& cartridgePath)
+void Gbmu::Gb::load (std::string const& cartridgePath)
 {
 	/*
 	** Test if the cartridge is correct actually i just check
@@ -63,7 +63,7 @@ void Gb::load (std::string const& cartridgePath)
 ** The GameBoy model to use
 */
 
-void Gb::setModel (Gb::Model const& model)
+void Gbmu::Gb::setModel (Gbmu::Gb::Model const& model)
 {
 	this->_model = model;
 }
@@ -72,13 +72,13 @@ void Gb::setModel (Gb::Model const& model)
 ** Controls
 */
 
-void Gb::play (void)
+void Gbmu::Gb::play (void)
 {
 	this->_play = true;
 
 }
 
-void Gb::setSpeed(size_t const& speed)
+void Gbmu::Gb::setSpeed(size_t const& speed)
 {
 	(void)speed; // TODO
 }
@@ -87,7 +87,7 @@ void Gb::setSpeed(size_t const& speed)
 ** Infos
 */
 
-bool Gb::isLoaded (void) const
+bool Gbmu::Gb::isLoaded (void) const
 {
 	if ((status_load = new bool) == NULL)
 		return (false);
@@ -95,7 +95,7 @@ bool Gb::isLoaded (void) const
 	return (true);
 }
 
-bool Gb::isRunning (void) const
+bool Gbmu::Gb::isRunning (void) const
 {
 	if ((status_running = new bool) == NULL)
 		return (false);
@@ -103,12 +103,12 @@ bool Gb::isRunning (void) const
 	return (true);
 }
 
-Gb::Model Gb::model (void) const
+Gbmu::Gb::Model Gbmu::Gb::model (void) const
 {
 	return (_model);
 }
 
-std::string Gb::gameTitle (void) const
+std::string Gbmu::Gb::gameTitle (void) const
 {
 	return ("loll");
 }
@@ -117,7 +117,7 @@ std::string Gb::gameTitle (void) const
 ** Private
 */
 
-void Gb::_run (void)
+void Gbmu::Gb::_run (void)
 {
 	std::cout << "Run gb" << std::endl;
 	if (this->model() == DMG)

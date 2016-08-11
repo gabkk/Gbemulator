@@ -1,6 +1,6 @@
 # include "Cartridge.class.hpp"
 
-Cartridge::Cartridge (Cpu* cpu, std::string const& path , Gb::Model const& model)
+Gbmu::Cartridge::Cartridge (Gbmu::Cpu* cpu, std::string const& path , Gb::Model const& model)
 {
 	this->_cpu = cpu;
 	this->_path = path;
@@ -8,49 +8,49 @@ Cartridge::Cartridge (Cpu* cpu, std::string const& path , Gb::Model const& model
 	(void)model;
 }
 
-Cartridge::Cartridge (Cartridge const & src)
+Gbmu::Cartridge::Cartridge (Cartridge const & src)
 {
 	(void)src;
 }
 
-Cartridge::~Cartridge (void)
+Gbmu::Cartridge::~Cartridge (void)
 {
 
 }
 
-Cartridge & Cartridge::operator=(Cartridge const & rhs)
+Gbmu::Cartridge & Gbmu::Cartridge::operator=(Cartridge const & rhs)
 {
 	(void)rhs;
 	return *this;
 }
 
-void Cartridge::reset (void)
+void Gbmu::Cartridge::reset (void)
 {
 
 }
 
-void Cartridge::setModel (Gb::Model const& model )
+void Gbmu::Cartridge::setModel (Gb::Model const& model )
 {
 	(void)model;
 
 }
 
-std::string Cartridge::title (void) const
+std::string Gbmu::Cartridge::title (void) const
 {
 	return (this->_header.title);
 }
 
-bool Cartridge::colorGB (void) const
+bool Gbmu::Cartridge::colorGB (void) const
 {
 	return (false);
 }
 
-bool Cartridge::colorCart (void) const
+bool Gbmu::Cartridge::colorCart (void) const
 {
 	return (false);
 }
 
-uint8_t const& Cartridge::getByteAt ( uint16_t const& addr )
+uint8_t const& Gbmu::Cartridge::getByteAt ( uint16_t const& addr )
 {
 	uint8_t *byte;
 
@@ -81,7 +81,7 @@ uint8_t const& Cartridge::getByteAt ( uint16_t const& addr )
 	return (*byte);
 }
 
-void Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
+void Gbmu::Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
 {
 	(void)addr;
 	(void)value;
@@ -114,14 +114,14 @@ char HexToCharpos(uint8_t * addr)
 	return x;
 }
 
-struct Cartridge::Header const& Cartridge::header (void) const
+struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
 {
 /*
 **	Header Temporaire 
 */
 
-	struct Cartridge::Header *header;
-	header = new struct Cartridge::Header;
+	struct Gbmu::Cartridge::Header *header;
+	header = new struct Gbmu::Cartridge::Header;
 
 	int position; 
 	int length;
@@ -179,12 +179,12 @@ struct Cartridge::Header const& Cartridge::header (void) const
 	return (*header);
 }
 
-uint8_t *Cartridge::data (void) const
+uint8_t *Gbmu::Cartridge::data (void) const
 {
 	return (this->_data);
 }
 
-std::string const& Cartridge::path (void) const
+std::string const& Gbmu::Cartridge::path (void) const
 {
 	std::string const *path;
 
@@ -193,13 +193,13 @@ std::string const& Cartridge::path (void) const
 	return (*path);
 }
 
-void Cartridge::saveState ( std::fstream& file)
+void Gbmu::Cartridge::saveState ( std::fstream& file)
 {
 	(void)file;
 
 }
 
-void Cartridge::loadState ( std::fstream& file)
+void Gbmu::Cartridge::loadState ( std::fstream& file)
 {
 	(void)file;
 }
@@ -229,7 +229,7 @@ std::string ToHex(const std::string& s, bool upper_case)
 **
 */
 
-void						Cartridge::load ( void )
+void						Gbmu::Cartridge::load ( void )
 {
 	std::ifstream::pos_type size_of_file;
 	Gb						gb;
@@ -260,7 +260,7 @@ void						Cartridge::load ( void )
 	std::string tohexed = ToHex(std::string(memblock, size_of_file), true);
 	this->_data = reinterpret_cast<uint8_t*>(&tohexed[0]);
 
-	std::cout << "Infos recuper dans Cartridge::load && Cartridge::header" << std::endl;
+	std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
 
 	this->_header = this->header();
 

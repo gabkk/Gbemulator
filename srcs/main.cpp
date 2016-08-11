@@ -4,16 +4,16 @@
 # include "Cpu.class.hpp"
 
 
-static void		s_set_cartridge(Cpu cpu, std::string path)
+static void		s_set_cartridge(Gbmu::Cpu cpu, std::string path)
 {
-	Gb::Model	Auto;
-	Cartridge	cartridge(&cpu, path, Auto);
+	Gbmu::Gb::Model	Auto;
+	Gbmu::Cartridge	cartridge(&cpu, path, Auto);
 
 }
 
 int				main(int argc, const char **argv)
 {
-	Cpu			cpu;
+	Gbmu::Cpu			cpu;
 	std::string path;
 
 	if (argc != 2)

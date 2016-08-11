@@ -1,38 +1,38 @@
 # include "Cpu.class.hpp"
 
-Cpu::Cpu (void)
+Gbmu::Cpu::Cpu (void)
 {
 
 }
 
-Cpu::Cpu (Cpu const & src)
+Gbmu::Cpu::Cpu (Cpu const & src)
 {
 	(void)src;
 }
 
-Cpu::~Cpu (void)
+Gbmu::Cpu::~Cpu (void)
 {
 
 }
 
-Cpu & Cpu::operator=(Cpu const & rhs)
+Gbmu::Cpu & Gbmu::Cpu::operator=(Cpu const & rhs)
 {
 	(void)rhs;
 	return *this;
 }
 
-// void Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
+// void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
 // {
 
 // }
 
 
-Memory	*Cpu::memory(void) const
+Gbmu::Memory	*Gbmu::Cpu::memory(void) const
 {
 	return (this->_memory);
 }
 
-Cartridge	*Cpu::cartridge(void) const
+Gbmu::Cartridge	*Gbmu::Cpu::cartridge(void) const
 {
 	return (this->_cartridge);
 }

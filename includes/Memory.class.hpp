@@ -103,53 +103,54 @@
 # define VRAM_BANK_SIZE	0x2000
 # define WRAM_BANK_SIZE	0x1000
 
-class Cpu;
 
+namespace Gbmu{
+	class Memory
+	{
+		private:
+			Cpu*			_cpu; 			// get pointer to the Cpu ( the parent )
+			uint8_t*		_data; 			// allocated DMG memory map
+	/*NI*/	//uint8_t*		_vram;			// allocated VRAM (max 16KB for CGB)
+	/*NI*/	//uint8_t*		_vramBankPtr;	// pointer to switch banks
+	/*NI*/	//uint8_t*		_ram;			// allocated RAM (max 32KB for CGB)
+	/*NI*/	//uint8_t*		_ramBankPtr;	// pointer to switch banks
+	/*NI*/	//uint8_t*		_bcp;			// allocated palettes RAM for BG
+	/*NI*/	//uint8_t*		_ocp;			// allocated palettes RAM for OBJ
 
-class Memory
-{
-	private:
-		Cpu*			_cpu; 			// get pointer to the Cpu ( the parent )
-		uint8_t*		_data; 			// allocated DMG memory map
-/*NI*/	//uint8_t*		_vram;			// allocated VRAM (max 16KB for CGB)
-/*NI*/	//uint8_t*		_vramBankPtr;	// pointer to switch banks
-/*NI*/	//uint8_t*		_ram;			// allocated RAM (max 32KB for CGB)
-/*NI*/	//uint8_t*		_ramBankPtr;	// pointer to switch banks
-/*NI*/	//uint8_t*		_bcp;			// allocated palettes RAM for BG
-/*NI*/	//uint8_t*		_ocp;			// allocated palettes RAM for OBJ
+		public:
+			Memory( Cpu* cpu );
+			virtual ~Memory( void );
+			Memory(Memory const & src);
+			Memory & operator=(Memory const & rhs);
 
-	public:
-		Memory( Cpu* cpu );
-		virtual ~Memory( void );
-		Memory(Memory const & src);
-		Memory & operator=(Memory const & rhs);
+	/*NI*/	void			reset ( void );
 
-/*NI*/	void			reset ( void );
+	/*NI*/	uint8_t			getByteAt ( uint16_t const& addr );
+	/*NI*/	uint16_t		getWordAt ( uint16_t const& addr );
 
-/*NI*/	uint8_t			getByteAt ( uint16_t const& addr );
-/*NI*/	uint16_t		getWordAt ( uint16_t const& addr );
+	/*NI*/	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
+	/*NI*/	void			setWordAt ( uint16_t const& addr, uint16_t const& value );
 
-/*NI*/	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
-/*NI*/	void			setWordAt ( uint16_t const& addr, uint16_t const& value );
+	/*NI*/	void			onWriteVBK ( uint8_t const& value );
+	/*NI*/	void			onWriteSVBK ( uint8_t const& value );
+	/*NI*/	void			onWriteBCPS ( uint8_t const& value );
+	/*NI*/	void			onWriteBCPD ( uint8_t const& value );
+	/*NI*/	void			onWriteOCPS ( uint8_t const& value );
+	/*NI*/	void			onWriteOCPD ( uint8_t const& value );
 
-/*NI*/	void			onWriteVBK ( uint8_t const& value );
-/*NI*/	void			onWriteSVBK ( uint8_t const& value );
-/*NI*/	void			onWriteBCPS ( uint8_t const& value );
-/*NI*/	void			onWriteBCPD ( uint8_t const& value );
-/*NI*/	void			onWriteOCPS ( uint8_t const& value );
-/*NI*/	void			onWriteOCPD ( uint8_t const& value );
+			uint8_t*		data ( void ) const;
+	/*NI*/	uint8_t*		vram ( void ) const;
+	/*NI*/	uint8_t*		vramBankPtr ( void ) const;
+	/*NI*/	uint8_t*		ram ( void ) const;
+	/*NI*/	uint8_t*		ramBankPtr ( void ) const;
+	/*NI*/	uint8_t*		bcp ( void ) const;
+	/*NI*/	uint8_t*		ocp ( void ) const;
 
-		uint8_t*		data ( void ) const;
-/*NI*/	uint8_t*		vram ( void ) const;
-/*NI*/	uint8_t*		vramBankPtr ( void ) const;
-/*NI*/	uint8_t*		ram ( void ) const;
-/*NI*/	uint8_t*		ramBankPtr ( void ) const;
-/*NI*/	uint8_t*		bcp ( void ) const;
-/*NI*/	uint8_t*		ocp ( void ) const;
+	/*NI*/	void			saveState ( std::fstream& file );
+	/*NI*/	void			loadState ( std::fstream& file );
 
-/*NI*/	void			saveState ( std::fstream& file );
-/*NI*/	void			loadState ( std::fstream& file );
-
-};
-
+	};
+}
+#else
+	class Memory;
 #endif // !MEMORY_CLASS_HPP

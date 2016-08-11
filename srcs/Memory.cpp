@@ -1,20 +1,20 @@
 #include "Memory.class.hpp"
 
-Memory::Memory (Cpu *cpu)
+Gbmu::Memory::Memory (Cpu *cpu)
 {
 	this->_cpu = cpu;
 }
 
-Memory::Memory (Memory const & src)
+Gbmu::Memory::Memory (Memory const & src)
 {
 	(void)src;
 }
 
-Memory::~Memory (void)
+Gbmu::Memory::~Memory (void)
 {
 }
 
-Memory & Memory::operator=(Memory const & rhs)
+Gbmu::Memory & Gbmu::Memory::operator=(Memory const & rhs)
 {
 	(void)rhs;
 	return *this;

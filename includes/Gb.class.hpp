@@ -12,72 +12,79 @@
 # include <sstream> //for osstringstream
 # include <iomanip>      // std::setfill, std::setw
 
-class Cpu;
-
-class Gb
+namespace Gbmu
 {
-	public:
-		enum Model
-		{
-			Auto,
-			DMG,//Game Boy (monochrome), introduced on April 21, 1989
-			CGB//Game Boy Color (color), introduced on October 21, 1998
-		};
 
-	private:
-		Gb::Model 		_model;			// Gb model
-			// Cpu*			_cpu;			// the gameboy CPU
-			// Debugger*	_debugger;		// the gameboy debugger
-			// std::thread*	_thread;		// running thread
-		bool			_play;			// playing flag
-		/*
-		** CPU Speed
-		** (system operating frequency)
-		** DMG  CPU
-		** 1.05 MHz
-		** CGB  CPU
-		** 1.05 MHz (normal mode)
-		** 2.10 MHz (double-speed mode)
-		*/
-		size_t			_speed;
+	class Cpu;
+	class Gb
+	{
+		public:
+			enum Model
+			{
+				Auto,
+				DMG,//Game Boy (monochrome), introduced on April 21, 1989
+				CGB//Game Boy Color (color), introduced on October 21, 1998
+			};
 
-	public:
-		Gb(void);
-		virtual ~Gb(void);
-		Gb(Gb const & src);
-		Gb & operator=(Gb const & rhs);
+		private:
+			Gb::Model 		_model;			// Gb model
+				// Cpu*			_cpu;			// the gameboy CPU
+				// Debugger*	_debugger;		// the gameboy debugger
+				// std::thread*	_thread;		// running thread
+			bool			_play;			// playing flag
+			/*
+			** CPU Speed
+			** (system operating frequency)
+			** DMG  CPU
+			** 1.05 MHz
+			** CGB  CPU
+			** 1.05 MHz (normal mode)
+			** 2.10 MHz (double-speed mode)
+			*/
+			size_t			_speed;
 
-		// Load a cartridge
-		void			load ( std::string const& cartridgePath );
-/*NI*/	// bool			saveState ( std::string const& path );
-/*NI*/	// bool			loadState ( std::string const& path );
-		
-		// // set your gui screen to gameBoy screen
-/*NI*/	// void			setScreen ( IScreen* screen );
+		public:
+			Gb(void);
+			virtual ~Gb(void);
+			Gb(Gb const & src);
+			Gb & operator=(Gb const & rhs);
 
-		// the the GameBoy model to use
-		void			setModel ( Gb::Model const& model);
+			// Load a cartridge
+			void			load ( std::string const& cartridgePath );
+	/*NI*/	// bool			saveState ( std::string const& path );
+	/*NI*/	// bool			loadState ( std::string const& path );
+			
+			// // set your gui screen to gameBoy screen
+	/*NI*/	// void			setScreen ( IScreen* screen );
 
-		// Controls
-		void			play ( void );
-/*NI*/	//	void			pause ( void );
-/*NI*/	//	void			reset ( void );
-		void			setSpeed ( size_t const& speed); // x1 , x2, ........
-/*NI*/	//	void			mute ( bool const& b );
+			// the the GameBoy model to use
+			void			setModel ( Gb::Model const& model);
 
-		// Infos
-		bool			isLoaded ( void ) const; //Singelton to check-is the current cartridge is load
-		bool			isRunning ( void ) const; //Singelton to check-is the current cartridge is run
-/*NI*/	// size_t			speed ( void ) const;		
-		Gb::Model		model ( void ) const;//Getter to _Model
-		std::string		gameTitle ( void ) const;
+			// Controls
+			void			play ( void );
+	/*NI*/	//	void			pause ( void );
+	/*NI*/	//	void			reset ( void );
+			void			setSpeed ( size_t const& speed); // x1 , x2, ........
+	/*NI*/	//	void			mute ( bool const& b );
 
-		// components
-/*NI*/	// IDebugger*		debugger ( void ) const;
-/*NI*/	// IKeyPad*			keyPad ( void ) const;
+			// Infos
+			bool			isLoaded ( void ) const; //Singelton to check-is the current cartridge is load
+			bool			isRunning ( void ) const; //Singelton to check-is the current cartridge is run
+	/*NI*/	// size_t			speed ( void ) const;		
+			Gb::Model		model ( void ) const;//Getter to _Model
+			std::string		gameTitle ( void ) const;
 
-	private:
-		void			_run ( void );
-};
+			// components
+	/*NI*/	// IDebugger*		debugger ( void ) const;
+	/*NI*/	// IKeyPad*			keyPad ( void ) const;
 
+		private:
+			void			_run ( void );
+	};
+}
+#else
+	namespace Gbmu
+	{
+		class Gb;
+	}
 #endif /*GB_CLASS_HPP*/
