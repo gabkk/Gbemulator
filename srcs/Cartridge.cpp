@@ -53,31 +53,16 @@ bool Gbmu::Cartridge::colorCart (void) const
 uint8_t const& Gbmu::Cartridge::getByteAt ( uint16_t const& addr )
 {
 	uint8_t *byte;
+	std::stringstream ss;
+	unsigned int x;
+	unsigned int out;
 
-/*Work in progresse*/
-
-
-/* Format addr correctyle*/
-
-    // unsigned int x;   
-    // std::stringstream ss;
-    // ss << std::hex << "fffefffe";
-    // ss >> x;
-	// static_cast<int>(x)
-/*tmp*/
-    
-    std::stringstream ss;
-    unsigned int x;
 	byte = new uint8_t;
+	ss << std::hex << addr;
+	ss >> x;
+	out = static_cast<int>(x);
+	*byte = this->data()[out];
 
-    ss << std::hex << addr;
-    ss >> x;
-
-	*byte = static_cast<int>(x);
-
-	std::cout << x << std::endl;
-//	std::cout << *byte << std::endl;
-	(void)addr;
 	return (*byte);
 }
 
@@ -102,19 +87,19 @@ int Get_pos(uint16_t const& addr)
 	return out;
 }
 
-int Get_pos_in_tab(uint16_t const& addr)
-{
+// uint8_t Get_pos_in_tab(uint16_t const& addr)
+// {
 
-    std::stringstream ss;
-    unsigned int x;
-    unsigned int out;
+//     std::stringstream ss;
+//     unsigned int x;
+//     unsigned int out;
 
-    ss << std::hex << addr;
-    ss >> x;
-	out = static_cast<int>(x);
+//     ss << std::hex << addr;
+//     ss >> x;
+// 	out = static_cast<int>(x);
 
-	return out;
-}
+// 	return (this->data()[out]);
+// }
 
 char HexToCharpos(uint8_t * addr)
 {
@@ -137,7 +122,7 @@ struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
 	struct Gbmu::Cartridge::Header *header;
 	header = new struct Gbmu::Cartridge::Header;
 
-	int position; 
+	int position;
 	int length;
 
 /*
@@ -300,12 +285,12 @@ void						Gbmu::Cartridge::load ( void )
 		convertStream.clear();
 	}
 
+	int test = 0x104;
 
-
-	if ( this->_data[Get_pos_in_tab(0x104)] == 0xce
-		&& this->_data[Get_pos_in_tab(0x105)] == 0xed //260 Car 520char donc 
-		&& this->_data[Get_pos_in_tab(0x106)] == 0x66 //260 Car 520char donc 
-		&& this->_data[Get_pos_in_tab(0x107)] == 0x66) //260 Car 520char donc 
+	if ( this->getByteAt(test++) == 0xce
+		&& this->getByteAt(test++) == 0xed
+		&& this->getByteAt(test++) == 0x66
+		&& this->getByteAt(test++) == 0x66)
 		std::cout << "Works" << '\n';
 	else // the 0c value
 		std::cout << "No" << '\n';
