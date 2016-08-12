@@ -15,8 +15,8 @@ namespace Gbmu{
 		private:
 			Memory*					_memory;			// GB General Memory
 			Cartridge*				_cartridge;			// Cartridge
-	//			bool					_BOOT;				// Booting Flag
-	//			bool					_HALT;				// Halting Flag
+			bool					_BOOT;				// Booting Flag
+			bool					_HALT;				// Halting Flag
 	//			bool					_doubleSpeed;		// DoubleSpeed Flag (CGB ONLY)
 
 		public:
@@ -34,11 +34,11 @@ namespace Gbmu{
 	/*NI*/		void					onWriteKey1 ( uint8_t const& value );
 	/*NI*/		void					switchSpeed ( void );
 
-	/*NI*/		void					setHALT ( bool const& b );
-	/*NI*/		void					stopBOOT ( void );
+	/*NWI*/		void					setHALT ( bool const& b );
+	/*NWI*/		void					stopBOOT ( void );
 
-	/*NI*/		bool const&				onHalt ( void ) const;
-	/*NI*/		bool const&				onBoot ( void ) const;
+			bool const&				onHalt ( void ) const;
+			bool const&				onBoot ( void ) const;
 
 			Memory*					memory ( void ) const;
 			Cartridge*				cartridge ( void ) const;

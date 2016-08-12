@@ -41,6 +41,8 @@ std::string Gbmu::Cartridge::title (void) const
 
 bool Gbmu::Cartridge::colorGB (void) const
 {
+	if (this->_model == Gb::CGB)
+		return (true);
 	return (false);
 }
 
@@ -77,7 +79,6 @@ char HexToCharpos(int addr)
 
 	ss << std::hex << addr;
 	ss >> x;
-
 	return x;
 }
 
@@ -159,15 +160,6 @@ void						Gbmu::Cartridge::load ( void )
 	std::ifstream::pos_type size_of_file;
 	Gb						gb;
 	char 					*memblock = NULL;
-	
-	try
-	{
-		gb.load(this->path());
-	}
-	catch (std::exception& e)
-	{
-		std::perror("File opening failed");
-	}
 
 	std::ifstream file(this->path().c_str(), std::ios::in|std::ios::binary|std::ios::ate);
 	if (file.is_open())

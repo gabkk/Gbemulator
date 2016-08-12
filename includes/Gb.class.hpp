@@ -32,15 +32,6 @@ namespace Gbmu
 				// Debugger*	_debugger;		// the gameboy debugger
 				// std::thread*	_thread;		// running thread
 			bool			_play;			// playing flag
-			/*
-			** CPU Speed
-			** (system operating frequency)
-			** DMG  CPU
-			** 1.05 MHz
-			** CGB  CPU
-			** 1.05 MHz (normal mode)
-			** 2.10 MHz (double-speed mode)
-			*/
 			size_t			_speed;
 
 		public:
@@ -62,7 +53,7 @@ namespace Gbmu
 
 			// Controls
 			void			play ( void );
-	/*NI*/	//	void			pause ( void );
+			void			pause ( void );
 	/*NI*/	//	void			reset ( void );
 			void			setSpeed ( size_t const& speed); // x1 , x2, ........
 	/*NI*/	//	void			mute ( bool const& b );

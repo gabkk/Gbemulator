@@ -1,11 +1,16 @@
-static bool *status_load = 0;
-static bool *status_running = 0;
+# include "Gb.class.hpp"
+# include "Cartridge.class.hpp"
 
-#include "Gb.class.hpp"
-
-Gbmu::Gb::Gb (void) : _model(Auto), _play(false)
+Gbmu::Gb::Gb (void)
 {
+	Gbmu::Cpu			*cpu;
 
+	cpu = new Gbmu::Cpu;
+	this->_cpu = cpu;
+	this->setModel(Auto);
+	this->_cpu->setHALT(true);
+//	if (this->_cpu->_HALT == false)
+	this->_run();
 }
 
 Gbmu::Gb::Gb (Gb const & src)
@@ -15,8 +20,7 @@ Gbmu::Gb::Gb (Gb const & src)
 
 Gbmu::Gb::~Gb (void)
 {
-	delete status_load;
-	delete status_running;
+
 }
 
 Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
@@ -32,31 +36,17 @@ Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
 
 void Gbmu::Gb::load (std::string const& cartridgePath)
 {
-	/*
-	** Test if the cartridge is correct actually i just check
-	** the cartridge name and path but i think
-	** we need to implement an other way to check if the 
-	** cartridge is correct
-	*/
-	
-	if (cartridgePath.find(".gbc") != std::string::npos)
+
+	Gbmu::Cartridge	cartridge(this->_cpu, cartridgePath, Auto);
+
+	if (this->_cpu->onBoot() == true &&
+		this->_cpu->onHalt() == false)
 	{
-//		std::cout << "Cartridge Model CGB" << std::endl;
-		this->setModel(CGB);
-	}
-	else if (cartridgePath.find(".gb")  != std::string::npos)
-	{
-//		std::cout << "Cartridge Model DMG" << std::endl;
-		this->setModel(DMG);
+		this->_play = true;
 	}
 	else
-	{
-		this->setModel(Auto);
-		std::cout << "Not found " << std::endl;
-	}
-
-	this->isLoaded();
-	this->_run();//faire un try catch
+		std::cout << "Boot status: Failed" << std::endl; // Check if it's correct
+//	this->isLoaded();
 }
 
 /* 
@@ -74,8 +64,15 @@ void Gbmu::Gb::setModel (Gbmu::Gb::Model const& model)
 
 void Gbmu::Gb::play (void)
 {
+	//If Interact with Gui interface button
+//	if 
 	this->_play = true;
+}
 
+void Gbmu::Gb::pause (void)
+{
+	//If Interact with Gui interface button
+	this->_play = false;
 }
 
 void Gbmu::Gb::setSpeed(size_t const& speed)
@@ -89,28 +86,22 @@ void Gbmu::Gb::setSpeed(size_t const& speed)
 
 bool Gbmu::Gb::isLoaded (void) const
 {
-	if ((status_load = new bool) == NULL)
-		return (false);
-	*status_load = true;
-	return (true);
+	return (false);
 }
 
 bool Gbmu::Gb::isRunning (void) const
 {
-	if ((status_running = new bool) == NULL)
-		return (false);
-	*status_running = true;
-	return (true);
+	return (false);
 }
 
 Gbmu::Gb::Model Gbmu::Gb::model (void) const
 {
-	return (_model);
+	return (this->_model);
 }
 
 std::string Gbmu::Gb::gameTitle (void) const
 {
-	return ("loll");
+	return ("not set");
 }
 
 /*
@@ -119,13 +110,11 @@ std::string Gbmu::Gb::gameTitle (void) const
 
 void Gbmu::Gb::_run (void)
 {
-//	std::cout << "Run gb" << std::endl;
-	(void)this->_cpu;
+//	bool value = false;//Get the Gui button play, if play so HALT false
+
 	if (this->model() == DMG)
 		this->_speed = 1;
 	else if (this->model() == CGB)
-		this->_speed = 2;
-	this->isRunning();
-	if (*status_running == true)
-		this->play();
+		this->_speed = 1;
+	this->play();
 }

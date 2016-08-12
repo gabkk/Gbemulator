@@ -91,7 +91,7 @@ namespace Gbmu
 			void							setModel ( Gb::Model const& model );
 
 			std::string						title ( void ) const;
-	/*NI*/	bool							colorGB ( void ) const;
+			bool							colorGB ( void ) const;
 	/*NI*/	bool							colorCart ( void ) const;
 
 			uint8_t	const&					getByteAt ( uint16_t const& addr );
@@ -99,7 +99,7 @@ namespace Gbmu
 
 	/*NWI*/	struct Cartridge::Header const&	header ( void ) const;
 			uint8_t*						data ( void ) const;
-	/*NI*/	std::string const&				path ( void ) const;
+			std::string const&				path ( void ) const;
 
 	/*NI*/	void							saveState ( std::fstream& file );
 	/*NI*/	void							loadState ( std::fstream& file );

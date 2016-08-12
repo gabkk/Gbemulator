@@ -1,20 +1,11 @@
 # include "../Gbmu.class.hpp"
-# include "Cartridge.class.hpp"
 # include "Gb.class.hpp"
-# include "Cpu.class.hpp"
+# include "Cartridge.class.hpp"
 
-
-static void		s_set_cartridge(Gbmu::Cpu cpu, std::string path)
+int						main(int argc, const char **argv)
 {
-	Gbmu::Gb::Model	Auto;
-	Gbmu::Cartridge	cartridge(&cpu, path, Auto);
-
-}
-
-int				main(int argc, const char **argv)
-{
-	Gbmu::Cpu			cpu;
-	std::string path;
+	Gbmu::Gb			gb;
+	std::string 		path;
 
 	if (argc != 2)
 	{
@@ -22,6 +13,16 @@ int				main(int argc, const char **argv)
 		return(0);
 	}
 	path = argv[1];
-	s_set_cartridge(cpu, path);
+		
+	try
+	{
+		gb.load(path);
+	}
+	catch (std::exception& e)
+	{
+		std::perror("File opening failed");
+	}
+
+	
 	return(0);
 }
