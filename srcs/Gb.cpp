@@ -1,5 +1,5 @@
 # include "Gb.class.hpp"
-# include "Cartridge.class.hpp"
+# include "Cpu.class.hpp"
 
 Gbmu::Gb::Gb (void)
 {
@@ -8,8 +8,7 @@ Gbmu::Gb::Gb (void)
 	cpu = new Gbmu::Cpu;
 	this->_cpu = cpu;
 	this->setModel(Auto);
-	this->_cpu->setHALT(true);
-//	if (this->_cpu->_HALT == false)
+	this->_cpu->setHALT(false);
 	this->_run();
 }
 
@@ -20,7 +19,7 @@ Gbmu::Gb::Gb (Gb const & src)
 
 Gbmu::Gb::~Gb (void)
 {
-
+	delete this->_cpu;
 }
 
 Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
@@ -36,9 +35,7 @@ Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
 
 void Gbmu::Gb::load (std::string const& cartridgePath)
 {
-
-	Gbmu::Cartridge	cartridge(this->_cpu, cartridgePath, Auto);
-
+	this->_cpu->loadCartridge(cartridgePath, Auto);
 	if (this->_cpu->onBoot() == true &&
 		this->_cpu->onHalt() == false)
 	{
@@ -67,12 +64,17 @@ void Gbmu::Gb::play (void)
 	//If Interact with Gui interface button
 //	if 
 	this->_play = true;
+
+	//Cpu launch executeframe
 }
 
 void Gbmu::Gb::pause (void)
 {
 	//If Interact with Gui interface button
 	this->_play = false;
+
+	//Cpu stop executeframe
+
 }
 
 void Gbmu::Gb::setSpeed(size_t const& speed)
@@ -101,7 +103,7 @@ Gbmu::Gb::Model Gbmu::Gb::model (void) const
 
 std::string Gbmu::Gb::gameTitle (void) const
 {
-	return ("not set");
+	return ("indefined");
 }
 
 /*

@@ -1,6 +1,4 @@
 # include "../Gbmu.class.hpp"
-# include "Gb.class.hpp"
-# include "Cartridge.class.hpp"
 
 int						main(int argc, const char **argv)
 {

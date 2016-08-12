@@ -173,6 +173,13 @@ void						Gbmu::Cartridge::load ( void )
 	else
 		std::perror("File opening failed");
 
+	/*
+	**	I ll improve the loader later to converter it 
+	**	directly from binary to uint8_t *
+	*/
+
+
+
 	std::string stringOfHex = ToHex(std::string(memblock, size_of_file), true);
 	delete memblock;
 
@@ -202,6 +209,21 @@ void						Gbmu::Cartridge::load ( void )
 		convertStream.str(std::string());
 		convertStream.clear();
 	}
+
+	/*
+	**	---------------------------------------- 
+	*/
+
+
+	/*
+	**	Store data from this_data to Header
+	**	i use getBytAt whitch takes an adresse
+	**	and return the uint8 value whtich match with the index
+	**
+	**
+	**	All the std::cout are there to display debug we can remove
+	**	i leave it to let you see the value on the output
+	*/
 
 	int position = 0;
 	int length;
@@ -346,8 +368,6 @@ void						Gbmu::Cartridge::load ( void )
 	this->_header.global_checksum = ((this->getByteAt(0x14E) << 8 )+ this->getByteAt(0x14F));
 	std::cout << "header.global_checksum" << std::endl;
 	std::cout << hex(this->_header.global_checksum) << std::endl;
-
-	// std::cout << "Infos recuper dans Gbmu::Cartridge::load && Gbmu::Cartridge::header" << std::endl;
 
 	/*Test if the header title value is set correctly*/
 	/*

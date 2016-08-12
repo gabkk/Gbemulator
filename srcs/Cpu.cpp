@@ -4,7 +4,11 @@ Gbmu::Cpu::Cpu (void)
 {
 	//call the bios if success ->
 	//this->_BOOT = true;
+	Gbmu::Memory			memory(this);
+
+	this->_memory = &memory;
 	this->_BOOT = true;
+
 }
 
 Gbmu::Cpu::Cpu (Cpu const & src)
@@ -25,9 +29,17 @@ Gbmu::Cpu & Gbmu::Cpu::operator=(Cpu const & rhs)
 
 void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
 {
+	//Initializied it with new
+	Gbmu::Cartridge	cartridge(this, cartridgePath, model);
 
-	(void)cartridgePath;
-	(void)model;
+	this->_cartridge = &cartridge;
+	
+	/*
+	**	i try to add the cartridge->_data to the memory
+	**	but i don't have time too :)
+	*/
+
+//	this->_memory->onWriteVBK(&this->_cartridge->data());
 }
 
 void Gbmu::Cpu::setHALT ( bool const& b )
