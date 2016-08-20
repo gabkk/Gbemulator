@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 17:00:37 by hhismans          #+#    #+#             */
-/*   Updated: 2016/08/20 19:28:24 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/08/20 19:47:54 by clement          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ Registers::Registers( void )
 }
 
 /*Registers::Registers const ( Registers const & src )
-{
-	_A = src.getA();
-	_B = src.getB();
-	_C = src.getC();
-	_D = src.getD();
-	_E = src.getE();
-	_F = src.getF();
-	_H = src.getH();
-	_L = src.getL();
-}*/
+  {
+  _A = src.getA();
+  _B = src.getB();
+  _C = src.getC();
+  _D = src.getD();
+  _E = src.getE();
+  _F = src.getF();
+  _H = src.getH();
+  _L = src.getL();
+  }*/
 
 Registers::~Registers (){}
 
@@ -80,5 +80,20 @@ void Registers::setDE(uint16_t value){
 void Registers::setHL(uint16_t value){
 	_H = (value >> 8);
 	_L = (value & 0x00FF);
+}
+
+std::ostream &operator<<(std::ostream &out, const Registers &reg) {
+	return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
+		<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
+		<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
+		<< "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
+		<< "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
+		<< "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
+		<< "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
+		<< "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
+		<< "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
+		<< "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
+		<< "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
+		<< "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl;
 }
 

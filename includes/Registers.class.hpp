@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 16:55:53 by hhismans          #+#    #+#             */
-/*   Updated: 2016/08/20 19:34:35 by hhismans         ###   ########.fr       */
+/*   Updated: 2016/08/20 19:47:53 by clement          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,7 @@ class Registers
 		uint8_t		_L;
 };
 
-/*std::ostream &operator<<(std::ostream &out, const Registers &reg){
-		return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
-					<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
-					<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
-					<< "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
-					<< "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
-					<< "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
-					<< "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
-					<< "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
-					<< "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
-					<< "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
-					<< "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
-					<< "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl;
-	}*/
+std::ostream &operator<<(std::ostream &out, const Registers &reg);
 
 #endif
+
