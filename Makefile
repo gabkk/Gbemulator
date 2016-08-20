@@ -14,6 +14,7 @@ SRCS =  main.cpp \
 		Cartridge.cpp \
 		Memory.cpp \
 		Cpu.cpp \
+		Registers.cpp \
 
 OBJ = $(SRCS:.cpp=.o)
 
