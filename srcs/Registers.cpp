@@ -14,14 +14,14 @@
 
 Registers::Registers( void )
 {
-	_A = 0xAA;
-	_B = 0xBB;
-	_C = 0xCC;
-	_D = 0xDD;
-	_E = 0xEE;
-	_F = 0xFF;
-	_H = 0x11;
-	_L = 0x22;
+	_A = 0;
+	_B = 0;
+	_C = 0;
+	_D = 0;
+	_E = 0;
+	_F = 0;
+	_H = 0;
+	_L = 0;
 }
 
 /*Registers::Registers const ( Registers const & src )
