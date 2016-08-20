@@ -71,17 +71,6 @@ void Gbmu::Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
 
 }
 
-char HexToCharpos(int addr)
-{
-
-	std::stringstream ss;
-	unsigned int x;
-
-	ss << std::hex << addr;
-	ss >> x;
-	return x;
-}
-
 struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
 {
 	return (this->_header);
@@ -113,38 +102,25 @@ void Gbmu::Cartridge::loadState ( std::fstream& file)
 **
 */
 
-std::string ToHex(const std::string& s, bool upper_case)
+char HexToCharpos(int addr)
 {
-	std::ostringstream ret;
 
-	for (std::string::size_type i = 0; i < s.length(); ++i)
-	{
-		int z = s[i]&0xff;
-		ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << z;
-	}
-	return ret.str();
+	std::stringstream ss;
+	unsigned int x;
+
+	ss << std::hex << addr;
+	ss >> x;
+	return x;
 }
 
-/*
-** Trick to show hex on std::cout
-**
-*/
-
-
-struct HexCharStruct
+long getFileSize(FILE *file)
 {
-  unsigned char c;
-  HexCharStruct(unsigned char _c) : c(_c) { }
-};
-
-inline std::ostream& operator<<(std::ostream& o, const HexCharStruct& hs)
-{
-  return (o << std::hex << (int)hs.c);
-}
-
-inline HexCharStruct hex(uint8_t _c)
-{
-  return HexCharStruct(_c);
+	long lCurPos, lEndPos;
+	lCurPos = ftell(file);
+	fseek(file, 0, 2);
+	lEndPos = ftell(file);
+	fseek(file, lCurPos, 0);
+	return lEndPos;
 }
 
 /*
@@ -157,62 +133,27 @@ inline HexCharStruct hex(uint8_t _c)
 
 void						Gbmu::Cartridge::load ( void )
 {
-	std::ifstream::pos_type size_of_file;
-	Gb						gb;
-	char 					*memblock = NULL;
+	const char *filePath;
+	FILE *file;
+	long fileSize;
 
-	std::ifstream file(this->path().c_str(), std::ios::in|std::ios::binary|std::ios::ate);
-	if (file.is_open())
-	{
-		size_of_file = file.tellg();
-		memblock = new char [size_of_file];
-		file.seekg (0, std::ios::beg);
-		file.read (memblock, size_of_file);
-		file.close();
-	}
+	filePath = this->path().c_str();
+	// Open the file in binary mode using the "rb" format string
+	// This also checks if the file exists and/or can be opened for reading correctly
+	if ((file = fopen(filePath, "rb")) == NULL)
+		std::cout << "Could not open specified file" << std::endl;
 	else
-		std::perror("File opening failed");
+		std::cout << "File opened successfully" << std::endl;
 
-	/*
-	**	I ll improve the loader later to converter it 
-	**	directly from binary to uint8_t *
-	*/
+	// Get the size of the file in bytes
+	fileSize = getFileSize(file);
 
+	// Allocate space in the buffer for the whole file
+	this->_data = new uint8_t[fileSize];
 
-
-	std::string stringOfHex = ToHex(std::string(memblock, size_of_file), true);
-	delete memblock;
-
-	std::stringstream convertStream;
-	size_t offset = 0, i = 0;
-	
-	/*
-	** Allocate the data tab
-	*/
-	this->_data = new uint8_t[stringOfHex.length()/2];
-
-	while (offset < (stringOfHex.length()/2)) 
-	{
-		unsigned int buffer;
-
-		convertStream << std::hex << stringOfHex.substr(offset, 2);         
-		convertStream >> std::hex >> buffer;
-
-		this->_data[i] = static_cast<uint8_t>(buffer);
-		
-//		std::cout << this->_data[i] << std::endl;
-
-		offset += 2;
-		i++;
-
-		// empty the stringstream
-		convertStream.str(std::string());
-		convertStream.clear();
-	}
-
-	/*
-	**	---------------------------------------- 
-	*/
+	// Read the file in to the buffer
+	fread(this->_data, fileSize, 1, file);
+	fclose(file);
 
 
 	/*
@@ -227,6 +168,7 @@ void						Gbmu::Cartridge::load ( void )
 
 	int position = 0;
 	int length;
+	int j;
 
 /*
 ** Entry point
@@ -239,14 +181,12 @@ void						Gbmu::Cartridge::load ( void )
 		length++;
 	}
 	this->_header.entry_point[length] = '\0';
-	std::cout << "header.entry_point" << std::endl;
-	
-	int j;
 
+	std::cout << "header.entry_point" << std::endl;
 	j=0;
 	while (j < 0x4)
 	{
-		std::cout << hex(this->_header.entry_point[j]);
+		printf("%X ", this->_header.entry_point[j]);
 		j++;
 	}
 	std::cout << std::endl;
@@ -262,12 +202,12 @@ void						Gbmu::Cartridge::load ( void )
 		length++;
 	}
 	this->_header.nintendo_logo[length] = '\0';
-	std::cout << "header.nintendo_logo" << std::endl;
 
+	std::cout << "header.nintendo_logo" << std::endl;
 	j=0;
 	while (j < 0x30)
 	{
-		std::cout << hex(this->_header.nintendo_logo[j]);
+		printf("%X ", this->_header.nintendo_logo[j]);
 		j++;
 	}
 	std::cout << std::endl;
@@ -283,6 +223,7 @@ void						Gbmu::Cartridge::load ( void )
 		length++;
 	}
 	this->_header.title[length] = '\0';
+
 	std::cout << "header.title" << std::endl;
 	std::cout << this->_header.title << std::endl;
 
@@ -291,7 +232,9 @@ void						Gbmu::Cartridge::load ( void )
 */
 	this->_header.CGB_flag = this->getByteAt(0x143);
 	std::cout << "header.CGB_flag" << std::endl;
-	std::cout << hex(this->_header.CGB_flag) << std::endl;
+
+	printf("%X \n", this->_header.CGB_flag);
+
 	if (this->_header.CGB_flag == 0x80)
 		this->setModel(Gbmu::Gb::Auto);
 	else if (this->_header.CGB_flag == 0xC0)
@@ -304,78 +247,68 @@ void						Gbmu::Cartridge::load ( void )
 */
 	this->_header.new_license_code = ((this->getByteAt(0x144) << 8 )+ this->getByteAt(0x145));
 	std::cout << "header.new_license_code" << std::endl;
-	std::cout << hex(this->_header.new_license_code) << std::endl;
+	printf("%X \n", this->_header.new_license_code);
 
 /*
 ** SGB_flag
 */
 	this->_header.SGB_flag = this->getByteAt(0x146);
 	std::cout << "header.SGB_flag" << std::endl;
-	std::cout << hex(this->_header.SGB_flag) << std::endl;
+	printf("%X \n", this->_header.SGB_flag);
 
 /*
 ** cartridge_type
 */
 	this->_header.cartridge_type = this->getByteAt(0x147);
 	std::cout << "header.cartridge_type" << std::endl;
-	std::cout << hex(this->_header.cartridge_type) << std::endl;
+	printf("%X \n", this->_header.cartridge_type);
 
 /*
 ** rom_size
 */
 	this->_header.rom_size = this->getByteAt(0x148);
 	std::cout << "header.rom_size" << std::endl;
-	std::cout << hex(this->_header.rom_size) << std::endl;
+	printf("%X \n", this->_header.rom_size);
 
 /*
 ** ram_size
 */
 	this->_header.ram_size = this->getByteAt(0x149);
 	std::cout << "header.ram_size" << std::endl;
-	std::cout << hex(this->_header.ram_size) << std::endl;
+	printf("%X \n", this->_header.ram_size);
 
 /*
 ** destination_code
 */
 	this->_header.destination_code = this->getByteAt(0x14A);
 	std::cout << "header.destination_code" << std::endl;
-	std::cout << hex(this->_header.destination_code) << std::endl;
+	printf("%X \n", this->_header.destination_code);
 
 /*
 ** old_license_code
 */
 	this->_header.old_license_code = this->getByteAt(0x14B);
 	std::cout << "header.old_license_code" << std::endl;
-	std::cout << hex(this->_header.old_license_code) << std::endl;
+	printf("%X \n", this->_header.old_license_code);
 
 /*
 ** rom_version
 */
 	this->_header.rom_version = this->getByteAt(0x14C);
 	std::cout << "header.rom_version" << std::endl;
-	std::cout << hex(this->_header.rom_version) << std::endl;
+	printf("%X \n", this->_header.rom_version);
 
 /*
 ** header_checksum
 */
 	this->_header.header_checksum = this->getByteAt(0x14D);
 	std::cout << "header.header_checksum" << std::endl;
-	std::cout << hex(this->_header.header_checksum) << std::endl;
+	printf("%X \n", this->_header.header_checksum);
 
 /*
 ** global_checksum
 */
 	this->_header.global_checksum = ((this->getByteAt(0x14E) << 8 )+ this->getByteAt(0x14F));
 	std::cout << "header.global_checksum" << std::endl;
-	std::cout << hex(this->_header.global_checksum) << std::endl;
-
-	/*Test if the header title value is set correctly*/
-	/*
-	** std::cout << this->title() <<std::endl;
-	*/
-
-	/*Display data available inside this->data*/
-	/*
-	** std::cout << this->data() <<std::endl;
-	*/
+	printf("%X \n", this->_header.global_checksum);
 }
