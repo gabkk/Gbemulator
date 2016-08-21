@@ -170,9 +170,9 @@ void						Gbmu::Cartridge::load ( void )
 	int length;
 	int j;
 
-/*
-** Entry point
-*/
+	/*
+	** Entry point
+	*/
 	length = 0;
 	position = 0x0100;
 	while (length < 0x4)
@@ -191,9 +191,9 @@ void						Gbmu::Cartridge::load ( void )
 	}
 	std::cout << std::endl;
 
-/*
-** Nintendo_logo
-*/
+	/*
+	** Nintendo_logo
+	*/
 	length = 0;
 	position = 0x104;
 	while (length < 0x30)
@@ -212,9 +212,9 @@ void						Gbmu::Cartridge::load ( void )
 	}
 	std::cout << std::endl;
 
-/*
-** Title
-*/
+	/*
+	** Title
+	*/
 	length = 0;
 	position = 0x134;
 	while (length < 0x0F)
@@ -227,9 +227,9 @@ void						Gbmu::Cartridge::load ( void )
 	std::cout << "header.title" << std::endl;
 	std::cout << this->_header.title << std::endl;
 
-/*
-** CGB_flag
-*/
+	/*
+	** CGB_flag
+	*/
 	this->_header.CGB_flag = this->getByteAt(0x143);
 	std::cout << "header.CGB_flag" << std::endl;
 
@@ -242,73 +242,79 @@ void						Gbmu::Cartridge::load ( void )
 	else if (this->_header.CGB_flag == 0x00)
 		this->setModel(Gbmu::Gb::DMG);
 
-/*
-** new_license_code
-*/
+	/*
+	** new_license_code
+	*/
 	this->_header.new_license_code = ((this->getByteAt(0x144) << 8 )+ this->getByteAt(0x145));
 	std::cout << "header.new_license_code" << std::endl;
 	printf("%X \n", this->_header.new_license_code);
 
-/*
-** SGB_flag
-*/
+	/*
+	** SGB_flag
+	*/
 	this->_header.SGB_flag = this->getByteAt(0x146);
 	std::cout << "header.SGB_flag" << std::endl;
 	printf("%X \n", this->_header.SGB_flag);
 
-/*
-** cartridge_type
-*/
+	/*
+	** cartridge_type
+	*/
 	this->_header.cartridge_type = this->getByteAt(0x147);
 	std::cout << "header.cartridge_type" << std::endl;
 	printf("%X \n", this->_header.cartridge_type);
 
-/*
-** rom_size
-*/
+	/*
+	** rom_size
+	*/
 	this->_header.rom_size = this->getByteAt(0x148);
 	std::cout << "header.rom_size" << std::endl;
 	printf("%X \n", this->_header.rom_size);
 
-/*
-** ram_size
-*/
+	/*
+	** ram_size
+	*/
 	this->_header.ram_size = this->getByteAt(0x149);
 	std::cout << "header.ram_size" << std::endl;
 	printf("%X \n", this->_header.ram_size);
 
-/*
-** destination_code
-*/
+	/*
+	** destination_code
+	*/
 	this->_header.destination_code = this->getByteAt(0x14A);
 	std::cout << "header.destination_code" << std::endl;
 	printf("%X \n", this->_header.destination_code);
 
-/*
-** old_license_code
-*/
+	/*
+	** old_license_code
+	*/
 	this->_header.old_license_code = this->getByteAt(0x14B);
 	std::cout << "header.old_license_code" << std::endl;
 	printf("%X \n", this->_header.old_license_code);
 
-/*
-** rom_version
-*/
+	/*
+	** rom_version
+	*/
 	this->_header.rom_version = this->getByteAt(0x14C);
 	std::cout << "header.rom_version" << std::endl;
 	printf("%X \n", this->_header.rom_version);
 
-/*
-** header_checksum
-*/
+	/*
+	** header_checksum
+	*/
 	this->_header.header_checksum = this->getByteAt(0x14D);
 	std::cout << "header.header_checksum" << std::endl;
 	printf("%X \n", this->_header.header_checksum);
 
-/*
-** global_checksum
-*/
+	/*
+	** global_checksum
+	*/
 	this->_header.global_checksum = ((this->getByteAt(0x14E) << 8 )+ this->getByteAt(0x14F));
 	std::cout << "header.global_checksum" << std::endl;
 	printf("%X \n", this->_header.global_checksum);
+
+	// Test
+	std::cout << "0x100: " << "0x" << std::setfill('0') << std::setw(2) << std::hex << (uint32_t)this->getByteAt(0x100)  << "." << std::endl;
+	std::cout << "0x101: " << "0x" << std::setfill('0') << std::setw(2) << std::hex << (uint32_t)this->getByteAt(0x101)  << "." << std::endl;
+	std::cout << "0x102: " << "0x" << std::setfill('0') << std::setw(2) << std::hex << (uint32_t)this->getByteAt(0x102)  << "." << std::endl;
+	std::cout << "0x103: " << "0x" << std::setfill('0') << std::setw(2) << std::hex << (uint32_t)this->getByteAt(0x103)  << "." << std::endl;
 }

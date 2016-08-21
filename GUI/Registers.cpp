@@ -14,14 +14,14 @@
 
 Registers::Registers( void )
 {
-    _A = 0;
-    _B = 0;
-    _C = 0;
-    _D = 0;
-    _E = 0;
-    _F = 0;
-    _H = 0;
-    _L = 0;
+	_A = 0;
+	_B = 0;
+	_C = 0;
+	_D = 0;
+	_E = 0;
+	_F = 0;
+	_H = 0;
+	_L = 0;
 }
 
 /*Registers::Registers const ( Registers const & src )
@@ -39,7 +39,7 @@ Registers::Registers( void )
 Registers::~Registers (){}
 
 // GETTER
-uint8_t Registers::getA() const {return _A;}
+uint8_t Registers::getA() const {return this->_A;}
 uint8_t Registers::getB() const {return _B;}
 uint8_t Registers::getC() const {return _C;}
 uint8_t Registers::getD() const {return _D;}
@@ -64,36 +64,36 @@ void Registers::setH(uint8_t value){_H = value;}
 void Registers::setL(uint8_t value){_L = value;}
 
 void Registers::setAF(uint16_t value){
-    _A = (value >> 8);
-    _F = (value & 0x00FF);
+	_A = (value >> 8);
+	_F = (value & 0x00FF);
 }
 void Registers::setBC(uint16_t value){
-    _B = (value >> 8);
-    _C = (value & 0x00FF);
+	_B = (value >> 8);
+	_C = (value & 0x00FF);
 }
 
 void Registers::setDE(uint16_t value){
-    _D = (value >> 8);
-    _E = (value & 0x00FF);
+	_D = (value >> 8);
+	_E = (value & 0x00FF);
 }
 
 void Registers::setHL(uint16_t value){
-    _H = (value >> 8);
-    _L = (value & 0x00FF);
+	_H = (value >> 8);
+	_L = (value & 0x00FF);
 }
 
 std::ostream &operator<<(std::ostream &out, const Registers &reg) {
-    return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
-                << "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
-                << "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
-                << "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
-                << "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
-                << "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
-                << "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
-                << "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
-                << "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
-                << "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
-                << "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
-                << "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl;
+	return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
+		<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
+		<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
+		<< "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
+		<< "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
+		<< "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
+		<< "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
+		<< "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
+		<< "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
+		<< "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
+		<< "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
+		<< "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl;
 }
 

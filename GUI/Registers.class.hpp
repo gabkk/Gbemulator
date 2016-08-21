@@ -27,17 +27,17 @@ class Registers
 
 		//getter
 		uint8_t getA() const;
-        uint8_t getB() const;
-        uint8_t getC() const;
-        uint8_t getD() const;
-        uint8_t getE() const;
-        uint8_t getH() const;
-        uint8_t getL() const;
-        uint8_t getF() const;
-        uint16_t getAF() const;
-        uint16_t getBC() const;
-        uint16_t getDE() const;
-        uint16_t getHL() const;
+		uint8_t getB() const;;
+		uint8_t getC() const;;
+		uint8_t getD() const;;
+		uint8_t getE() const;;
+		uint8_t getH() const;;
+		uint8_t getL() const;;
+		uint8_t getF() const;;
+		uint16_t getAF() const;;
+		uint16_t getBC() const;;
+		uint16_t getDE() const;;
+		uint16_t getHL() const;;
 
 		//setter
 		void setA(uint8_t value);

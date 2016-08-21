@@ -4,7 +4,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    _ui(new Ui::MainWindow)
+    _ui(new Ui::MainWindow),
+    _reg(new Registers)
 {
     qDebug() << "MainWindow constructor";
     _ui->setupUi(this); // load mainwindow.ui file
@@ -15,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui->disassembler->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->videoRegisters->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->otherRegisters->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+
+    // test
+    _reg->setAF(0xBEEF);
 
     update(); // start main loop
 }
@@ -28,19 +32,17 @@ void MainWindow::update() {
     _updateRegisters();
 }
 
-// TODO: Replace every 0xDEAD with the correct _cpu->getXX
+// TODO: Replace every 0xDEAD with the correct _reg->getXX()
 void MainWindow::_updateRegisters() {
     qDebug() << "_updateRegisters()";
 
     // Update general registers
     _ui->generalRegisters->item(MainWindow::REG_PC, 0)->setData(Qt::DisplayRole, "0xDEAD");
-    _ui->generalRegisters->item(MainWindow::REG_AF, 0)->setData(Qt::DisplayRole, "0xDEAD");
-    _ui->generalRegisters->item(MainWindow::REG_AF, 0)->setData(Qt::DisplayRole, "0xDEAD");
+    _ui->generalRegisters->item(MainWindow::REG_AF, 0)->setData(Qt::DisplayRole, "0x" + QString::number(_reg->getAF(), 16).toUpper()); // test, see line 20
     _ui->generalRegisters->item(MainWindow::REG_BC, 0)->setData(Qt::DisplayRole, "0xDEAD");
     _ui->generalRegisters->item(MainWindow::REG_DE, 0)->setData(Qt::DisplayRole, "0xDEAD");
     _ui->generalRegisters->item(MainWindow::REG_HL, 0)->setData(Qt::DisplayRole, "0xDEAD");
     _ui->generalRegisters->item(MainWindow::REG_SP, 0)->setData(Qt::DisplayRole, "0xDEAD");
-
 
     // Update video registers
     _ui->videoRegisters->item(MainWindow::REG_LCDC, 1)->setData(Qt::DisplayRole, "0xDEAD");

@@ -2,21 +2,22 @@
 # include "Registers.class.hpp"
 # include <iostream>
 
-int						main()
+//int						main()
+int						main(int argc, char *argv[])
 {
 
-	Registers	reg;
-	uint8_t 	t = 8;
-	t = reg.getA();
-	std::cout << reg;
-	reg.setAF(0x1234);
-	reg.setBC(0x1234);
-	reg.setDE(0x1234);
-	reg.setHL(0x1234);
-	std::cout << reg;
+	//Registers	reg;
+	//uint8_t 	t = 8;
+	//t = reg.getA();
+	//std::cout << reg;
+	//reg.setAF(0x1234);
+	//reg.setBC(0x1234);
+	//reg.setDE(0x1234);
+	//reg.setHL(0x1234);
+	//std::cout << reg;
 
 
-/*	Gbmu::Gb			gb;
+	Gbmu::Gb			gb;
 	std::string 		path;
 
 	if (argc != 2)
@@ -34,6 +35,6 @@ int						main()
 	{
 		std::perror("File opening failed");
 	}
-	*/
+
 	return(0);
 }

@@ -4,10 +4,8 @@
 #include "gbmu_gui.h"
 #include <QMainWindow>
 
-class Gbmu;
 namespace Ui {
 class MainWindow;
-
 }
 
 class MainWindow : public QMainWindow
@@ -68,8 +66,8 @@ public:
     ~MainWindow();
 
 private:
-    Gbmu * _gb;
     Ui::MainWindow * _ui;
+    Registers * _reg;
 
     void _updateRegisters();
 };
