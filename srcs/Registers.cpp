@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Registers.class.hpp"
+#include "../includes/Registers.class.hpp"
 
-Registers::Registers( void )
+Gbmu::Registers::Registers( void ) :
+    _A(0),
+    _B(0),
+    _C(0),
+    _D(0),
+    _E(0),
+    _F(0),
+    _H(0),
+    _L(0)
 {
-    _A = 0;
-    _B = 0;
-    _C = 0;
-    _D = 0;
-    _E = 0;
-    _F = 0;
-    _H = 0;
-    _L = 0;
 }
 
 /*Registers::Registers const ( Registers const & src )
@@ -36,53 +36,53 @@ Registers::Registers( void )
   _L = src.getL();
   }*/
 
-Registers::~Registers (){}
+Gbmu::Registers::~Registers (){}
 
 // GETTER
-uint8_t Registers::getA() const {return _A;}
-uint8_t Registers::getB() const {return _B;}
-uint8_t Registers::getC() const {return _C;}
-uint8_t Registers::getD() const {return _D;}
-uint8_t Registers::getE() const {return _E;}
-uint8_t Registers::getF() const {return _F;}
-uint8_t Registers::getH() const {return _H;}
-uint8_t Registers::getL() const {return _L;}
+uint8_t Gbmu::Registers::getA() const {return _A;}
+uint8_t Gbmu::Registers::getB() const {return _B;}
+uint8_t Gbmu::Registers::getC() const {return _C;}
+uint8_t Gbmu::Registers::getD() const {return _D;}
+uint8_t Gbmu::Registers::getE() const {return _E;}
+uint8_t Gbmu::Registers::getF() const {return _F;}
+uint8_t Gbmu::Registers::getH() const {return _H;}
+uint8_t Gbmu::Registers::getL() const {return _L;}
 
-uint16_t Registers::getAF() const {return ((_A << 8) + _F);}
-uint16_t Registers::getBC() const {return ((_B << 8) + _C);}
-uint16_t Registers::getDE() const {return ((_D << 8) + _E);}
-uint16_t Registers::getHL() const {return ((_H << 8) + _L);}
+uint16_t Gbmu::Registers::getAF() const {return ((_A << 8) + _F);}
+uint16_t Gbmu::Registers::getBC() const {return ((_B << 8) + _C);}
+uint16_t Gbmu::Registers::getDE() const {return ((_D << 8) + _E);}
+uint16_t Gbmu::Registers::getHL() const {return ((_H << 8) + _L);}
 
 //SETTER
-void Registers::setA(uint8_t value){_A = value;}
-void Registers::setB(uint8_t value){_B = value;}
-void Registers::setC(uint8_t value){_C = value;}
-void Registers::setD(uint8_t value){_D = value;}
-void Registers::setE(uint8_t value){_E = value;}
-void Registers::setF(uint8_t value){_F = value;}
-void Registers::setH(uint8_t value){_H = value;}
-void Registers::setL(uint8_t value){_L = value;}
+void Gbmu::Registers::setA(uint8_t value){_A = value;}
+void Gbmu::Registers::setB(uint8_t value){_B = value;}
+void Gbmu::Registers::setC(uint8_t value){_C = value;}
+void Gbmu::Registers::setD(uint8_t value){_D = value;}
+void Gbmu::Registers::setE(uint8_t value){_E = value;}
+void Gbmu::Registers::setF(uint8_t value){_F = value;}
+void Gbmu::Registers::setH(uint8_t value){_H = value;}
+void Gbmu::Registers::setL(uint8_t value){_L = value;}
 
-void Registers::setAF(uint16_t value){
+void Gbmu::Registers::setAF(uint16_t value){
     _A = (value >> 8);
     _F = (value & 0x00FF);
 }
-void Registers::setBC(uint16_t value){
+void Gbmu::Registers::setBC(uint16_t value){
     _B = (value >> 8);
     _C = (value & 0x00FF);
 }
 
-void Registers::setDE(uint16_t value){
+void Gbmu::Registers::setDE(uint16_t value){
     _D = (value >> 8);
     _E = (value & 0x00FF);
 }
 
-void Registers::setHL(uint16_t value){
+void Gbmu::Registers::setHL(uint16_t value){
     _H = (value >> 8);
     _L = (value & 0x00FF);
 }
 
-std::ostream &operator<<(std::ostream &out, const Registers &reg) {
+std::ostream &operator<<(std::ostream &out, const Gbmu::Registers &reg) {
     return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
                 << "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
                 << "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl

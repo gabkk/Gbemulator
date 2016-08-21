@@ -1,4 +1,4 @@
-# include "Cartridge.class.hpp"
+#include "../includes/Cartridge.class.hpp"
 
 Gbmu::Cartridge::Cartridge (Gbmu::Cpu* cpu, std::string const& path , Gb::Model const& model)
 {

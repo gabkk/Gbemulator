@@ -1,17 +1,21 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DEBUGWINDOW_H
+#define DEBUGWINDOW_H
 
-#include "gbmu_gui.h"
+#include <QDebug>
 #include <QMainWindow>
+#include "../includes/Gb.class.hpp"
+#include "../includes/Registers.class.hpp"
+#include "../includes/Cpu.class.hpp"
 
 namespace Ui {
-class MainWindow;
+class DebugWindow;
 }
 
-class MainWindow : public QMainWindow
+class DebugWindow : public QMainWindow
 {
     Q_OBJECT
 
+    // TODO: Move to Registers
     enum generalRegisters {
         REG_PC,
         REG_AF,
@@ -61,15 +65,15 @@ class MainWindow : public QMainWindow
     };
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit DebugWindow(QWidget *parent = 0, Gbmu::Gb *gb = 0);
     void update();
-    ~MainWindow();
+    ~DebugWindow();
 
 private:
-    Ui::MainWindow * _ui;
-    Registers * _reg;
+    Ui::DebugWindow *_ui;
+    Gbmu::Gb *_gb;
 
     void _updateRegisters();
 };
 
-#endif // MAINWINDOW_H
+#endif // DEBUGWINDOW_H

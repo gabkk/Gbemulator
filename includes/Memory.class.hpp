@@ -103,7 +103,6 @@
 # define VRAM_BANK_SIZE	0x2000
 # define WRAM_BANK_SIZE	0x1000
 
-
 namespace Gbmu{
 	class Memory
 	{
@@ -152,5 +151,7 @@ namespace Gbmu{
 	};
 }
 #else
+namespace Gbmu {
 	class Memory;
+}
 #endif // !MEMORY_CLASS_HPP

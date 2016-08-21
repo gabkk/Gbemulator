@@ -7,17 +7,18 @@
 
 # include "Memory.class.hpp"
 # include "Cartridge.class.hpp"
-
+# include "Registers.class.hpp"
 
 namespace Gbmu{
 	class Cpu
 	{
 		private:
+            Registers *				_regs;				// Cpu registers
 			Memory*					_memory;			// GB General Memory
 			Cartridge*				_cartridge;			// Cartridge
 			bool					_BOOT;				// Booting Flag
 			bool					_HALT;				// Halting Flag
-	//			bool					_doubleSpeed;		// DoubleSpeed Flag (CGB ONLY)
+			//			bool					_doubleSpeed;		// DoubleSpeed Flag (CGB ONLY)
 
 		public:
 			Cpu ( void );
@@ -25,31 +26,31 @@ namespace Gbmu{
 			Cpu(Cpu const & src);
 			Cpu & operator=(Cpu const & rhs);
 
-	/*NI*/		void					reset ( void );
-	/*NI*/		void					loadCartridge ( std::string const& cartridgePath, Gb::Model const& model );
-				
-	/*NI*/		void					executeFrame ( void );
-	/*NI*/		size_t					execute ( void );
+			/*NI*/		void					reset ( void );
+			/*NI*/		void					loadCartridge ( std::string const& cartridgePath, Gb::Model const& model );
 
-	/*NI*/		void					onWriteKey1 ( uint8_t const& value );
-	/*NI*/		void					switchSpeed ( void );
+			/*NI*/		void					executeFrame ( void );
+			/*NI*/		size_t					execute ( void );
 
-	/*NWI*/		void					setHALT ( bool const& b );
-	/*NWI*/		void					stopBOOT ( void );
+			/*NI*/		void					onWriteKey1 ( uint8_t const& value );
+			/*NI*/		void					switchSpeed ( void );
+
+			/*NWI*/		void					setHALT ( bool const& b );
+			/*NWI*/		void					stopBOOT ( void );
 
 			bool const&				onHalt ( void ) const;
 			bool const&				onBoot ( void ) const;
 
+            Registers *				regs(void) const;
 			Memory*					memory ( void ) const;
 			Cartridge*				cartridge ( void ) const;
 
-	/*NI*/		void					saveState ( std::fstream& file );
-	/*NI*/		void					loadState ( std::fstream& file );
+			/*NI*/		void					saveState ( std::fstream& file );
+			/*NI*/		void					loadState ( std::fstream& file );
 	};
 }
 #else
-	namespace Gbmu
-	{
-		class Cpu;
-	}
+namespace Gbmu {
+	class Cpu;
+}
 #endif // !CPU_CLASS_HPP

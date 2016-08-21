@@ -14,7 +14,6 @@
 
 namespace Gbmu
 {
-
 	class Cpu;
 	class Gb
 	{
@@ -64,6 +63,8 @@ namespace Gbmu
 	/*NI*/	// size_t			speed ( void ) const;		
 			Gb::Model		model ( void ) const;//Getter to _Model
 			std::string		gameTitle ( void ) const;
+
+            Cpu 			* cpu(void) const;
 
 			// components
 	/*NI*/	// IDebugger*		debugger ( void ) const;

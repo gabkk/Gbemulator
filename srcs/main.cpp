@@ -1,5 +1,5 @@
-# include "Gbmu.class.hpp"
-# include "Registers.class.hpp"
+# include "../includes/Gbmu.class.hpp"
+# include "../includes/Registers.class.hpp"
 # include <iostream>
 
 //int						main()

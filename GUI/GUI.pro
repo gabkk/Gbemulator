@@ -13,11 +13,24 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    ../srcs/Registers.cpp
+    ../srcs/Registers.cpp \
+    debugwindow.cpp \
+    ../srcs/Cartridge.cpp \
+    ../srcs/Cpu.cpp \
+    ../srcs/Gb.cpp \
+    ../srcs/Memory.cpp
 
-HEADERS  += mainwindow.h \
-    gbmu_gui.h \
-    ../includes/Registers.class.hpp
+HEADERS  += \
+    ../includes/Registers.class.hpp \
+    debugwindow.h \
+    ../includes/Cartridge.class.hpp \
+    ../includes/Cpu.class.hpp \
+    ../includes/Gb.class.hpp \
+    ../includes/Gbmu.class.hpp \
+    ../includes/Memory.class.hpp
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    debugwindow.ui
+
+DISTFILES += \
+    README

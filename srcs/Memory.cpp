@@ -1,8 +1,8 @@
-#include "Memory.class.hpp"
+#include "../includes/Memory.class.hpp"
 
-Gbmu::Memory::Memory (Cpu *cpu)
+Gbmu::Memory::Memory (Cpu *cpu) :
+    _cpu(cpu)
 {
-	this->_cpu = cpu;
 }
 
 Gbmu::Memory::Memory (Memory const & src)

@@ -1,5 +1,5 @@
-# include "Gb.class.hpp"
-# include "Cpu.class.hpp"
+# include "../includes/Gb.class.hpp"
+# include "../includes/Cpu.class.hpp"
 
 Gbmu::Gb::Gb (void)
 {
@@ -104,6 +104,10 @@ Gbmu::Gb::Model Gbmu::Gb::model (void) const
 std::string Gbmu::Gb::gameTitle (void) const
 {
 	return ("indefined");
+}
+
+Gbmu::Cpu * Gbmu::Gb::cpu(void) const {
+    return _cpu;
 }
 
 /*

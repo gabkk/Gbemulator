@@ -1,12 +1,14 @@
-# include "Cpu.class.hpp"
+# include "../includes/Cpu.class.hpp"
 
-Gbmu::Cpu::Cpu (void)
+Gbmu::Cpu::Cpu (void) :
+   _regs(new Gbmu::Registers),
+   _memory(new Gbmu::Memory(this))
 {
 	//call the bios if success ->
 	//this->_BOOT = true;
-	Gbmu::Memory			memory(this);
+    //Memory			memory(this);
 
-	this->_memory = &memory;
+    //this->_memory = &memory;
 	this->_BOOT = true;
 
 }
@@ -30,7 +32,7 @@ Gbmu::Cpu & Gbmu::Cpu::operator=(Cpu const & rhs)
 void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
 {
 	//Initializied it with new
-	Gbmu::Cartridge	cartridge(this, cartridgePath, model);
+	Cartridge	cartridge(this, cartridgePath, model);
 
 	this->_cartridge = &cartridge;
 	
@@ -74,4 +76,8 @@ Gbmu::Memory	*Gbmu::Cpu::memory(void) const
 Gbmu::Cartridge	*Gbmu::Cpu::cartridge(void) const
 {
 	return (this->_cartridge);
+}
+
+Gbmu::Registers * Gbmu::Cpu::regs(void) const {
+    return (_regs);
 }
