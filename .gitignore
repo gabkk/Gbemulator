@@ -1,3 +1,5 @@
 Gbmu
 *.o
 test*
+build-*
+GUI.pro.user
