@@ -1,4 +1,4 @@
-# include "../Gbmu.class.hpp"
+# include "Gbmu.class.hpp"
 # include "Registers.class.hpp"
 # include <iostream>
 

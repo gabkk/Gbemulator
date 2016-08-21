@@ -8,6 +8,6 @@
 # include <iostream>
 # include <fstream>
 # include <unistd.h>
-# include "includes/Gb.class.hpp"
+# include "Gb.class.hpp"
 
 #endif // !GBMU_HPP
