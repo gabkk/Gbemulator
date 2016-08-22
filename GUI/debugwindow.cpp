@@ -11,11 +11,20 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
     _ui->setupUi(this); // load debugwindow.ui file
 
      // Forbid header cells resize
+
+#if QT_VERSION >= 0x050000
     _ui->memory->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->generalRegisters->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->disassembler->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->videoRegisters->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     _ui->otherRegisters->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+#else
+    _ui->memory->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+    _ui->generalRegisters->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+    _ui->disassembler->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+    _ui->videoRegisters->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+    _ui->otherRegisters->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+#endif
 
     update(); // start main loop
 }
