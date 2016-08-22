@@ -25,36 +25,41 @@ public:
     Registers( void );
     //Registers const ( Registers const & src );
     ~Registers( void );
+		//getter
+		uint8_t getA() const;
+		uint8_t getB() const;
+		uint8_t getC() const;
+		uint8_t getD() const;
+		uint8_t getE() const;
+		uint8_t getH() const;
+		uint8_t getL() const;
+		uint8_t getF() const;
+		bool	getFz() const;
+		bool	getFn() const;
+		bool	getFh() const;
+		bool	getFc() const;
+		uint16_t getAF() const;
+		uint16_t getBC() const;
+		uint16_t getDE() const;
+		uint16_t getHL() const;
 
-    //getter
-    uint8_t getA() const;
-    uint8_t getB() const;
-    uint8_t getC() const;
-    uint8_t getD() const;
-    uint8_t getE() const;
-    uint8_t getH() const;
-    uint8_t getL() const;
-    uint8_t getF() const;
-    uint16_t getAF() const;
-    uint16_t getBC() const;
-    uint16_t getDE() const;
-    uint16_t getHL() const;
-
-    //setter
-    void setA(uint8_t value);
-    void setB(uint8_t value);
-    void setC(uint8_t value);
-    void setD(uint8_t value);
-    void setE(uint8_t value);
-    void setH(uint8_t value);
-    void setL(uint8_t value);
-    void setF(uint8_t value);
-    void setAF(uint16_t value);
-    void setBC(uint16_t value);
-    void setDE(uint16_t value);
-    void setHL(uint16_t value);
-
-    //operator
+		//setter
+		void setA(uint8_t value);
+		void setB(uint8_t value);
+		void setC(uint8_t value);
+		void setD(uint8_t value);
+		void setE(uint8_t value);
+		void setH(uint8_t value);
+		void setL(uint8_t value);
+		void setF(uint8_t value);
+		void setAF(uint16_t value);
+		void setBC(uint16_t value);
+		void setDE(uint16_t value);
+		void setHL(uint16_t value);
+		void setFz(bool value);
+		void setFn(bool value);
+		void setFh(bool value);
+		void setFc(bool value);
 
 private:
 
