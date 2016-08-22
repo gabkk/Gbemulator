@@ -54,10 +54,10 @@ uint16_t Gbmu::Registers::getBC() const {return ((_B << 8) + _C);}
 uint16_t Gbmu::Registers::getDE() const {return ((_D << 8) + _E);}
 uint16_t Gbmu::Registers::getHL() const {return ((_H << 8) + _L);}
 
-bool Registers::getFz() const {return (_F >> 7);}
-bool Registers::getFn() const {return ((_F >> 6) & 1);}
-bool Registers::getFh() const {return ((_F >> 5) & 1);}
-bool Registers::getFc() const {return ((_F >> 4) & 1);}
+bool Gbmu::Registers::getFz() const {return (_F >> 7);}
+bool Gbmu::Registers::getFn() const {return ((_F >> 6) & 1);}
+bool Gbmu::Registers::getFh() const {return ((_F >> 5) & 1);}
+bool Gbmu::Registers::getFc() const {return ((_F >> 4) & 1);}
 
 //SETTER
 void Gbmu::Registers::setA(uint8_t value){_A = value;}
@@ -88,12 +88,12 @@ void Gbmu::Registers::setHL(uint16_t value){
     _L = (value & 0x00FF);
 }
 
-void Registers::setFz(bool value){_F |= (value << 7);}
-void Registers::setFn(bool value){_F |= (value << 6);}
-void Registers::setFh(bool value){_F |= (value << 5);}
-void Registers::setFc(bool value){_F |= (value << 4);}
+void Gbmu::Registers::setFz(bool value){_F |= (value << 7);}
+void Gbmu::Registers::setFn(bool value){_F |= (value << 6);}
+void Gbmu::Registers::setFh(bool value){_F |= (value << 5);}
+void Gbmu::Registers::setFc(bool value){_F |= (value << 4);}
 
-std::ostream &operator<<(std::ostream &out, const Registers &reg) {
+std::ostream &operator<<(std::ostream &out, const Gbmu::Registers &reg) {
 	return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
 		<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
 		<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl

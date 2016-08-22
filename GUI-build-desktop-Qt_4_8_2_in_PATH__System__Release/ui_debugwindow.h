@@ -1,0 +1,664 @@
+/********************************************************************************
+** Form generated from reading UI file 'debugwindow.ui'
+**
+** Created: Mon Aug 22 20:39:10 2016
+**      by: Qt User Interface Compiler version 4.8.2
+**
+** WARNING! All changes made in this file will be lost when recompiling UI file!
+********************************************************************************/
+
+#ifndef UI_DEBUGWINDOW_H
+#define UI_DEBUGWINDOW_H
+
+#include <QtCore/QVariant>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QGroupBox>
+#include <QtGui/QHeaderView>
+#include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QTableWidget>
+#include <QtGui/QToolBar>
+#include <QtGui/QWidget>
+
+QT_BEGIN_NAMESPACE
+
+class Ui_DebugWindow
+{
+public:
+    QAction *actionStep;
+    QAction *actionExecute;
+    QWidget *centralWidget;
+    QGroupBox *groupBox;
+    QTableWidget *memory;
+    QGroupBox *groupBox_5;
+    QTableWidget *generalRegisters;
+    QGroupBox *groupBox_6;
+    QTableWidget *videoRegisters;
+    QGroupBox *groupBox_7;
+    QTableWidget *otherRegisters;
+    QGroupBox *groupBox_2;
+    QTableWidget *disassembler;
+    QMenuBar *menuBar;
+    QMenu *menuMenu;
+    QToolBar *toolBar;
+
+    void setupUi(QMainWindow *DebugWindow)
+    {
+        if (DebugWindow->objectName().isEmpty())
+            DebugWindow->setObjectName(QString::fromUtf8("DebugWindow"));
+        DebugWindow->resize(1124, 692);
+        DebugWindow->setMinimumSize(QSize(1115, 664));
+        actionStep = new QAction(DebugWindow);
+        actionStep->setObjectName(QString::fromUtf8("actionStep"));
+        actionExecute = new QAction(DebugWindow);
+        actionExecute->setObjectName(QString::fromUtf8("actionExecute"));
+        centralWidget = new QWidget(DebugWindow);
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setGeometry(QRect(10, 280, 621, 371));
+        memory = new QTableWidget(groupBox);
+        if (memory->columnCount() < 16)
+            memory->setColumnCount(16);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(5, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(6, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(7, __qtablewidgetitem7);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(8, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(9, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(10, __qtablewidgetitem10);
+        QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(11, __qtablewidgetitem11);
+        QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(12, __qtablewidgetitem12);
+        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(13, __qtablewidgetitem13);
+        QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(14, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
+        memory->setHorizontalHeaderItem(15, __qtablewidgetitem15);
+        if (memory->rowCount() < 1)
+            memory->setRowCount(1);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        memory->setVerticalHeaderItem(0, __qtablewidgetitem16);
+        memory->setObjectName(QString::fromUtf8("memory"));
+        memory->setGeometry(QRect(10, 30, 601, 331));
+        memory->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        memory->setSelectionMode(QAbstractItemView::SingleSelection);
+        memory->horizontalHeader()->setDefaultSectionSize(35);
+        memory->horizontalHeader()->setStretchLastSection(true);
+        groupBox_5 = new QGroupBox(centralWidget);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setGeometry(QRect(10, 30, 171, 241));
+        generalRegisters = new QTableWidget(groupBox_5);
+        if (generalRegisters->columnCount() < 1)
+            generalRegisters->setColumnCount(1);
+        QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
+        generalRegisters->setHorizontalHeaderItem(0, __qtablewidgetitem17);
+        if (generalRegisters->rowCount() < 6)
+            generalRegisters->setRowCount(6);
+        QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(0, __qtablewidgetitem18);
+        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(1, __qtablewidgetitem19);
+        QTableWidgetItem *__qtablewidgetitem20 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(2, __qtablewidgetitem20);
+        QTableWidgetItem *__qtablewidgetitem21 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(3, __qtablewidgetitem21);
+        QTableWidgetItem *__qtablewidgetitem22 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(4, __qtablewidgetitem22);
+        QTableWidgetItem *__qtablewidgetitem23 = new QTableWidgetItem();
+        generalRegisters->setVerticalHeaderItem(5, __qtablewidgetitem23);
+        QTableWidgetItem *__qtablewidgetitem24 = new QTableWidgetItem();
+        generalRegisters->setItem(0, 0, __qtablewidgetitem24);
+        QTableWidgetItem *__qtablewidgetitem25 = new QTableWidgetItem();
+        generalRegisters->setItem(1, 0, __qtablewidgetitem25);
+        QTableWidgetItem *__qtablewidgetitem26 = new QTableWidgetItem();
+        generalRegisters->setItem(2, 0, __qtablewidgetitem26);
+        QTableWidgetItem *__qtablewidgetitem27 = new QTableWidgetItem();
+        generalRegisters->setItem(3, 0, __qtablewidgetitem27);
+        QTableWidgetItem *__qtablewidgetitem28 = new QTableWidgetItem();
+        generalRegisters->setItem(4, 0, __qtablewidgetitem28);
+        QTableWidgetItem *__qtablewidgetitem29 = new QTableWidgetItem();
+        generalRegisters->setItem(5, 0, __qtablewidgetitem29);
+        generalRegisters->setObjectName(QString::fromUtf8("generalRegisters"));
+        generalRegisters->setGeometry(QRect(10, 30, 151, 200));
+        generalRegisters->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        generalRegisters->horizontalHeader()->setDefaultSectionSize(126);
+        generalRegisters->horizontalHeader()->setStretchLastSection(false);
+        groupBox_6 = new QGroupBox(centralWidget);
+        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setGeometry(QRect(640, 30, 225, 541));
+        videoRegisters = new QTableWidget(groupBox_6);
+        if (videoRegisters->columnCount() < 2)
+            videoRegisters->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem30 = new QTableWidgetItem();
+        videoRegisters->setHorizontalHeaderItem(0, __qtablewidgetitem30);
+        QTableWidgetItem *__qtablewidgetitem31 = new QTableWidgetItem();
+        videoRegisters->setHorizontalHeaderItem(1, __qtablewidgetitem31);
+        if (videoRegisters->rowCount() < 16)
+            videoRegisters->setRowCount(16);
+        QTableWidgetItem *__qtablewidgetitem32 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(0, __qtablewidgetitem32);
+        QTableWidgetItem *__qtablewidgetitem33 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(1, __qtablewidgetitem33);
+        QTableWidgetItem *__qtablewidgetitem34 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(2, __qtablewidgetitem34);
+        QTableWidgetItem *__qtablewidgetitem35 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(3, __qtablewidgetitem35);
+        QTableWidgetItem *__qtablewidgetitem36 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(4, __qtablewidgetitem36);
+        QTableWidgetItem *__qtablewidgetitem37 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(5, __qtablewidgetitem37);
+        QTableWidgetItem *__qtablewidgetitem38 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(6, __qtablewidgetitem38);
+        QTableWidgetItem *__qtablewidgetitem39 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(7, __qtablewidgetitem39);
+        QTableWidgetItem *__qtablewidgetitem40 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(8, __qtablewidgetitem40);
+        QTableWidgetItem *__qtablewidgetitem41 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(9, __qtablewidgetitem41);
+        QTableWidgetItem *__qtablewidgetitem42 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(10, __qtablewidgetitem42);
+        QTableWidgetItem *__qtablewidgetitem43 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(11, __qtablewidgetitem43);
+        QTableWidgetItem *__qtablewidgetitem44 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(12, __qtablewidgetitem44);
+        QTableWidgetItem *__qtablewidgetitem45 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(13, __qtablewidgetitem45);
+        QTableWidgetItem *__qtablewidgetitem46 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(14, __qtablewidgetitem46);
+        QTableWidgetItem *__qtablewidgetitem47 = new QTableWidgetItem();
+        videoRegisters->setVerticalHeaderItem(15, __qtablewidgetitem47);
+        QTableWidgetItem *__qtablewidgetitem48 = new QTableWidgetItem();
+        __qtablewidgetitem48->setTextAlignment(Qt::AlignLeading|Qt::AlignVCenter);
+        videoRegisters->setItem(0, 0, __qtablewidgetitem48);
+        QTableWidgetItem *__qtablewidgetitem49 = new QTableWidgetItem();
+        videoRegisters->setItem(0, 1, __qtablewidgetitem49);
+        QTableWidgetItem *__qtablewidgetitem50 = new QTableWidgetItem();
+        videoRegisters->setItem(1, 0, __qtablewidgetitem50);
+        QTableWidgetItem *__qtablewidgetitem51 = new QTableWidgetItem();
+        videoRegisters->setItem(1, 1, __qtablewidgetitem51);
+        QTableWidgetItem *__qtablewidgetitem52 = new QTableWidgetItem();
+        videoRegisters->setItem(2, 0, __qtablewidgetitem52);
+        QTableWidgetItem *__qtablewidgetitem53 = new QTableWidgetItem();
+        videoRegisters->setItem(2, 1, __qtablewidgetitem53);
+        QTableWidgetItem *__qtablewidgetitem54 = new QTableWidgetItem();
+        videoRegisters->setItem(3, 0, __qtablewidgetitem54);
+        QTableWidgetItem *__qtablewidgetitem55 = new QTableWidgetItem();
+        videoRegisters->setItem(3, 1, __qtablewidgetitem55);
+        QTableWidgetItem *__qtablewidgetitem56 = new QTableWidgetItem();
+        videoRegisters->setItem(4, 0, __qtablewidgetitem56);
+        QTableWidgetItem *__qtablewidgetitem57 = new QTableWidgetItem();
+        videoRegisters->setItem(4, 1, __qtablewidgetitem57);
+        QTableWidgetItem *__qtablewidgetitem58 = new QTableWidgetItem();
+        videoRegisters->setItem(5, 0, __qtablewidgetitem58);
+        QTableWidgetItem *__qtablewidgetitem59 = new QTableWidgetItem();
+        videoRegisters->setItem(5, 1, __qtablewidgetitem59);
+        QTableWidgetItem *__qtablewidgetitem60 = new QTableWidgetItem();
+        videoRegisters->setItem(6, 0, __qtablewidgetitem60);
+        QTableWidgetItem *__qtablewidgetitem61 = new QTableWidgetItem();
+        videoRegisters->setItem(6, 1, __qtablewidgetitem61);
+        QTableWidgetItem *__qtablewidgetitem62 = new QTableWidgetItem();
+        videoRegisters->setItem(7, 0, __qtablewidgetitem62);
+        QTableWidgetItem *__qtablewidgetitem63 = new QTableWidgetItem();
+        videoRegisters->setItem(7, 1, __qtablewidgetitem63);
+        QTableWidgetItem *__qtablewidgetitem64 = new QTableWidgetItem();
+        videoRegisters->setItem(8, 0, __qtablewidgetitem64);
+        QTableWidgetItem *__qtablewidgetitem65 = new QTableWidgetItem();
+        videoRegisters->setItem(8, 1, __qtablewidgetitem65);
+        QTableWidgetItem *__qtablewidgetitem66 = new QTableWidgetItem();
+        videoRegisters->setItem(9, 0, __qtablewidgetitem66);
+        QTableWidgetItem *__qtablewidgetitem67 = new QTableWidgetItem();
+        videoRegisters->setItem(9, 1, __qtablewidgetitem67);
+        QTableWidgetItem *__qtablewidgetitem68 = new QTableWidgetItem();
+        videoRegisters->setItem(10, 0, __qtablewidgetitem68);
+        QTableWidgetItem *__qtablewidgetitem69 = new QTableWidgetItem();
+        videoRegisters->setItem(10, 1, __qtablewidgetitem69);
+        QTableWidgetItem *__qtablewidgetitem70 = new QTableWidgetItem();
+        videoRegisters->setItem(11, 0, __qtablewidgetitem70);
+        QTableWidgetItem *__qtablewidgetitem71 = new QTableWidgetItem();
+        videoRegisters->setItem(11, 1, __qtablewidgetitem71);
+        QTableWidgetItem *__qtablewidgetitem72 = new QTableWidgetItem();
+        videoRegisters->setItem(12, 0, __qtablewidgetitem72);
+        QTableWidgetItem *__qtablewidgetitem73 = new QTableWidgetItem();
+        videoRegisters->setItem(12, 1, __qtablewidgetitem73);
+        QTableWidgetItem *__qtablewidgetitem74 = new QTableWidgetItem();
+        videoRegisters->setItem(13, 0, __qtablewidgetitem74);
+        QTableWidgetItem *__qtablewidgetitem75 = new QTableWidgetItem();
+        videoRegisters->setItem(13, 1, __qtablewidgetitem75);
+        QTableWidgetItem *__qtablewidgetitem76 = new QTableWidgetItem();
+        videoRegisters->setItem(14, 0, __qtablewidgetitem76);
+        QTableWidgetItem *__qtablewidgetitem77 = new QTableWidgetItem();
+        videoRegisters->setItem(14, 1, __qtablewidgetitem77);
+        QTableWidgetItem *__qtablewidgetitem78 = new QTableWidgetItem();
+        videoRegisters->setItem(15, 0, __qtablewidgetitem78);
+        QTableWidgetItem *__qtablewidgetitem79 = new QTableWidgetItem();
+        videoRegisters->setItem(15, 1, __qtablewidgetitem79);
+        videoRegisters->setObjectName(QString::fromUtf8("videoRegisters"));
+        videoRegisters->setGeometry(QRect(10, 30, 206, 500));
+        videoRegisters->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        videoRegisters->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        videoRegisters->setSelectionMode(QAbstractItemView::SingleSelection);
+        videoRegisters->setSelectionBehavior(QAbstractItemView::SelectItems);
+        videoRegisters->horizontalHeader()->setDefaultSectionSize(80);
+        videoRegisters->horizontalHeader()->setStretchLastSection(false);
+        groupBox_7 = new QGroupBox(centralWidget);
+        groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
+        groupBox_7->setGeometry(QRect(874, 30, 239, 571));
+        otherRegisters = new QTableWidget(groupBox_7);
+        if (otherRegisters->columnCount() < 2)
+            otherRegisters->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem80 = new QTableWidgetItem();
+        otherRegisters->setHorizontalHeaderItem(0, __qtablewidgetitem80);
+        QTableWidgetItem *__qtablewidgetitem81 = new QTableWidgetItem();
+        otherRegisters->setHorizontalHeaderItem(1, __qtablewidgetitem81);
+        if (otherRegisters->rowCount() < 17)
+            otherRegisters->setRowCount(17);
+        QTableWidgetItem *__qtablewidgetitem82 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(0, __qtablewidgetitem82);
+        QTableWidgetItem *__qtablewidgetitem83 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(1, __qtablewidgetitem83);
+        QTableWidgetItem *__qtablewidgetitem84 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(2, __qtablewidgetitem84);
+        QTableWidgetItem *__qtablewidgetitem85 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(3, __qtablewidgetitem85);
+        QTableWidgetItem *__qtablewidgetitem86 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(4, __qtablewidgetitem86);
+        QTableWidgetItem *__qtablewidgetitem87 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(5, __qtablewidgetitem87);
+        QTableWidgetItem *__qtablewidgetitem88 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(6, __qtablewidgetitem88);
+        QTableWidgetItem *__qtablewidgetitem89 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(7, __qtablewidgetitem89);
+        QTableWidgetItem *__qtablewidgetitem90 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(8, __qtablewidgetitem90);
+        QTableWidgetItem *__qtablewidgetitem91 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(9, __qtablewidgetitem91);
+        QTableWidgetItem *__qtablewidgetitem92 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(10, __qtablewidgetitem92);
+        QTableWidgetItem *__qtablewidgetitem93 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(11, __qtablewidgetitem93);
+        QTableWidgetItem *__qtablewidgetitem94 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(12, __qtablewidgetitem94);
+        QTableWidgetItem *__qtablewidgetitem95 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(13, __qtablewidgetitem95);
+        QTableWidgetItem *__qtablewidgetitem96 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(14, __qtablewidgetitem96);
+        QTableWidgetItem *__qtablewidgetitem97 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(15, __qtablewidgetitem97);
+        QTableWidgetItem *__qtablewidgetitem98 = new QTableWidgetItem();
+        otherRegisters->setVerticalHeaderItem(16, __qtablewidgetitem98);
+        QTableWidgetItem *__qtablewidgetitem99 = new QTableWidgetItem();
+        otherRegisters->setItem(0, 1, __qtablewidgetitem99);
+        QTableWidgetItem *__qtablewidgetitem100 = new QTableWidgetItem();
+        otherRegisters->setItem(1, 1, __qtablewidgetitem100);
+        QTableWidgetItem *__qtablewidgetitem101 = new QTableWidgetItem();
+        otherRegisters->setItem(2, 1, __qtablewidgetitem101);
+        QTableWidgetItem *__qtablewidgetitem102 = new QTableWidgetItem();
+        otherRegisters->setItem(3, 1, __qtablewidgetitem102);
+        QTableWidgetItem *__qtablewidgetitem103 = new QTableWidgetItem();
+        otherRegisters->setItem(4, 1, __qtablewidgetitem103);
+        QTableWidgetItem *__qtablewidgetitem104 = new QTableWidgetItem();
+        otherRegisters->setItem(5, 1, __qtablewidgetitem104);
+        QTableWidgetItem *__qtablewidgetitem105 = new QTableWidgetItem();
+        otherRegisters->setItem(6, 1, __qtablewidgetitem105);
+        QTableWidgetItem *__qtablewidgetitem106 = new QTableWidgetItem();
+        otherRegisters->setItem(7, 1, __qtablewidgetitem106);
+        QTableWidgetItem *__qtablewidgetitem107 = new QTableWidgetItem();
+        otherRegisters->setItem(8, 1, __qtablewidgetitem107);
+        QTableWidgetItem *__qtablewidgetitem108 = new QTableWidgetItem();
+        otherRegisters->setItem(9, 1, __qtablewidgetitem108);
+        QTableWidgetItem *__qtablewidgetitem109 = new QTableWidgetItem();
+        otherRegisters->setItem(10, 1, __qtablewidgetitem109);
+        QTableWidgetItem *__qtablewidgetitem110 = new QTableWidgetItem();
+        otherRegisters->setItem(11, 1, __qtablewidgetitem110);
+        QTableWidgetItem *__qtablewidgetitem111 = new QTableWidgetItem();
+        otherRegisters->setItem(12, 1, __qtablewidgetitem111);
+        QTableWidgetItem *__qtablewidgetitem112 = new QTableWidgetItem();
+        otherRegisters->setItem(13, 1, __qtablewidgetitem112);
+        QTableWidgetItem *__qtablewidgetitem113 = new QTableWidgetItem();
+        otherRegisters->setItem(14, 1, __qtablewidgetitem113);
+        QTableWidgetItem *__qtablewidgetitem114 = new QTableWidgetItem();
+        otherRegisters->setItem(15, 1, __qtablewidgetitem114);
+        QTableWidgetItem *__qtablewidgetitem115 = new QTableWidgetItem();
+        otherRegisters->setItem(16, 1, __qtablewidgetitem115);
+        otherRegisters->setObjectName(QString::fromUtf8("otherRegisters"));
+        otherRegisters->setGeometry(QRect(10, 30, 219, 530));
+        otherRegisters->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        otherRegisters->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        otherRegisters->setSelectionMode(QAbstractItemView::SingleSelection);
+        otherRegisters->horizontalHeader()->setDefaultSectionSize(80);
+        otherRegisters->horizontalHeader()->setStretchLastSection(false);
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setGeometry(QRect(190, 30, 431, 241));
+        disassembler = new QTableWidget(groupBox_2);
+        if (disassembler->columnCount() < 3)
+            disassembler->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem116 = new QTableWidgetItem();
+        disassembler->setHorizontalHeaderItem(0, __qtablewidgetitem116);
+        QTableWidgetItem *__qtablewidgetitem117 = new QTableWidgetItem();
+        disassembler->setHorizontalHeaderItem(1, __qtablewidgetitem117);
+        QTableWidgetItem *__qtablewidgetitem118 = new QTableWidgetItem();
+        disassembler->setHorizontalHeaderItem(2, __qtablewidgetitem118);
+        disassembler->setObjectName(QString::fromUtf8("disassembler"));
+        disassembler->setGeometry(QRect(10, 30, 411, 201));
+        disassembler->horizontalHeader()->setVisible(false);
+        disassembler->horizontalHeader()->setCascadingSectionResizes(false);
+        disassembler->horizontalHeader()->setDefaultSectionSize(120);
+        disassembler->horizontalHeader()->setHighlightSections(true);
+        disassembler->horizontalHeader()->setMinimumSectionSize(35);
+        disassembler->horizontalHeader()->setStretchLastSection(true);
+        DebugWindow->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(DebugWindow);
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 1124, 20));
+        menuMenu = new QMenu(menuBar);
+        menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
+        DebugWindow->setMenuBar(menuBar);
+        toolBar = new QToolBar(DebugWindow);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        DebugWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+
+        menuBar->addAction(menuMenu->menuAction());
+
+        retranslateUi(DebugWindow);
+
+        QMetaObject::connectSlotsByName(DebugWindow);
+    } // setupUi
+
+    void retranslateUi(QMainWindow *DebugWindow)
+    {
+        DebugWindow->setWindowTitle(QApplication::translate("DebugWindow", "GBMU Debugger", 0, QApplication::UnicodeUTF8));
+        actionStep->setText(QApplication::translate("DebugWindow", "Step", 0, QApplication::UnicodeUTF8));
+        actionExecute->setText(QApplication::translate("DebugWindow", "Execute", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("DebugWindow", "Memory", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem = memory->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QApplication::translate("DebugWindow", "x0", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem1 = memory->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QApplication::translate("DebugWindow", "x1", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem2 = memory->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QApplication::translate("DebugWindow", "x2", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem3 = memory->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QApplication::translate("DebugWindow", "x3", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem4 = memory->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QApplication::translate("DebugWindow", "x4", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem5 = memory->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QApplication::translate("DebugWindow", "x5", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem6 = memory->horizontalHeaderItem(6);
+        ___qtablewidgetitem6->setText(QApplication::translate("DebugWindow", "x6", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem7 = memory->horizontalHeaderItem(7);
+        ___qtablewidgetitem7->setText(QApplication::translate("DebugWindow", "x7", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem8 = memory->horizontalHeaderItem(8);
+        ___qtablewidgetitem8->setText(QApplication::translate("DebugWindow", "x8", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem9 = memory->horizontalHeaderItem(9);
+        ___qtablewidgetitem9->setText(QApplication::translate("DebugWindow", "x9", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem10 = memory->horizontalHeaderItem(10);
+        ___qtablewidgetitem10->setText(QApplication::translate("DebugWindow", "xA", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem11 = memory->horizontalHeaderItem(11);
+        ___qtablewidgetitem11->setText(QApplication::translate("DebugWindow", "xB", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem12 = memory->horizontalHeaderItem(12);
+        ___qtablewidgetitem12->setText(QApplication::translate("DebugWindow", "xC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem13 = memory->horizontalHeaderItem(13);
+        ___qtablewidgetitem13->setText(QApplication::translate("DebugWindow", "xD", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem14 = memory->horizontalHeaderItem(14);
+        ___qtablewidgetitem14->setText(QApplication::translate("DebugWindow", "xE", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem15 = memory->horizontalHeaderItem(15);
+        ___qtablewidgetitem15->setText(QApplication::translate("DebugWindow", "xF", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem16 = memory->verticalHeaderItem(0);
+        ___qtablewidgetitem16->setText(QApplication::translate("DebugWindow", "0000", 0, QApplication::UnicodeUTF8));
+        groupBox_5->setTitle(QApplication::translate("DebugWindow", "General registers", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem17 = generalRegisters->horizontalHeaderItem(0);
+        ___qtablewidgetitem17->setText(QApplication::translate("DebugWindow", " Value", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem18 = generalRegisters->verticalHeaderItem(0);
+        ___qtablewidgetitem18->setText(QApplication::translate("DebugWindow", "PC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem19 = generalRegisters->verticalHeaderItem(1);
+        ___qtablewidgetitem19->setText(QApplication::translate("DebugWindow", "AF", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem20 = generalRegisters->verticalHeaderItem(2);
+        ___qtablewidgetitem20->setText(QApplication::translate("DebugWindow", "BC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem21 = generalRegisters->verticalHeaderItem(3);
+        ___qtablewidgetitem21->setText(QApplication::translate("DebugWindow", "DE", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem22 = generalRegisters->verticalHeaderItem(4);
+        ___qtablewidgetitem22->setText(QApplication::translate("DebugWindow", "HL", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem23 = generalRegisters->verticalHeaderItem(5);
+        ___qtablewidgetitem23->setText(QApplication::translate("DebugWindow", "SP", 0, QApplication::UnicodeUTF8));
+
+        const bool __sortingEnabled = generalRegisters->isSortingEnabled();
+        generalRegisters->setSortingEnabled(false);
+        QTableWidgetItem *___qtablewidgetitem24 = generalRegisters->item(0, 0);
+        ___qtablewidgetitem24->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem25 = generalRegisters->item(1, 0);
+        ___qtablewidgetitem25->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem26 = generalRegisters->item(2, 0);
+        ___qtablewidgetitem26->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem27 = generalRegisters->item(3, 0);
+        ___qtablewidgetitem27->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem28 = generalRegisters->item(4, 0);
+        ___qtablewidgetitem28->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem29 = generalRegisters->item(5, 0);
+        ___qtablewidgetitem29->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        generalRegisters->setSortingEnabled(__sortingEnabled);
+
+        groupBox_6->setTitle(QApplication::translate("DebugWindow", "Video registers", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem30 = videoRegisters->horizontalHeaderItem(0);
+        ___qtablewidgetitem30->setText(QApplication::translate("DebugWindow", "Addr", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem31 = videoRegisters->horizontalHeaderItem(1);
+        ___qtablewidgetitem31->setText(QApplication::translate("DebugWindow", "Value", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem32 = videoRegisters->verticalHeaderItem(0);
+        ___qtablewidgetitem32->setText(QApplication::translate("DebugWindow", "LCDC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem33 = videoRegisters->verticalHeaderItem(1);
+        ___qtablewidgetitem33->setText(QApplication::translate("DebugWindow", "STAT", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem34 = videoRegisters->verticalHeaderItem(2);
+        ___qtablewidgetitem34->setText(QApplication::translate("DebugWindow", "SCY", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem35 = videoRegisters->verticalHeaderItem(3);
+        ___qtablewidgetitem35->setText(QApplication::translate("DebugWindow", "SCX", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem36 = videoRegisters->verticalHeaderItem(4);
+        ___qtablewidgetitem36->setText(QApplication::translate("DebugWindow", "LY", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem37 = videoRegisters->verticalHeaderItem(5);
+        ___qtablewidgetitem37->setText(QApplication::translate("DebugWindow", "LYC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem38 = videoRegisters->verticalHeaderItem(6);
+        ___qtablewidgetitem38->setText(QApplication::translate("DebugWindow", "DMA", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem39 = videoRegisters->verticalHeaderItem(7);
+        ___qtablewidgetitem39->setText(QApplication::translate("DebugWindow", "BGP", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem40 = videoRegisters->verticalHeaderItem(8);
+        ___qtablewidgetitem40->setText(QApplication::translate("DebugWindow", "OBP0", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem41 = videoRegisters->verticalHeaderItem(9);
+        ___qtablewidgetitem41->setText(QApplication::translate("DebugWindow", "OBP1", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem42 = videoRegisters->verticalHeaderItem(10);
+        ___qtablewidgetitem42->setText(QApplication::translate("DebugWindow", "WY", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem43 = videoRegisters->verticalHeaderItem(11);
+        ___qtablewidgetitem43->setText(QApplication::translate("DebugWindow", "WX", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem44 = videoRegisters->verticalHeaderItem(12);
+        ___qtablewidgetitem44->setText(QApplication::translate("DebugWindow", "BCPS", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem45 = videoRegisters->verticalHeaderItem(13);
+        ___qtablewidgetitem45->setText(QApplication::translate("DebugWindow", "BCPD", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem46 = videoRegisters->verticalHeaderItem(14);
+        ___qtablewidgetitem46->setText(QApplication::translate("DebugWindow", "OCPS", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem47 = videoRegisters->verticalHeaderItem(15);
+        ___qtablewidgetitem47->setText(QApplication::translate("DebugWindow", "OCPD", 0, QApplication::UnicodeUTF8));
+
+        const bool __sortingEnabled1 = videoRegisters->isSortingEnabled();
+        videoRegisters->setSortingEnabled(false);
+        QTableWidgetItem *___qtablewidgetitem48 = videoRegisters->item(0, 0);
+        ___qtablewidgetitem48->setText(QApplication::translate("DebugWindow", "FF40", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem49 = videoRegisters->item(0, 1);
+        ___qtablewidgetitem49->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem50 = videoRegisters->item(1, 0);
+        ___qtablewidgetitem50->setText(QApplication::translate("DebugWindow", "FF41", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem51 = videoRegisters->item(1, 1);
+        ___qtablewidgetitem51->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem52 = videoRegisters->item(2, 0);
+        ___qtablewidgetitem52->setText(QApplication::translate("DebugWindow", "FF42", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem53 = videoRegisters->item(2, 1);
+        ___qtablewidgetitem53->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem54 = videoRegisters->item(3, 0);
+        ___qtablewidgetitem54->setText(QApplication::translate("DebugWindow", "FF43", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem55 = videoRegisters->item(3, 1);
+        ___qtablewidgetitem55->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem56 = videoRegisters->item(4, 0);
+        ___qtablewidgetitem56->setText(QApplication::translate("DebugWindow", "FF44", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem57 = videoRegisters->item(4, 1);
+        ___qtablewidgetitem57->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem58 = videoRegisters->item(5, 0);
+        ___qtablewidgetitem58->setText(QApplication::translate("DebugWindow", "FF45", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem59 = videoRegisters->item(5, 1);
+        ___qtablewidgetitem59->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem60 = videoRegisters->item(6, 0);
+        ___qtablewidgetitem60->setText(QApplication::translate("DebugWindow", "FF46", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem61 = videoRegisters->item(6, 1);
+        ___qtablewidgetitem61->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem62 = videoRegisters->item(7, 0);
+        ___qtablewidgetitem62->setText(QApplication::translate("DebugWindow", "FF47", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem63 = videoRegisters->item(7, 1);
+        ___qtablewidgetitem63->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem64 = videoRegisters->item(8, 0);
+        ___qtablewidgetitem64->setText(QApplication::translate("DebugWindow", "FF48", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem65 = videoRegisters->item(8, 1);
+        ___qtablewidgetitem65->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem66 = videoRegisters->item(9, 0);
+        ___qtablewidgetitem66->setText(QApplication::translate("DebugWindow", "FF49", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem67 = videoRegisters->item(9, 1);
+        ___qtablewidgetitem67->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem68 = videoRegisters->item(10, 0);
+        ___qtablewidgetitem68->setText(QApplication::translate("DebugWindow", "FF4A", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem69 = videoRegisters->item(10, 1);
+        ___qtablewidgetitem69->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem70 = videoRegisters->item(11, 0);
+        ___qtablewidgetitem70->setText(QApplication::translate("DebugWindow", "FF4B", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem71 = videoRegisters->item(11, 1);
+        ___qtablewidgetitem71->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem72 = videoRegisters->item(12, 0);
+        ___qtablewidgetitem72->setText(QApplication::translate("DebugWindow", "FF68", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem73 = videoRegisters->item(12, 1);
+        ___qtablewidgetitem73->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem74 = videoRegisters->item(13, 0);
+        ___qtablewidgetitem74->setText(QApplication::translate("DebugWindow", "FF69", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem75 = videoRegisters->item(13, 1);
+        ___qtablewidgetitem75->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem76 = videoRegisters->item(14, 0);
+        ___qtablewidgetitem76->setText(QApplication::translate("DebugWindow", "FF6A", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem77 = videoRegisters->item(14, 1);
+        ___qtablewidgetitem77->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem78 = videoRegisters->item(15, 0);
+        ___qtablewidgetitem78->setText(QApplication::translate("DebugWindow", "FF6B", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem79 = videoRegisters->item(15, 1);
+        ___qtablewidgetitem79->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        videoRegisters->setSortingEnabled(__sortingEnabled1);
+
+        groupBox_7->setTitle(QApplication::translate("DebugWindow", "Other registers", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem80 = otherRegisters->horizontalHeaderItem(0);
+        ___qtablewidgetitem80->setText(QApplication::translate("DebugWindow", "Addr", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem81 = otherRegisters->horizontalHeaderItem(1);
+        ___qtablewidgetitem81->setText(QApplication::translate("DebugWindow", "Value", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem82 = otherRegisters->verticalHeaderItem(0);
+        ___qtablewidgetitem82->setText(QApplication::translate("DebugWindow", "P1", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem83 = otherRegisters->verticalHeaderItem(1);
+        ___qtablewidgetitem83->setText(QApplication::translate("DebugWindow", "SB", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem84 = otherRegisters->verticalHeaderItem(2);
+        ___qtablewidgetitem84->setText(QApplication::translate("DebugWindow", "SC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem85 = otherRegisters->verticalHeaderItem(3);
+        ___qtablewidgetitem85->setText(QApplication::translate("DebugWindow", "DIV", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem86 = otherRegisters->verticalHeaderItem(4);
+        ___qtablewidgetitem86->setText(QApplication::translate("DebugWindow", "TIMA", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem87 = otherRegisters->verticalHeaderItem(5);
+        ___qtablewidgetitem87->setText(QApplication::translate("DebugWindow", "TMA", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem88 = otherRegisters->verticalHeaderItem(6);
+        ___qtablewidgetitem88->setText(QApplication::translate("DebugWindow", "TAC", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem89 = otherRegisters->verticalHeaderItem(7);
+        ___qtablewidgetitem89->setText(QApplication::translate("DebugWindow", "KEY1", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem90 = otherRegisters->verticalHeaderItem(8);
+        ___qtablewidgetitem90->setText(QApplication::translate("DebugWindow", "VBK", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem91 = otherRegisters->verticalHeaderItem(9);
+        ___qtablewidgetitem91->setText(QApplication::translate("DebugWindow", "HDMA1", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem92 = otherRegisters->verticalHeaderItem(10);
+        ___qtablewidgetitem92->setText(QApplication::translate("DebugWindow", "HDMA2", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem93 = otherRegisters->verticalHeaderItem(11);
+        ___qtablewidgetitem93->setText(QApplication::translate("DebugWindow", "HDMA3", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem94 = otherRegisters->verticalHeaderItem(12);
+        ___qtablewidgetitem94->setText(QApplication::translate("DebugWindow", "HDMA4", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem95 = otherRegisters->verticalHeaderItem(13);
+        ___qtablewidgetitem95->setText(QApplication::translate("DebugWindow", "HDMA5", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem96 = otherRegisters->verticalHeaderItem(14);
+        ___qtablewidgetitem96->setText(QApplication::translate("DebugWindow", "SVSK", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem97 = otherRegisters->verticalHeaderItem(15);
+        ___qtablewidgetitem97->setText(QApplication::translate("DebugWindow", "IF", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem98 = otherRegisters->verticalHeaderItem(16);
+        ___qtablewidgetitem98->setText(QApplication::translate("DebugWindow", "IE", 0, QApplication::UnicodeUTF8));
+
+        const bool __sortingEnabled2 = otherRegisters->isSortingEnabled();
+        otherRegisters->setSortingEnabled(false);
+        QTableWidgetItem *___qtablewidgetitem99 = otherRegisters->item(0, 1);
+        ___qtablewidgetitem99->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem100 = otherRegisters->item(1, 1);
+        ___qtablewidgetitem100->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem101 = otherRegisters->item(2, 1);
+        ___qtablewidgetitem101->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem102 = otherRegisters->item(3, 1);
+        ___qtablewidgetitem102->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem103 = otherRegisters->item(4, 1);
+        ___qtablewidgetitem103->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem104 = otherRegisters->item(5, 1);
+        ___qtablewidgetitem104->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem105 = otherRegisters->item(6, 1);
+        ___qtablewidgetitem105->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem106 = otherRegisters->item(7, 1);
+        ___qtablewidgetitem106->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem107 = otherRegisters->item(8, 1);
+        ___qtablewidgetitem107->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem108 = otherRegisters->item(9, 1);
+        ___qtablewidgetitem108->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem109 = otherRegisters->item(10, 1);
+        ___qtablewidgetitem109->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem110 = otherRegisters->item(11, 1);
+        ___qtablewidgetitem110->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem111 = otherRegisters->item(12, 1);
+        ___qtablewidgetitem111->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem112 = otherRegisters->item(13, 1);
+        ___qtablewidgetitem112->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem113 = otherRegisters->item(14, 1);
+        ___qtablewidgetitem113->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem114 = otherRegisters->item(15, 1);
+        ___qtablewidgetitem114->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem115 = otherRegisters->item(16, 1);
+        ___qtablewidgetitem115->setText(QApplication::translate("DebugWindow", "NOT IMPLEMENTED", 0, QApplication::UnicodeUTF8));
+        otherRegisters->setSortingEnabled(__sortingEnabled2);
+
+        groupBox_2->setTitle(QApplication::translate("DebugWindow", "Disassembler", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem116 = disassembler->horizontalHeaderItem(0);
+        ___qtablewidgetitem116->setText(QApplication::translate("DebugWindow", "Address", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem117 = disassembler->horizontalHeaderItem(1);
+        ___qtablewidgetitem117->setText(QApplication::translate("DebugWindow", "Instruction", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem118 = disassembler->horizontalHeaderItem(2);
+        ___qtablewidgetitem118->setText(QApplication::translate("DebugWindow", "Data", 0, QApplication::UnicodeUTF8));
+        menuMenu->setTitle(QApplication::translate("DebugWindow", "Menu", 0, QApplication::UnicodeUTF8));
+        toolBar->setWindowTitle(QApplication::translate("DebugWindow", "toolBar", 0, QApplication::UnicodeUTF8));
+    } // retranslateUi
+
+};
+
+namespace Ui {
+    class DebugWindow: public Ui_DebugWindow {};
+} // namespace Ui
+
+QT_END_NAMESPACE
+
+#endif // UI_DEBUGWINDOW_H
