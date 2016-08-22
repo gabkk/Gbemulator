@@ -3,6 +3,7 @@
 Gbmu::Memory::Memory (Cpu *cpu) :
     _cpu(cpu)
 {
+	_data = new uint8_t[GB_MEM_SIZE];
 }
 
 Gbmu::Memory::Memory (Memory const & src)
@@ -12,6 +13,7 @@ Gbmu::Memory::Memory (Memory const & src)
 
 Gbmu::Memory::~Memory (void)
 {
+	delete [] _data;
 }
 
 Gbmu::Memory & Gbmu::Memory::operator=(Memory const & rhs)
