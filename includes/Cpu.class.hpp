@@ -1,10 +1,8 @@
-
 #ifndef CPU_CLASS_HPP
 # define CPU_CLASS_HPP
 
 # include <iostream>
 # include <fstream>
-
 # include "Memory.class.hpp"
 # include "Cartridge.class.hpp"
 # include "Registers.class.hpp"
@@ -13,7 +11,7 @@ namespace Gbmu{
 	class Cpu
 	{
 		private:
-            Registers *				_regs;				// Cpu registers
+			Registers *				_regs;				// Cpu registers
 			Memory*					_memory;			// GB General Memory
 			Cartridge*				_cartridge;			// Cartridge
 			bool					_BOOT;				// Booting Flag
@@ -41,7 +39,7 @@ namespace Gbmu{
 			bool const&				onHalt ( void ) const;
 			bool const&				onBoot ( void ) const;
 
-            Registers *				regs(void) const;
+			Registers *				regs(void) const;
 			Memory*					memory ( void ) const;
 			Cartridge*				cartridge ( void ) const;
 
