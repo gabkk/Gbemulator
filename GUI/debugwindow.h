@@ -1,18 +1,17 @@
 #ifndef DEBUGWINDOW_H
 #define DEBUGWINDOW_H
 
-#include <QDebug>
 #include <QMainWindow>
+#include <QDebug>
+
 #include "../includes/Gb.class.hpp"
 #include "../includes/Registers.class.hpp"
 #include "../includes/Cpu.class.hpp"
 
-#include <sstream>
-
-class QTableWidgetItem;
 namespace Ui {
 class DebugWindow;
 }
+class QTableWidgetItem;
 
 class DebugWindow : public QMainWindow
 {
@@ -72,15 +71,19 @@ public:
 	void updateUI();
 	~DebugWindow();
 
-public slots:
-	void generalRegisterChanged(QTableWidgetItem* item);
-
 private:
 	Ui::DebugWindow *_ui;
 	Gbmu::Gb *_gb;
 
 	void _updateRegisters();
 	void _updateMemory();
+	void _connectSignals();
+	void _disconnectSignals();
+
+private slots:
+	void _onGeneralRegisterChange(QTableWidgetItem *item);
+	void _onMemoryChange(QTableWidgetItem *item);
+
 };
 
 #endif // DEBUGWINDOW_H

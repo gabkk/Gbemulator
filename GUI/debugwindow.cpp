@@ -4,14 +4,13 @@
 /**
   * DebugWindow constructor
   * Load and setup UI (forbid resize, number of memory rows, connect signals/slot..)
-  */
+ */
 DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 	QMainWindow(parent),
 	_ui(new Ui::DebugWindow),
 	_gb(gb)
 {
-	_ui->setupUi(this); // load debugwindow.ui file (Forms/debugwindow.ui)
-	_ui->memory->setRowCount(GB_MEM_SIZE / 16); // each row is 16 bytes long
+	_ui->setupUi(this); // load debugwindow.ui (Forms/debugwindow.ui)
 
 	// Forbid header cells resize
 #if QT_VERSION >= 0x050000
@@ -38,11 +37,20 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 	_ui->otherRegisters->verticalHeader()->setResizeMode(QHeaderView::Fixed);
 #endif
 
+	// Initialize memory dump rows
+	_ui->memory->setRowCount(GB_MEM_SIZE / 16); // each row is 16 bytes long
+	for (int i = 0; i < _ui->memory->rowCount(); i++) {
+		_ui->memory->setVerticalHeaderItem(i, new QTableWidgetItem(QString::number(i * 16, 16).rightJustified(4, '0'))); // address on the left
+		for (int j = 0; j < 16; j++) {
+			_ui->memory->setItem(i, j, new QTableWidgetItem(QString::number(0))); // display read byte in the UI
+			_ui->memory->item(i, j)->setTextAlignment(Qt::AlignCenter);
+		}
+	}
+
 	updateUI(); // update UI once
 
-	// Test signals/slot (button that quits debugger)
-	// qApp is a global defined in <QApplication> (pointer to QApplication declared in main)
-	connect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(generalRegisterChanged(QTableWidgetItem*)));
+	// TODO: Pause game before connecting signals
+	//_connectSignals(); // we are ready to handle user input (game is paused)
 }
 
 /**
@@ -64,15 +72,14 @@ void DebugWindow::updateUI() {
 /**
   * Visually update memory table
   * Values are not modified in this function
-  */
+ */
 void DebugWindow::_updateMemory() {
 	uint8_t byte;
 
 	for (int i = 0; i < _ui->memory->rowCount(); i++) {
-		_ui->memory->setVerticalHeaderItem(i, new QTableWidgetItem(QString::number(i * 16, 16).rightJustified(4, '0'))); // address on the left
 		for (int j = 0; j < 16; j++) {
 			byte = _gb->cpu()->memory()->getByteAt(i * 16 + j); // read byte from memory
-			_ui->memory->setItem(i, j, new QTableWidgetItem(QString::number(byte, 16))); // display read byte in the UI
+			_ui->memory->item(i, j)->setData(Qt::DisplayRole, QString::number(byte, 16).rightJustified(2, '0')); // display read byte in the UI
 		}
 	}
 }
@@ -80,7 +87,7 @@ void DebugWindow::_updateMemory() {
 /**
   * Visually update all register values
   * Values are not modified in this function
-  */
+ */
 void DebugWindow::_updateRegisters() {
 	Gbmu::Registers * regs = _gb->cpu()->regs(); // get registers from attached gameboy
 
@@ -135,28 +142,68 @@ void DebugWindow::_updateRegisters() {
 /**
   * Slot function executed when generalRegister cell changed
   * Reads new value from cell and set the corresponding register (based on the DebugWindow::REG_xx enum)
-  * @param[in]  item  The changed cell
-  */
-void DebugWindow::generalRegisterChanged(QTableWidgetItem *item) {
+  * @param item The changed cell
+ */
+void DebugWindow::_onGeneralRegisterChange(QTableWidgetItem *item) {
 	std::stringstream ss; // used to get uint16_t from string (the cell contains text)
 	uint16_t x; // converted user input
 
 	// TODO: Check if x is a valid value
 	ss << std::hex << item->data(Qt::DisplayRole).toString().toStdString(); // get cell data (QVariant) to QString (toString) then to stdstring (toStdString)
 	ss >> x; // get stringstream value as uint16_t
+	qDebug() << "new register value is " << x;
+
 	switch (item->row()) { // find which register was changed based on its row index
 	case DebugWindow::REG_AF:
-		_gb->cpu()->regs()->setAF(x);
+		_gb->cpu()->regs()->setAF(x); // set AF register
 		break;
 	case DebugWindow::REG_BC:
-		_gb->cpu()->regs()->setBC(x);
+		_gb->cpu()->regs()->setBC(x); // set BC register
 		break;
 	case DebugWindow::REG_DE:
-		_gb->cpu()->regs()->setDE(x);
+		_gb->cpu()->regs()->setDE(x); // set DE register
 		break;
 	case DebugWindow::REG_HL:
-		_gb->cpu()->regs()->setHL(x);
+		_gb->cpu()->regs()->setHL(x); // set HL register
 		break;
 	};
-	update(); // update ui (maybe not needed)
+	_disconnectSignals();
+	updateUI(); // refresh screen
+	_connectSignals();
+}
+
+/**
+  * Slot function called when memory cell changed
+  * Read new value from cell and set new one at correct address
+  * @param item The changed cell
+ */
+void DebugWindow::_onMemoryChange(QTableWidgetItem *item) {
+	qDebug() << "Memory changed" << item->data(Qt::DisplayRole).toString();
+	std::stringstream ss; // used to convert user input to uint8_t
+	uint16_t addr; // addr at which we write new byte
+	uint16_t byte; // uint16_t is shrinked to uint8_t when we setByteAt, because stringstream needs a numeric type to extract correct value
+
+	ss << std::hex << item->data(Qt::DisplayRole).toString().toStdString(); // get cell data (QVariant) to QString (toString) then to stdstring (toStdString)
+	ss >> byte; // get stringstream value as uint16_t
+	addr = item->row() * 16 + item->column(); // calculate addr based on row & column
+	_gb->cpu()->memory()->setByteAt(addr, static_cast<uint8_t>(byte)); // set byte at addr
+	_disconnectSignals();
+	updateUI(); // refresh screen
+	_connectSignals();
+}
+
+/**
+  * Connect signals to slot. Signal is emitted when a cell changes, whether when the gameboy runs or when user modifies a value.
+ */
+void DebugWindow::_connectSignals() {
+	connect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
+	connect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
+}
+
+/**
+  * Disconnect signals from their slots.
+ */
+void DebugWindow::_disconnectSignals() {
+	disconnect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
+	disconnect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
 }

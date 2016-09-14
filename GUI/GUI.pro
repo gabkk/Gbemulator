@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     ../srcs/Cartridge.cpp \
     ../srcs/Cpu.cpp \
     ../srcs/Gb.cpp \
-    ../srcs/Memory.cpp
+    ../srcs/Memory.cpp \
+    mainwindow.cpp
 
 HEADERS  += \
     ../includes/Registers.class.hpp \
@@ -27,10 +28,12 @@ HEADERS  += \
     ../includes/Cpu.class.hpp \
     ../includes/Gb.class.hpp \
     ../includes/Gbmu.class.hpp \
-    ../includes/Memory.class.hpp
+    ../includes/Memory.class.hpp \
+    mainwindow.h
 
 FORMS    += \
-    debugwindow.ui
+    debugwindow.ui \
+    mainwindow.ui
 
 DISTFILES += \
     README
