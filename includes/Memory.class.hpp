@@ -124,7 +124,7 @@ namespace Gbmu{
 
 	/*NI*/	void			reset ( void );
 
-	/*NI*/	uint8_t			getByteAt ( uint16_t const& addr );
+    /*NI*/	uint8_t			getByteAt ( uint16_t const& addr ) const;
 	/*NI*/	uint16_t		getWordAt ( uint16_t const& addr );
 
 	/*NI*/	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
