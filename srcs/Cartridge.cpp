@@ -4,7 +4,7 @@ Gbmu::Cartridge::Cartridge (Gbmu::Cpu* cpu, std::string const& path , Gb::Model 
 {
 	this->_cpu = cpu;
 	this->_path = path;
-	this->load();	
+	this->load();
 	(void)model;
 }
 

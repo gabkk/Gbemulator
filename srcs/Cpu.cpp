@@ -1,14 +1,14 @@
 # include "../includes/Cpu.class.hpp"
 
 Gbmu::Cpu::Cpu (void) :
-   _regs(new Gbmu::Registers),
-   _memory(new Gbmu::Memory(this))
+	_regs(new Gbmu::Registers),
+	_memory(new Gbmu::Memory(this))
 {
 	//call the bios if success ->
 	//this->_BOOT = true;
-    //Memory			memory(this);
+	//Memory			memory(this);
 
-    //this->_memory = &memory;
+	//this->_memory = &memory;
 	this->_BOOT = true;
 
 }
@@ -35,13 +35,13 @@ void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model cons
 	Cartridge	cartridge(this, cartridgePath, model);
 
 	this->_cartridge = &cartridge;
-	
+
 	/*
 	**	i try to add the cartridge->_data to the memory
 	**	but i don't have time too :)
 	*/
 
-//	this->_memory->onWriteVBK(&this->_cartridge->data());
+	//	this->_memory->onWriteVBK(&this->_cartridge->data());
 }
 
 void Gbmu::Cpu::setHALT ( bool const& b )
@@ -55,7 +55,7 @@ void Gbmu::Cpu::setHALT ( bool const& b )
 
 void Gbmu::Cpu::stopBOOT ( void )
 {
-//		this->_BOOT = false;
+	//		this->_BOOT = false;
 }
 
 bool const& Gbmu::Cpu::onHalt ( void ) const
@@ -79,5 +79,5 @@ Gbmu::Cartridge	*Gbmu::Cpu::cartridge(void) const
 }
 
 Gbmu::Registers * Gbmu::Cpu::regs(void) const {
-    return (_regs);
+	return (_regs);
 }

@@ -37,13 +37,13 @@ void Gbmu::Gb::load (std::string const& cartridgePath)
 {
 	this->_cpu->loadCartridge(cartridgePath, Auto);
 	if (this->_cpu->onBoot() == true &&
-		this->_cpu->onHalt() == false)
+			this->_cpu->onHalt() == false)
 	{
 		this->_play = true;
 	}
 	else
 		std::cout << "Boot status: Failed" << std::endl; // Check if it's correct
-//	this->isLoaded();
+	//	this->isLoaded();
 }
 
 /* 
@@ -62,7 +62,7 @@ void Gbmu::Gb::setModel (Gbmu::Gb::Model const& model)
 void Gbmu::Gb::play (void)
 {
 	//If Interact with Gui interface button
-//	if 
+	//	if
 	this->_play = true;
 
 	//Cpu launch executeframe
@@ -107,7 +107,7 @@ std::string Gbmu::Gb::gameTitle (void) const
 }
 
 Gbmu::Cpu * Gbmu::Gb::cpu(void) const {
-    return _cpu;
+	return _cpu;
 }
 
 /*
@@ -116,7 +116,7 @@ Gbmu::Cpu * Gbmu::Gb::cpu(void) const {
 
 void Gbmu::Gb::_run (void)
 {
-//	bool value = false;//Get the Gui button play, if play so HALT false
+	//	bool value = false;//Get the Gui button play, if play so HALT false
 
 	if (this->model() == DMG)
 		this->_speed = 1;

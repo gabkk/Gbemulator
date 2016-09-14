@@ -1,31 +1,31 @@
 #include "../includes/Memory.class.hpp"
 
 Gbmu::Memory::Memory (Cpu *cpu) :
-    _cpu(cpu),
-    _data(new uint8_t[GB_MEM_SIZE])
+	_cpu(cpu),
+	_data(new uint8_t[GB_MEM_SIZE])
 {
 }
 
 Gbmu::Memory::Memory (Memory const & src)
 {
-    (void)src;
+	(void)src;
 }
 
 Gbmu::Memory::~Memory (void)
 {
-    delete [] _data;
+	delete [] _data;
 }
 
 Gbmu::Memory & Gbmu::Memory::operator=(Memory const & rhs)
 {
-    (void)rhs;
-    return *this;
+	(void)rhs;
+	return *this;
 }
 
 void Gbmu::Memory::onWriteVBK( uint8_t const& value )
 {
-    (void)value;
-    //	this->_data = value;
+	(void)value;
+	// this->_data = value;
 }
 
 /**
@@ -33,7 +33,7 @@ void Gbmu::Memory::onWriteVBK( uint8_t const& value )
  * @return The byte at addr in gb memory
  */
 uint8_t Gbmu::Memory::getByteAt(uint16_t const& addr) const {
-    return _data[addr];
+	return _data[addr];
 }
 
 /**
@@ -41,5 +41,5 @@ uint8_t Gbmu::Memory::getByteAt(uint16_t const& addr) const {
  * @param value Value we set at addr
  */
 void Gbmu::Memory::setByteAt(const uint16_t &addr, const uint8_t &value) {
-   _data[addr] = value;
+	_data[addr] = value;
 }

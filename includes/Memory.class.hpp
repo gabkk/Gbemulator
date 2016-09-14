@@ -23,7 +23,7 @@
 	--------------------------- 0xFEA0 ---+
 	Sprite Attrib Memory (OAM) 			  |--- OAM ram 40 x 4Bytes ( store 40 strite attributes )
 	--------------------------- 0xFE00 ---+
-	Echo of 8kB Internal RAM 			  |--- prohibed area 
+	Echo of 8kB Internal RAM 			  |--- prohibed area
 	--------------------------- 0xE000 ---+
 	8kB Internal RAM					  |--- 8KB Work RAM ( extended 32KB for CGB )
 	--------------------------- 0xC000 ---+
@@ -104,11 +104,11 @@
 # define WRAM_BANK_SIZE	0x1000
 
 namespace Gbmu{
-	class Memory
-	{
-		private:
-			Cpu*			_cpu; 			// get pointer to the Cpu ( the parent )
-			uint8_t*		_data; 			// allocated DMG memory map
+class Memory
+{
+private:
+	Cpu*			_cpu; 			// get pointer to the Cpu ( the parent )
+	uint8_t*		_data; 			// allocated DMG memory map
 	/*NI*/	//uint8_t*		_vram;			// allocated VRAM (max 16KB for CGB)
 	/*NI*/	//uint8_t*		_vramBankPtr;	// pointer to switch banks
 	/*NI*/	//uint8_t*		_ram;			// allocated RAM (max 32KB for CGB)
@@ -116,15 +116,15 @@ namespace Gbmu{
 	/*NI*/	//uint8_t*		_bcp;			// allocated palettes RAM for BG
 	/*NI*/	//uint8_t*		_ocp;			// allocated palettes RAM for OBJ
 
-		public:
-			Memory( Cpu* cpu );
-			virtual ~Memory( void );
-			Memory(Memory const & src);
-			Memory & operator=(Memory const & rhs);
+public:
+	Memory( Cpu* cpu );
+	virtual ~Memory( void );
+	Memory(Memory const & src);
+	Memory & operator=(Memory const & rhs);
 
 	/*NI*/	void			reset ( void );
 
-    /*NI*/	uint8_t			getByteAt ( uint16_t const& addr ) const;
+	/*NI*/	uint8_t			getByteAt ( uint16_t const& addr ) const;
 	/*NI*/	uint16_t		getWordAt ( uint16_t const& addr );
 
 	/*NI*/	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
@@ -137,7 +137,7 @@ namespace Gbmu{
 	/*NI*/	void			onWriteOCPS ( uint8_t const& value );
 	/*NI*/	void			onWriteOCPD ( uint8_t const& value );
 
-			uint8_t*		data ( void ) const;
+	uint8_t*		data ( void ) const;
 	/*NI*/	uint8_t*		vram ( void ) const;
 	/*NI*/	uint8_t*		vramBankPtr ( void ) const;
 	/*NI*/	uint8_t*		ram ( void ) const;
@@ -148,10 +148,10 @@ namespace Gbmu{
 	/*NI*/	void			saveState ( std::fstream& file );
 	/*NI*/	void			loadState ( std::fstream& file );
 
-	};
+};
 }
 #else
 namespace Gbmu {
-	class Memory;
+class Memory;
 }
 #endif // !MEMORY_CLASS_HPP

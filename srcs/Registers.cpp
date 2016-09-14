@@ -14,14 +14,14 @@
 #include <bitset>
 
 Gbmu::Registers::Registers( void ) :
-    _A(0),
-    _B(0),
-    _C(0),
-    _D(0),
-    _E(0),
-    _F(0),
-    _H(0),
-    _L(0)
+	_A(0),
+	_B(0),
+	_C(0),
+	_D(0),
+	_E(0),
+	_F(0),
+	_H(0),
+	_L(0)
 {
 }
 
@@ -70,22 +70,22 @@ void Gbmu::Registers::setH(uint8_t value){_H = value;}
 void Gbmu::Registers::setL(uint8_t value){_L = value;}
 
 void Gbmu::Registers::setAF(uint16_t value){
-    _A = (value >> 8);
-    _F = (value & 0x00FF);
+	_A = (value >> 8);
+	_F = (value & 0x00FF);
 }
 void Gbmu::Registers::setBC(uint16_t value){
-    _B = (value >> 8);
-    _C = (value & 0x00FF);
+	_B = (value >> 8);
+	_C = (value & 0x00FF);
 }
 
 void Gbmu::Registers::setDE(uint16_t value){
-    _D = (value >> 8);
-    _E = (value & 0x00FF);
+	_D = (value >> 8);
+	_E = (value & 0x00FF);
 }
 
 void Gbmu::Registers::setHL(uint16_t value){
-    _H = (value >> 8);
-    _L = (value & 0x00FF);
+	_H = (value >> 8);
+	_L = (value & 0x00FF);
 }
 
 void Gbmu::Registers::setFz(bool value){_F |= (value << 7);}
@@ -95,21 +95,21 @@ void Gbmu::Registers::setFc(bool value){_F |= (value << 4);}
 
 std::ostream &operator<<(std::ostream &out, const Gbmu::Registers &reg) {
 	return out	<< "regA  = 0x" << std::hex << unsigned(reg.getA()) << std::endl
-		<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
-		<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
-		<< "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
-		<< "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
-		<< "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
-		<< "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
-		<< "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
-		<< "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
-		<< "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
-		<< "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
-		<< "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl
-		<< "regFz = 0x" << reg.getFz() <<std::endl
-		<< "regFn = 0x" << reg.getFn() <<std::endl
-		<< "regFh = 0x" << reg.getFh() <<std::endl
-		<< "regFc = 0x" << reg.getFc() <<std::endl
-		<< "regF  = Ux" << std::bitset<8>(unsigned(reg.getF())) <<std::endl;
+				<< "regB  = 0x" << std::hex << unsigned(reg.getB()) <<std::endl
+				<< "regC  = 0x" << std::hex << unsigned(reg.getC()) <<std::endl
+				<< "regD  = 0x" << std::hex << unsigned(reg.getD()) <<std::endl
+				<< "regE  = 0x" << std::hex << unsigned(reg.getE()) <<std::endl
+				<< "regF  = 0x" << std::hex << unsigned(reg.getF()) <<std::endl
+				<< "regH  = 0x" << std::hex << unsigned(reg.getH()) <<std::endl
+				<< "regL  = 0x" << std::hex << unsigned(reg.getL()) <<std::endl
+				<< "regAF = 0x" << std::hex << unsigned(reg.getAF()) <<std::endl
+				<< "regBC = 0x" << std::hex << unsigned(reg.getBC()) <<std::endl
+				<< "regDE = 0x" << std::hex << unsigned(reg.getDE()) <<std::endl
+				<< "regHL = 0x" << std::hex << unsigned(reg.getHL()) <<std::endl
+				<< "regFz = 0x" << reg.getFz() <<std::endl
+				<< "regFn = 0x" << reg.getFn() <<std::endl
+				<< "regFh = 0x" << reg.getFh() <<std::endl
+				<< "regFc = 0x" << reg.getFc() <<std::endl
+				<< "regF  = Ux" << std::bitset<8>(unsigned(reg.getF())) <<std::endl;
 }
 
