@@ -10,11 +10,12 @@
 # include <string>
 # include <cstring>
 # include <sstream> //for osstringstream
-# include <iomanip>      // std::setfill, std::setw
+# include <iomanip> // std::setfill, std::setw
 
 namespace Gbmu
 {
 class Cpu;
+
 class Gb
 {
 public:
@@ -73,10 +74,10 @@ public:
 private:
 	void			_run ( void );
 };
+
 }
 #else
-namespace Gbmu
-{
+namespace Gbmu {
 class Gb;
 }
 #endif /*GB_CLASS_HPP*/

@@ -76,6 +76,8 @@ void DebugWindow::updateUI() {
 void DebugWindow::_updateMemory() {
 	uint8_t byte;
 
+	qDebug() << "Update memory";
+
 	for (int i = 0; i < _ui->memory->rowCount(); i++) {
 		for (int j = 0; j < 16; j++) {
 			byte = _gb->cpu()->memory()->getByteAt(i * 16 + j); // read byte from memory

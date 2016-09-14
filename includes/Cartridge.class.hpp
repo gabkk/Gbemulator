@@ -7,6 +7,9 @@
 # include "Gb.class.hpp"
 # include "Cpu.class.hpp"
 # include <string.h>
+
+# define CARTRIDGE_SIZE 0x8000
+
 /*
 
 ********************** CATRIDGE MEMORY MAP ****************************

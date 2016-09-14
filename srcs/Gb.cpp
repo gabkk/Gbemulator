@@ -1,12 +1,9 @@
 # include "../includes/Gb.class.hpp"
 # include "../includes/Cpu.class.hpp"
 
-Gbmu::Gb::Gb (void)
+Gbmu::Gb::Gb (void) :
+	_cpu(new Gbmu::Cpu)
 {
-	Gbmu::Cpu			*cpu;
-
-	cpu = new Gbmu::Cpu;
-	this->_cpu = cpu;
 	this->setModel(Auto);
 	this->_cpu->setHALT(false);
 	this->_run();
@@ -35,6 +32,7 @@ Gbmu::Gb & Gbmu::Gb::operator=(Gb const & rhs)
 
 void Gbmu::Gb::load (std::string const& cartridgePath)
 {
+	std::cout << "GB LOAD" << std::endl;
 	this->_cpu->loadCartridge(cartridgePath, Auto);
 	if (this->_cpu->onBoot() == true &&
 			this->_cpu->onHalt() == false)

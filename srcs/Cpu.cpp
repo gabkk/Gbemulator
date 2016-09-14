@@ -31,17 +31,14 @@ Gbmu::Cpu & Gbmu::Cpu::operator=(Cpu const & rhs)
 
 void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
 {
-	//Initializied it with new
-	Cartridge	cartridge(this, cartridgePath, model);
+	uint8_t *data;
 
-	this->_cartridge = &cartridge;
-
-	/*
-	**	i try to add the cartridge->_data to the memory
-	**	but i don't have time too :)
-	*/
-
-	//	this->_memory->onWriteVBK(&this->_cartridge->data());
+	std::cout << "Create cartridge";
+	_cartridge = new Cartridge(this ,cartridgePath, model);
+	data = _cartridge->data();
+	for (int addr = 0; addr < CARTRIDGE_SIZE; addr++) {
+		_memory->setByteAt(addr, data[addr]);
+	}
 }
 
 void Gbmu::Cpu::setHALT ( bool const& b )
