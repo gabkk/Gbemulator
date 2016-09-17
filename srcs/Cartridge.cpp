@@ -1,9 +1,8 @@
 #include "../includes/Cartridge.class.hpp"
 
-Gbmu::Cartridge::Cartridge (Gbmu::Cpu* cpu, std::string const& path , Gb::Model const& model)
+Gbmu::Cartridge::Cartridge (std::string const& path , Gb::Model const& model) :
+	_path(path)
 {
-	this->_cpu = cpu;
-	this->_path = path;
 	this->load();
 	(void)model;
 }
@@ -53,22 +52,13 @@ bool Gbmu::Cartridge::colorCart (void) const
 
 uint8_t const& Gbmu::Cartridge::getByteAt ( uint16_t const& addr )
 {
-	std::stringstream ss;
-	unsigned int x;
-	unsigned int out;
-
-	ss << std::hex << addr;
-	ss >> x;
-	out = static_cast<int>(x);
-
-	return (this->data()[out]);
+	return (_data[addr]);
 }
 
 void Gbmu::Cartridge::setByteAt ( uint16_t const& addr , uint8_t const& value )
 {
 	(void)addr;
 	(void)value;
-
 }
 
 struct Gbmu::Cartridge::Header const& Gbmu::Cartridge::header (void) const
@@ -154,7 +144,6 @@ void						Gbmu::Cartridge::load ( void )
 	// Read the file in to the buffer
 	fread(this->_data, fileSize, 1, file);
 	fclose(file);
-
 
 	/*
 	**	Store data from this_data to Header

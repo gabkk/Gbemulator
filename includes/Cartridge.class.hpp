@@ -4,11 +4,11 @@
 # include <iostream>
 # include <fstream>
 # include <inttypes.h> //Allow uint8_t on Debian
-# include "Gb.class.hpp"
-# include "Cpu.class.hpp"
 # include <string.h>
 
 # define CARTRIDGE_SIZE 0x8000
+
+# include "Gb.class.hpp"
 
 /*
 
@@ -75,7 +75,6 @@ public:
 	};
 
 private:
-	Cpu*						_cpu;		// get pointer to CPU ( parent )
 	std::string					_path;		// ROM file path
 	Gb::Model					_model;		// GB forced model
 	uint8_t*					_data;		// pointer on cartridge data
@@ -84,7 +83,7 @@ private:
 
 
 public:
-	Cartridge ( Cpu* cpu, std::string const& path, Gb::Model const& model );
+	Cartridge (std::string const& path, Gb::Model const& model);
 	virtual ~Cartridge ( void );
 	Cartridge(Cartridge const & src);
 	Cartridge & operator=(Cartridge const & rhs);
@@ -112,9 +111,8 @@ private:
 };
 }
 
-#else
-namespace Gbmu
-{
+# else
+namespace Gbmu {
 class Cartridge;
 }
 #endif // !CARTRIDGE_CLASS_HPP

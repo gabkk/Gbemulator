@@ -107,7 +107,6 @@ namespace Gbmu{
 class Memory
 {
 private:
-	Cpu *_cpu;
 	uint8_t*		_data; 			// allocated DMG memory map
 	/*NI*/	//uint8_t*		_vram;			// allocated VRAM (max 16KB for CGB)
 	/*NI*/	//uint8_t*		_vramBankPtr;	// pointer to switch banks
@@ -117,7 +116,7 @@ private:
 	/*NI*/	//uint8_t*		_ocp;			// allocated palettes RAM for OBJ
 
 public:
-	Memory(Cpu *cpu);
+	Memory(void);
 	virtual ~Memory( void );
 	Memory(Memory const & src);
 	Memory & operator=(Memory const & rhs);

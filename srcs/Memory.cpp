@@ -1,7 +1,6 @@
 #include "../includes/Memory.class.hpp"
 
-Gbmu::Memory::Memory (Cpu *cpu) :
-	_cpu(cpu),
+Gbmu::Memory::Memory (void) :
 	_data(new uint8_t[GB_MEM_SIZE])
 {
 }

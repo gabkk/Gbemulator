@@ -2,7 +2,7 @@
 
 Gbmu::Cpu::Cpu (void) :
 	_regs(new Gbmu::Registers),
-	_memory(new Gbmu::Memory(this))
+	_memory(new Gbmu::Memory)
 {
 	//call the bios if success ->
 	//this->_BOOT = true;
@@ -34,7 +34,7 @@ void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model cons
 	uint8_t *data;
 
 	std::cout << "Create cartridge";
-	_cartridge = new Cartridge(this ,cartridgePath, model);
+	_cartridge = new Cartridge(cartridgePath, model);
 	data = _cartridge->data();
 	for (int addr = 0; addr < CARTRIDGE_SIZE; addr++) {
 		_memory->setByteAt(addr, data[addr]);
