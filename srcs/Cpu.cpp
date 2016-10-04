@@ -1,54 +1,40 @@
 # include "../includes/Cpu.class.hpp"
 
 Gbmu::Cpu::Cpu (void) :
-	_regs(new Gbmu::Registers),
-	_memory(new Gbmu::Memory)
-{
-	//call the bios if success ->
-	//this->_BOOT = true;
-	//Memory			memory(this);
+	_regs(new Gbmu::Registers),	// initialize registers
+	_memory(new Gbmu::Memory),	// initialize memory
+	_cartridge(NULL),			// no cartridge is initially loaded
+	_pc(DEFAULT_PC),			// program entry point is at 0x150
+	_sp(DEFAULT_SP),			// stack pointer default is 0xFFFE
+	_BOOT(true),
+	_HALT(false)
+{}
 
-	//this->_memory = &memory;
-	this->_BOOT = true;
-
-}
-
-Gbmu::Cpu::Cpu (Cpu const & src)
-{
-	(void)src;
-}
-
-Gbmu::Cpu::~Cpu (void)
-{
-
-}
-
-Gbmu::Cpu & Gbmu::Cpu::operator=(Cpu const & rhs)
-{
-	(void)rhs;
-	return *this;
-}
+Gbmu::Cpu::~Cpu (void) {}
 
 void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model const& model )
 {
-	uint8_t *data;
+	uint8_t		*data;
 
-	std::cout << "Create cartridge";
-	_cartridge = new Cartridge(cartridgePath, model);
+	if (_cartridge)
+		delete _cartridge;
+	_cartridge = new Gbmu::Cartridge(cartridgePath, model);
 	data = _cartridge->data();
 	for (int addr = 0; addr < CARTRIDGE_SIZE; addr++) {
 		_memory->setByteAt(addr, data[addr]);
 	}
 }
 
-void Gbmu::Cpu::setHALT ( bool const& b )
-{
-	(void)b;
-	if (b == true)
-		this->_HALT = true;
-	else
-		this->_HALT = false;
+void Gbmu::Cpu::executeFrame(void) {
+	uint8_t		instruction;
+
+	std::cout << "executeFrame at " << std::hex << _pc << std::endl;
+	instruction = _memory->getByteAt(_pc);
+	std::cout << "next instruction = " << std::hex << static_cast<uint16_t>(instruction) << std::endl;
+	_pc += 1;
 }
+
+void Gbmu::Cpu::setHALT ( bool const& b ) { _HALT = b; }
 
 void Gbmu::Cpu::stopBOOT ( void )
 {

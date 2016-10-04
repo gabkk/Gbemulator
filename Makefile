@@ -1,33 +1,28 @@
-
 NAME = Gbmu
 
 SRCS_DIR = srcs/
 OBJ_DIR = obj/
 INC_DIR = includes/
 
-CC = clang++
+CXX = clang++
 CFLAGS = -Wall -Wextra -Werror -c -std=c++11
 IFLAGS = -I $(INC_DIR)
-
-
-SRCS_FILES =  main.cpp \
-			  Gb.cpp \
-			  Cartridge.cpp \
-			  Memory.cpp \
-			  Cpu.cpp \
-			  Registers.cpp
 
 INC_FILES = Cartridge.class.hpp \
 			Cpu.class.hpp \
 			Gb.class.hpp \
-			Gbmu.class.hpp \
 			Memory.class.hpp \
 			Registers.class.hpp
 
+SRCS_FILES =  main.cpp \
+			  Gb.cpp \
+			  Cartridge.cpp \
+			  Cpu.cpp \
+			  Memory.cpp \
+			  Registers.cpp
+
 OBJ_FILES = $(SRCS_FILES:.cpp=.o)
 
-# SRC unused
-SRC = $(addprefix $(SRCS_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 INC = $(addprefix $(INC_DIR), $(INC_FILES))
 

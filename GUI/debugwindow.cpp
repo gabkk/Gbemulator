@@ -2,8 +2,8 @@
 #include "ui_debugwindow.h"
 
 /**
-  * DebugWindow constructor
-  * Load and setup UI (forbid resize, number of memory rows, connect signals/slot..)
+ * DebugWindow constructor
+ * Load and setup UI (forbid resize, number of memory rows, connect signals/slot..)
  */
 DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 	QMainWindow(parent),
@@ -11,6 +11,9 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 	_gb(gb)
 {
 	_ui->setupUi(this); // load debugwindow.ui (Forms/debugwindow.ui)
+
+	// Disable toolbar context menu
+	_ui->toolBar->setContextMenuPolicy(Qt::NoContextMenu);
 
 	// Forbid header cells resize
 #if QT_VERSION >= 0x050000
@@ -47,6 +50,10 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 		}
 	}
 
+	connect(_ui->actionStep, SIGNAL(triggered()), this, SLOT(_onStep()));
+	// connect(_ui->inspectMemory, static_cast<void(QSpinBox::*)(const QString&)>(&QSpinBox::valueChanged), this, &DebugWindow::_onInspectMemory); // valueChanged overloaded so we have to make ugly casts
+	connect(_ui->inspectMemory, SIGNAL(editingFinished()), this, SLOT(_onInspectMemory()));
+
 	updateUI(); // update UI once
 
 	// TODO: Pause game before connecting signals
@@ -54,7 +61,7 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 }
 
 /**
-  * DebugWindow destructor
+ * DebugWindow destructor
  */
 DebugWindow::~DebugWindow()
 {
@@ -62,7 +69,7 @@ DebugWindow::~DebugWindow()
 }
 
 /**
-  * Calls all UI related update functions (memory, registers, disassembler)
+ * Calls all UI related update functions (memory, registers, disassembler)
  */
 void DebugWindow::updateUI() {
 	_updateRegisters();
@@ -70,8 +77,8 @@ void DebugWindow::updateUI() {
 }
 
 /**
-  * Visually update memory table
-  * Values are not modified in this function
+ * Visually update memory table
+ * Values are not modified in this function
  */
 void DebugWindow::_updateMemory() {
 	uint8_t byte;
@@ -87,8 +94,8 @@ void DebugWindow::_updateMemory() {
 }
 
 /**
-  * Visually update all register values
-  * Values are not modified in this function
+ * Visually update all register values
+ * Values are not modified in this function
  */
 void DebugWindow::_updateRegisters() {
 	Gbmu::Registers * regs = _gb->cpu()->regs(); // get registers from attached gameboy
@@ -142,9 +149,25 @@ void DebugWindow::_updateRegisters() {
 }
 
 /**
-  * Slot function executed when generalRegister cell changed
-  * Reads new value from cell and set the corresponding register (based on the DebugWindow::REG_xx enum)
-  * @param item The changed cell
+ * Connect signals to slot. Signal is emitted when a cell changes, whether when the gameboy runs or when user modifies a value.
+ */
+void DebugWindow::_connectSignals() {
+	connect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
+	connect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
+}
+
+/**
+ * Disconnect signals from their slots.
+ */
+void DebugWindow::_disconnectSignals() {
+	disconnect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
+	disconnect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
+}
+
+/**
+ * Slot function executed when generalRegister cell changed
+ * Reads new value from cell and set the corresponding register (based on the DebugWindow::REG_xx enum)
+ * @param item The changed cell
  */
 void DebugWindow::_onGeneralRegisterChange(QTableWidgetItem *item) {
 	std::stringstream ss; // used to get uint16_t from string (the cell contains text)
@@ -175,9 +198,9 @@ void DebugWindow::_onGeneralRegisterChange(QTableWidgetItem *item) {
 }
 
 /**
-  * Slot function called when memory cell changed
-  * Read new value from cell and set new one at correct address
-  * @param item The changed cell
+ * Slot function called when memory cell is changed
+ * Read new value from cell and set new one at correct address
+ * @param item The changed cell
  */
 void DebugWindow::_onMemoryChange(QTableWidgetItem *item) {
 	qDebug() << "Memory changed" << item->data(Qt::DisplayRole).toString();
@@ -195,17 +218,21 @@ void DebugWindow::_onMemoryChange(QTableWidgetItem *item) {
 }
 
 /**
-  * Connect signals to slot. Signal is emitted when a cell changes, whether when the gameboy runs or when user modifies a value.
+ * Slot function called when step button is clicked
  */
-void DebugWindow::_connectSignals() {
-	connect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
-	connect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
+void DebugWindow::_onStep() {
+	_gb->cpu()->executeFrame();
 }
 
 /**
-  * Disconnect signals from their slots.
+ * Slot function called when HexSpinBox editing is finished
  */
-void DebugWindow::_disconnectSignals() {
-	disconnect(_ui->generalRegisters, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onGeneralRegisterChange(QTableWidgetItem *)));
-	disconnect(_ui->memory, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(_onMemoryChange(QTableWidgetItem *)));
+void DebugWindow::_onInspectMemory() {
+	qDebug() << "On inspect memory. value = " << _ui->inspectMemory->value();
+	uint16_t row;
+	uint16_t col;
+
+	row = _ui->inspectMemory->value() / 16;
+	col = _ui->inspectMemory->value() % 16;
+	_ui->memory->setCurrentCell(row, col);
 }

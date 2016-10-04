@@ -83,6 +83,8 @@ private:
 private slots:
 	void _onGeneralRegisterChange(QTableWidgetItem *item);
 	void _onMemoryChange(QTableWidgetItem *item);
+	void _onStep();
+	void _onInspectMemory();
 
 };
 

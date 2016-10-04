@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     ../srcs/Cpu.cpp \
     ../srcs/Gb.cpp \
     ../srcs/Memory.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    hexspinbox.cpp
 
 HEADERS  += \
     ../includes/Registers.class.hpp \
@@ -29,7 +30,8 @@ HEADERS  += \
     ../includes/Gb.class.hpp \
     ../includes/Gbmu.class.hpp \
     ../includes/Memory.class.hpp \
-    mainwindow.h
+    mainwindow.h \
+    hexspinbox.h
 
 FORMS    += \
     debugwindow.ui \
@@ -37,3 +39,6 @@ FORMS    += \
 
 DISTFILES += \
     README
+
+RESOURCES += \
+    resources.qrc

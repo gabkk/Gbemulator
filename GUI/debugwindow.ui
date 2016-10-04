@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>1135</width>
-    <height>650</height>
+    <height>710</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1135</width>
-    <height>650</height>
+    <height>710</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>1135</width>
-    <height>650</height>
+    <height>710</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
       <x>10</x>
       <y>260</y>
       <width>641</width>
-      <height>371</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
@@ -42,7 +42,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>60</y>
        <width>621</width>
        <height>331</height>
       </rect>
@@ -155,6 +155,47 @@
       </property>
      </item>
     </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>20</y>
+       <width>638</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>11</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>480</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Inspect</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="HexSpinBox" name="inspectMemory">
+        <property name="prefix">
+         <string>0x</string>
+        </property>
+        <property name="maximum">
+         <number>65535</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
@@ -257,7 +298,7 @@
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>10</y>
+      <y>120</y>
       <width>225</width>
       <height>541</height>
      </rect>
@@ -551,7 +592,7 @@
     <property name="geometry">
      <rect>
       <x>890</x>
-      <y>10</y>
+      <y>90</y>
       <width>239</width>
       <height>571</height>
      </rect>
@@ -806,7 +847,12 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Address</string>
+       <string>Addr</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Opcode</string>
       </property>
      </column>
      <column>
@@ -814,26 +860,71 @@
        <string>Instruction</string>
       </property>
      </column>
-     <column>
-      <property name="text">
-       <string>Data</string>
-      </property>
-     </column>
     </widget>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionStep"/>
+   <addaction name="actionExecute"/>
+  </widget>
   <action name="actionStep">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/png/arrow-into-drive-symbol.png</normaloff>:/icons/icons/png/arrow-into-drive-symbol.png</iconset>
+   </property>
    <property name="text">
     <string>Step</string>
    </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionExecute">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/png/arrow-in-u-shape-to-turn.png</normaloff>:/icons/icons/png/arrow-in-u-shape-to-turn.png</iconset>
+   </property>
    <property name="text">
     <string>Execute</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>HexSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>hexspinbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -12,10 +12,7 @@ Gbmu::Cartridge::Cartridge (Cartridge const & src)
 	(void)src;
 }
 
-Gbmu::Cartridge::~Cartridge (void)
-{
-
-}
+Gbmu::Cartridge::~Cartridge (void) {}
 
 Gbmu::Cartridge & Gbmu::Cartridge::operator=(Cartridge const & rhs)
 {

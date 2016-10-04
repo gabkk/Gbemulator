@@ -21,8 +21,8 @@ MainWindow::~MainWindow()
 }
 
 /**
-  * Slot function called when File->Load is triggered
-  * Loads a cartridge
+ * Slot function called when File->Load is triggered
+ * Loads a cartridge
  */
 void MainWindow::_onMenuLoad()
 {
