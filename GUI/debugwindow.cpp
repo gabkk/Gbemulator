@@ -222,6 +222,7 @@ void DebugWindow::_onMemoryChange(QTableWidgetItem *item) {
  */
 void DebugWindow::_onStep() {
 	_gb->cpu()->executeFrame();
+	updateUI();
 }
 
 /**

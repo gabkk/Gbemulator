@@ -160,7 +160,7 @@
       <rect>
        <x>9</x>
        <y>20</y>
-       <width>638</width>
+       <width>621</width>
        <height>41</height>
       </rect>
      </property>
@@ -828,7 +828,7 @@
       </rect>
      </property>
      <attribute name="horizontalHeaderVisible">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
      <attribute name="horizontalHeaderCascadingSectionResizes">
       <bool>false</bool>

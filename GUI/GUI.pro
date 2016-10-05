@@ -19,6 +19,7 @@ SOURCES += main.cpp\
     ../srcs/Cpu.cpp \
     ../srcs/Gb.cpp \
     ../srcs/Memory.cpp \
+    ../srcs/Instructions.cpp \
     mainwindow.cpp \
     hexspinbox.cpp
 
@@ -30,6 +31,7 @@ HEADERS  += \
     ../includes/Gb.class.hpp \
     ../includes/Gbmu.class.hpp \
     ../includes/Memory.class.hpp \
+    ../includes/Instructions.class.hpp \
     mainwindow.h \
     hexspinbox.h
 

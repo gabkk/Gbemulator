@@ -6,6 +6,7 @@
 # include "Memory.class.hpp"
 # include "Cartridge.class.hpp"
 # include "Registers.class.hpp"
+# include "Instructions.class.hpp"
 
 # define DEFAULT_PC 0x150
 # define DEFAULT_SP 0xFFFE
@@ -17,6 +18,7 @@ namespace Gbmu{
 			Registers		*_regs;			// general registers (A, B, ..)
 			Memory			*_memory;		// gb memory
 			Cartridge		*_cartridge;	// loaded cartridge
+			Instructions	*_instructions;	// cpu instruction set
 			uint16_t		_pc;			// program counter (address of the current instruction)
 			uint16_t		_sp;			// stack pointer
 			bool			_BOOT;			// Booting Flag
@@ -45,6 +47,8 @@ namespace Gbmu{
 			Registers *				regs(void) const;
 			Memory*					memory ( void ) const;
 			Cartridge*				cartridge ( void ) const;
+			uint16_t				pc(void) const;
+			uint16_t				sp(void) const;
 
 			/*NI*/		void		saveState ( std::fstream& file );
 			/*NI*/		void		loadState ( std::fstream& file );
