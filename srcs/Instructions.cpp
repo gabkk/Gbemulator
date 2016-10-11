@@ -1570,7 +1570,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0xc2] = { 
 		"JP NZ,a16",
-		12, // 16 is jump is taken
+		12, // 16 if jump is taken
 		[](Cpu *cpu) {
 			(void)cpu;
 		}
@@ -1586,7 +1586,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0xc4] = { 
 		"CALL NZ,a16",
-		12, // 24 is action is taken
+		12, // 24 if action is taken
 		[](Cpu *cpu) {
 			(void)cpu;
 		}
