@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 17:00:37 by hhismans          #+#    #+#             */
-/*   Updated: 2016/08/20 19:47:54 by clement          ###   ########.fr       */
+/*   Updated: 2016/10/12 01:24:00 by clement          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ Gbmu::Registers::Registers( void ) :
 	_E(0),
 	_F(0),
 	_H(0),
-	_L(0)
+	_L(0),
+	_pc(DEFAULT_PC),	// program entry point is at 0x150
+	_sp(DEFAULT_SP)	// stack pointer is initialized at 0xFFFE
 {
 }
 
@@ -53,6 +55,9 @@ uint16_t Gbmu::Registers::getAF() const {return ((_A << 8) + _F);}
 uint16_t Gbmu::Registers::getBC() const {return ((_B << 8) + _C);}
 uint16_t Gbmu::Registers::getDE() const {return ((_D << 8) + _E);}
 uint16_t Gbmu::Registers::getHL() const {return ((_H << 8) + _L);}
+
+uint16_t Gbmu::Registers::getPC() const { return (_pc); }
+uint16_t Gbmu::Registers::getSP() const { return (_sp); }
 
 bool Gbmu::Registers::getFz() const {return (_F >> 7);}
 bool Gbmu::Registers::getFn() const {return ((_F >> 6) & 1);}
@@ -86,6 +91,14 @@ void Gbmu::Registers::setDE(uint16_t value){
 void Gbmu::Registers::setHL(uint16_t value){
 	_H = (value >> 8);
 	_L = (value & 0x00FF);
+}
+
+void Gbmu::Registers::setPC(uint16_t addr) {
+	_pc = addr;
+}
+
+void Gbmu::Registers::setSP(uint16_t addr) {
+	_sp = addr;
 }
 
 void Gbmu::Registers::setFz(bool value){_F |= (value << 7);}

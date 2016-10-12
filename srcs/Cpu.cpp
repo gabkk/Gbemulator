@@ -5,8 +5,6 @@ Gbmu::Cpu::Cpu (void) :
 	_memory(new Gbmu::Memory),						// initialize memory
 	_cartridge(NULL),								// no cartridge is initially loaded
 	_instructions(new Gbmu::Instructions(this)),	// cpu instruction set
-	_pc(DEFAULT_PC),								// program entry point is at 0x150
-	_sp(DEFAULT_SP),								// stack pointer default is 0xFFFE
 	_BOOT(true),									// start the gameboy
 	_HALT(false)									// don't halt
 {}
@@ -33,7 +31,6 @@ void Gbmu::Cpu::executeFrame(void) {
 	instruction = _memory->getByteAt(_pc);
 	std::cout << " instruction = " << std::hex << static_cast<uint16_t>(instruction) << std::endl;
 	_instructions->execute(instruction);
-	_pc += 1;
 }
 
 void Gbmu::Cpu::setHALT ( bool const& b ) { _HALT = b; }

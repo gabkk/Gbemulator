@@ -27,6 +27,7 @@ void Gbmu::Memory::onWriteVBK( uint8_t const& value )
 	// this->_data = value;
 }
 
+
 /**
   * Read one byte at address and return it
   * @param addr Address at which we read a byte

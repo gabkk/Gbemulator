@@ -8,9 +8,6 @@
 # include "Registers.class.hpp"
 # include "Instructions.class.hpp"
 
-# define DEFAULT_PC 0x150
-# define DEFAULT_SP 0xFFFE
-
 namespace Gbmu{
 	class Cpu
 	{
