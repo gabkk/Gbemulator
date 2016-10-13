@@ -7,6 +7,11 @@
  *
  * @param cpu - The cpu we create the instruction set for
  */
+
+/*
+ * Subfunction for repetitive work
+ */
+
 Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 	/**
 	 * We store the instructions in an array of structures containing a "lambda function" pointer.
@@ -1379,10 +1384,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			if (this->onHalt() == true)
-				this->setHALT = false;
+			if (cpu->onHalt() == true)
+				cpu->setHALT(false);
 			else
-				this->setHALT = true;
+				cpu->setHALT(true);
 		}
 	};
 
@@ -1498,7 +1503,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 			a = regs->getA();
 			b = regs->getB();
-			regs->setFz(((a + b) & 0xff == 0));
+			regs->setFz(((a + b) & 0xff) == 0);
 			regs->setFn(false);
 			regs->setFh(FLAG_H8_ADD(a, b));
 			regs->setFh(FLAG_C8_ADD(a, b));
@@ -2731,4 +2736,22 @@ void		Gbmu::Instructions::OR(uint8_t value, Cpu *cpu)
 	regs->setFn(0);
 	regs->setFh(0);
 	regs->setFc(0);
+}
+
+void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
+{
+	/**
+	 * static gs are affected as follows
+	 *
+	 * C or carry flag          1 if <0 else 0
+	 * Z or zero flag           1 if result = 0 else 0
+	 * N flag                   1
+	 * H or half carry flag     1 if borrow from bit 12 else 0
+	*/
+	static Registers	*regs = cpu->regs();
+
+	regs->setFz(regs->getA() == value ? 1 : 0); // set zero flags
+	regs->setFn(1);
+	regs->setFh(0);
+	regs->setFc(value > regs->getA() ? 1 : 0);
 }
