@@ -3,6 +3,12 @@
 
 #include "Cpu.class.hpp"
 
+#define FLAG_C8(X)			( ((X) >> 7) & 1 )
+#define FLAG_C16(X, Y)		( ((X) >> 15) & 1 )
+
+#define FLAG_H8(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x10 )
+#define FLAG_H16(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x1000 )
+
 namespace Gbmu {
 	class Instructions {
 		typedef struct		s_instruction {

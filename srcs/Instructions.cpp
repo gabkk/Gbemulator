@@ -125,11 +125,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint8_t		b;
 
 			b = regs->getB();
-			regs->setFz(b + 1 == 0);			// set zero (Z) flag if b == 0 after INC
-			regs->setFn(false);					// clear substract (N) flag
-			regs->setFh(((b + 1) & 0x10) != 0);	// set half carry (H) flag if (b & 0x10) != 0 after INC
-			regs->setFc(false);					// clear carry (C) flag
-			regs->setB(b + 1);					// inc B
+			regs->setFz(b + 1 == 0);		// set zero (Z) flag if b == 0 after INC
+			regs->setFn(false);				// clear substract (N) flag
+			regs->setFh(FLAG_H8(b, 1));		// set half carry (H) flag if carry from bit 3
+			regs->setFc(false);				// clear carry (C) flag
+			regs->setB(b + 1);				// inc B
 		}
 	};
 
@@ -142,10 +142,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint8_t		b;
 
 			b = regs->getB();
-			regs->setFz(b - 1 == 0);			// set zero (Z) flag if b == 0 after DEC
-			regs->setFn(true);					// set substract (N) flag
-			regs->setFh(((b - 1) & 0x10) != 0);	// set half carry flag (H) if (b & 0x10) != 0 after DEC
-			regs->setB(regs->getB() - 1);		// dec B
+			regs->setFz(b - 1 == 0);		// set zero (Z) flag if b == 0 after DEC
+			regs->setFn(true);				// set substract (N) flag
+			regs->setFh(FLAG_H8(b, -1));	// set half carry flag (H) if borrow from bit 4
+			regs->setB(regs->getB() - 1);	// dec B
 		}
 	};
 
@@ -173,7 +173,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(false);
 			regs->setFn(false);
 			regs->setFh(false);
-			regs->setFc((a >> 7) != 0);
+			regs->setFc(FLAG_C8(a));
 			regs->setA((a << 1) | (a >> 7));
 		}
 	};
@@ -187,9 +187,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 			uint16_t			addr;
 
-			addr = mem->getByteAt(regs->getPC()); // get higher byte of the 16 bits address
-			addr = (addr << 8) | mem->getByteAt(regs->getPC() + 1); // shift it and get lower
-			mem->setByteAt(addr, mem->getByteAt(regs->getSP()));
+			addr = mem->getByteAt(regs->getPC());					// get higher byte of the 16 bits address
+			addr = (addr << 8) | mem->getByteAt(regs->getPC() + 1);	// shift it and get lower
+			mem->setByteAt(addr, mem->getByteAt(regs->getSP()));	// write SP contents at addr
 		}
 	};
 
@@ -200,9 +200,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 
-			regs->setHL(regs->getHL() + regs->getBC()); // add BC to HL
-			regs->setFn(false); // reset N flag
-			//TODO
+			regs->setFn(false);										// reset N flag
+			regs->setFh(FLAG_H16(regs->getHL(), regs->getBC()));	// set H if carry from bit 11
+			regs->setFc(FLAG_C16(regs->getHL(), regs->getBC()));	// set C if carry from bit 15
+			regs->setHL(regs->getHL() + regs->getBC());				// add BC to HL
 		}
 	};
 
