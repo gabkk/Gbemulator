@@ -2461,8 +2461,9 @@ Gbmu::Instructions::~Instructions(void) {}
  */
 void Gbmu::Instructions::execute(uint8_t opcode) {
 	static t_instruction	*instruction;
+	static Registers		*regs = _cpu->regs();
 
 	instruction = &_instructions[opcode];
 	instruction->exec(_cpu);
-	_cpu->regs()->setPC(_cpu->regs->getPC() + instruction->length);
+	regs->setPC(regs->getPC() + instruction->size);
 }
