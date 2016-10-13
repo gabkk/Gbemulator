@@ -14,13 +14,35 @@
 
 static void and(uint8_t value)
 {
-	static Registers	regs = cpu->regs();
+	static Registers	*regs = cpu->regs();
 	regs->setA(regs->getA() & value);
 	regs->setFz(regs->getA ? 0 : 1); // set zero flags
 	regs->setFn(0);
 	regs->setFh(1);
 	regs->setFc(0);
 	// maybe to optimise by change just F.
+}
+
+static void xor(uint8_t value)
+{
+	static Registers	*regs = cpu->regs();
+	regs->setA(regs->getA() ^ value);
+	regs->setFz(regs->getA ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(0);
+	regs->setFc(0);
+	// maybe to optimise by change just F.
+}
+
+static void or(uint8_t value)
+{
+	static Registers	*regs = cpu->regs();
+
+	regs->setA(regs->getA() | value);
+	regs->setFz(regs->getA ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(0);
+	regs->setFc(0);
 }
 
 Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
@@ -1614,6 +1636,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		4,
 		[](Cpu *cpu) {
 			(void)cpu;
+			xor(regs->getB());
+		}
 		}
 	};
 
@@ -1622,7 +1646,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getC());
 		}
 	};
 
@@ -1631,7 +1655,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getD());
 		}
 	};
 
@@ -1640,7 +1664,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getE());
 		}
 	};
 
@@ -1649,7 +1673,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getH());
 		}
 	};
 
@@ -1658,7 +1682,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getL());
 		}
 	};
 
@@ -1667,7 +1691,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getHL()); // not sure too (see AND (HL))
 		}
 	};
 
@@ -1676,7 +1700,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			xor(regs->getA());
 		}
 	};
 
@@ -1685,7 +1709,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getB());
 		}
 	};
 
@@ -1694,7 +1718,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getC());
 		}
 	};
 
@@ -1703,7 +1727,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getD());
 		}
 	};
 
@@ -1712,7 +1736,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getE());
 		}
 	};
 
@@ -1721,7 +1745,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getH());
 		}
 	};
 
@@ -1730,7 +1754,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getH());
 		}
 	};
 
@@ -1739,7 +1763,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getHL());  // Same question than XOR and AND
 		}
 	};
 
@@ -1748,7 +1772,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			or(regs->getA());
 		}
 	};
 
