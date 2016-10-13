@@ -1571,6 +1571,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getC());
 		}
 	};
@@ -1580,6 +1581,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getD());
 		}
 	};
@@ -1589,6 +1591,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getE());
 		}
 	};
@@ -1598,6 +1601,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getH());
 		}
 	};
@@ -1607,6 +1611,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getL());
 		}
 	};
@@ -1616,8 +1621,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			and(regs->getHL()); // WARINIG, MUST BE WRONG, but no better idea
-								// HL int16 & A int8 ..wtf?
+			static regs			*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			and(mem->getByteAt(regs->getHL));
 		}
 	};
 
@@ -1626,6 +1632,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			and(regs->getA());
 		}
 	};
@@ -1635,7 +1642,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static regs			*regs = cpu->regs();
 			xor(regs->getB());
 		}
 		}
@@ -1646,6 +1653,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getC());
 		}
 	};
@@ -1655,6 +1663,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getD());
 		}
 	};
@@ -1664,6 +1673,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getE());
 		}
 	};
@@ -1673,6 +1683,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getH());
 		}
 	};
@@ -1682,6 +1693,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getL());
 		}
 	};
@@ -1691,7 +1703,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			xor(regs->getHL()); // not sure too (see AND (HL))
+			static regs			*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			xor(mem->getByteAt(regs->getHL));
 		}
 	};
 
@@ -1700,6 +1714,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			xor(regs->getA());
 		}
 	};
@@ -1709,6 +1724,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getB());
 		}
 	};
@@ -1718,6 +1734,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getC());
 		}
 	};
@@ -1727,6 +1744,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getD());
 		}
 	};
@@ -1736,6 +1754,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getE());
 		}
 	};
@@ -1745,6 +1764,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getH());
 		}
 	};
@@ -1754,6 +1774,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getH());
 		}
 	};
@@ -1763,7 +1784,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			or(regs->getHL());  // Same question than XOR and AND
+			static regs			*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			or(mem->getByteAt(regs->getHL));
 		}
 	};
 
@@ -1772,6 +1795,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
+			static regs			*regs = cpu->regs();
 			or(regs->getA());
 		}
 	};
