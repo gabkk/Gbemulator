@@ -7,6 +7,22 @@
  *
  * @param cpu - The cpu we create the instruction set for
  */
+
+/*
+ * Subfunction for repetitive work
+ */
+
+static void and(uint8_t value)
+{
+	static Registers	regs = cpu->regs();
+	regs->setA(regs->getA() & value);
+	regs->setFz(regs->getA ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(1);
+	regs->setFc(0);
+	// maybe to optimise by change just F.
+}
+
 Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 	/**
 	 * We store the instructions in an array of structures containing a "lambda function" pointer.
@@ -1523,7 +1539,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			and(regs->getB());
 		}
 	};
 
@@ -1532,7 +1549,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getC());
 		}
 	};
 
@@ -1541,7 +1558,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getD());
 		}
 	};
 
@@ -1550,7 +1567,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getE());
 		}
 	};
 
@@ -1559,7 +1576,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getH());
 		}
 	};
 
@@ -1568,7 +1585,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getL());
 		}
 	};
 
@@ -1577,7 +1594,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getHL()); // WARINIG, MUST BE WRONG, but no better idea
+								// HL int16 & A int8 ..wtf?
 		}
 	};
 
@@ -1586,7 +1604,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			and(regs->getA());
 		}
 	};
 
