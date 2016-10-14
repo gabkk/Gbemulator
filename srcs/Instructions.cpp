@@ -1,5 +1,4 @@
 #include "../includes/Instructions.class.hpp"
-
 /**
  * Instructions class constructor.
  * Depends on a Cpu instance, cannot be instanciated without it.
@@ -7,43 +6,6 @@
  *
  * @param cpu - The cpu we create the instruction set for
  */
-
-/*
- * Subfunction for repetitive work
- */
-
-static void and(uint8_t value)
-{
-	static Registers	*regs = cpu->regs();
-	regs->setA(regs->getA() & value);
-	regs->setFz(regs->getA ? 0 : 1); // set zero flags
-	regs->setFn(0);
-	regs->setFh(1);
-	regs->setFc(0);
-	// maybe to optimise by change just F.
-}
-
-static void xor(uint8_t value)
-{
-	static Registers	*regs = cpu->regs();
-	regs->setA(regs->getA() ^ value);
-	regs->setFz(regs->getA ? 0 : 1); // set zero flags
-	regs->setFn(0);
-	regs->setFh(0);
-	regs->setFc(0);
-	// maybe to optimise by change just F.
-}
-
-static void or(uint8_t value)
-{
-	static Registers	*regs = cpu->regs();
-
-	regs->setA(regs->getA() | value);
-	regs->setFz(regs->getA ? 0 : 1); // set zero flags
-	regs->setFn(0);
-	regs->setFh(0);
-	regs->setFc(0);
-}
 
 Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 	/**
@@ -125,10 +87,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint8_t		b;
 
 			b = regs->getB();
-			regs->setFz(b + 1 == 0);		// set zero (Z) flag if b == 0 after INC
+			regs->setFz(((b + 1) & 0xff) == 0);		// set zero (Z) flag if b == 0 after INC
 			regs->setFn(false);				// clear substract (N) flag
 			regs->setFh(FLAG_H8(b, 1));		// set half carry (H) flag if carry from bit 3
-			regs->setFc(false);				// clear carry (C) flag
 			regs->setB(b + 1);				// inc B
 		}
 	};
@@ -142,7 +103,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint8_t		b;
 
 			b = regs->getB();
-			regs->setFz(b - 1 == 0);		// set zero (Z) flag if b == 0 after DEC
+			regs->setFz(((b - 1) & 0xff) == 0);		// set zero (Z) flag if b == 0 after DEC
 			regs->setFn(true);				// set substract (N) flag
 			regs->setFh(FLAG_H8(b, -1));	// set half carry flag (H) if borrow from bit 4
 			regs->setB(regs->getB() - 1);	// dec B
@@ -173,7 +134,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(false);
 			regs->setFn(false);
 			regs->setFh(false);
-			regs->setFc(FLAG_C8(a));
+			regs->setFc(a >> 7);
 			regs->setA((a << 1) | (a >> 7));
 		}
 	};
@@ -199,11 +160,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
+			static uint16_t		hl, bc;
 
-			regs->setFn(false);										// reset N flag
-			regs->setFh(FLAG_H16(regs->getHL(), regs->getBC()));	// set H if carry from bit 11
-			regs->setFc(FLAG_C16(regs->getHL(), regs->getBC()));	// set C if carry from bit 15
-			regs->setHL(regs->getHL() + regs->getBC());				// add BC to HL
+			hl = regs->getHL();
+			bc = regs->getBC();
+			regs->setFn(false);					// reset N flag
+			regs->setFh(FLAG_H16(hl, bc));		// set H if carry from bit 11
+			regs->setFc(FLAG_C16(hl, bc));		// set C if carry from bit 15
+			regs->setHL(hl + bc);				// add BC to HL
 		}
 	};
 
@@ -212,7 +176,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(mem->getByteAt(regs->getBC()));
 		}
 	};
 
@@ -221,7 +188,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setBC(regs->getBC() - 1);
 		}
 	};
 
@@ -230,7 +199,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		c;
+
+			c = regs->getC();
+			regs->setFz(((c + 1) & 0xff) == 0);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8(c, 1));
+			regs->setC(regs->getC() + 1);
 		}
 	};
 
@@ -239,7 +215,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		c;
+
+			c = regs->getC();
+			regs->setFz(((c - 1) & 0xff) == 0);
+			regs->setFn(true);
+			regs->setFh(FLAG_H8(c, -1));
+			regs->setC(regs->getC() - 1);
 		}
 	};
 
@@ -248,7 +231,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(mem->getByteAt(regs->getPC() + 1));
 		}
 	};
 
@@ -257,7 +243,15 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		a;
+
+			a = regs->getA();
+			regs->setFz(false);
+			regs->setFn(false);
+			regs->setFh(false);
+			regs->setFc(a & 0x1);
+			regs->setA((a >> 1) | (a << 7));
 		}
 	};
 
@@ -267,6 +261,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		4,
 		[](Cpu *cpu) {
 			(void)cpu;
+			/**
+			 * TODO: implement switching to STOP mode (stop processor & screen until button press)
+			 * see: 
+			 *   - http://www.chrisantonellis.com/files/gameboy/gb-programming-manual.pdf (p.22)
+			 *   - http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf (p.19)
+			 */
 		}
 	};
 
@@ -275,7 +275,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(mem->getByteAt(regs->getPC() + 1));
+			regs->setE(mem->getByteAt(regs->getPC() + 2));
 		}
 	};
 
@@ -284,7 +288,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getDE(), regs->getA());
 		}
 	};
 
@@ -293,7 +300,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setDE(regs->getDE() + 1);
 		}
 	};
 
@@ -302,7 +311,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		d;
+
+			d = regs->getD();
+			regs->setFz(((d + 1) & 0xff) == 0);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8(d, 1));
+			regs->setD(d + 1);
 		}
 	};
 
@@ -311,16 +327,26 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		d;
+
+			d = regs->getD();
+			regs->setFz(((d - 1) & 0xff) == 0);
+			regs->setFn(true);
+			regs->setFh(FLAG_H8(d, -1));
+			regs->setD(d - 1);
 		}
 	};
 
 	_instructions[0x16] = {
-		"LD, D,d8",
+		"LD D,d8",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(mem->getByteAt(regs->getPC() + 1));
 		}
 	};
 
@@ -329,16 +355,26 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t				a;
+
+			a = regs->getA();
+			regs->setFz(false);
+			regs->setFn(false);
+			regs->setFh(false);
+			regs->setFc(a >> 7);
+			regs->setA(a << 1);
 		}
 	};
 
 	_instructions[0x18] = {
-		"JR r8",
+		"JR r8", // r8 = offset - 2 we go to (because we do pc += instruction.size, here 2)
 		2,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setPC(regs->getPC() + static_cast<uint8_t>(regs->getByteAt(regs->getPC() + 1)));
 		}
 	};
 
@@ -347,7 +383,15 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint16_t			hl, de;
+
+			hl = regs->getHL();
+			de = regs->getDE();
+			regs->setFn(false);
+			regs->setFh(FLAG_H16(hl, de));
+			regs->setFc(FLAG_C16(hl, de));
+			regs->setHL(hl + de);
 		}
 	};
 
@@ -356,7 +400,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->regs();
+
+			regs->setA(mem->getByteAt(regs->getDE()));
 		}
 	};
 
@@ -365,7 +412,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setDE(regs->getDE() - 1);
 		}
 	};
 
@@ -374,7 +423,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t				e;
+
+			e = regs->getE();
+			regs->setFz(((e + 1) & 0xff) == 0);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8(e, 1));
+			regs->setE(regs->getE() + 1);
 		}
 	};
 
@@ -383,7 +439,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t				e;
+
+			e = regs->getE();
+			regs->setFz(((e - 1) & 0xff) == 0);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8(e, -1));
+			regs->setE(regs->getE() - 1);
 		}
 	};
 
@@ -392,7 +455,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(mem->getByteAt(regs->getPC() + 1));
 		}
 	};
 
@@ -401,7 +467,15 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t				a;
+
+			a = regs->getA();
+			regs->setFz(false);
+			regs->setFn(false);
+			regs->setFh(false);
+			regs->setFc(a << 7);
+			regs->setA(a >> 1);
 		}
 	};
 
@@ -1563,7 +1637,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		4,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			and(regs->getB());
+			AND(regs->getB(), cpu);
 		}
 	};
 
@@ -1572,8 +1646,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getC());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getC(), cpu);
 		}
 	};
 
@@ -1582,8 +1656,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getD());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getD(), cpu);
 		}
 	};
 
@@ -1592,8 +1666,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getE());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getE(), cpu);
 		}
 	};
 
@@ -1602,8 +1676,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getH());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getH(), cpu);
 		}
 	};
 
@@ -1612,8 +1686,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getL());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getL(), cpu);
 		}
 	};
 
@@ -1622,9 +1696,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
+			static Registers			*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			and(mem->getByteAt(regs->getHL));
+			AND(mem->getByteAt(regs->getHL()), cpu);
 		}
 	};
 
@@ -1633,8 +1707,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			and(regs->getA());
+			static Registers			*regs = cpu->regs();
+			AND(regs->getA(), cpu);
 		}
 	};
 
@@ -1643,9 +1717,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getB());
-		}
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getB(), cpu);
 		}
 	};
 
@@ -1654,8 +1727,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getC());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getC(), cpu);
 		}
 	};
 
@@ -1664,8 +1737,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getD());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getD(), cpu);
 		}
 	};
 
@@ -1674,8 +1747,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getE());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getE(), cpu);
 		}
 	};
 
@@ -1684,8 +1757,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getH());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getH(), cpu);
 		}
 	};
 
@@ -1694,8 +1767,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getL());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getL(), cpu);
 		}
 	};
 
@@ -1704,9 +1777,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
+			static Registers			*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			xor(mem->getByteAt(regs->getHL));
+			XOR(mem->getByteAt(regs->getHL()), cpu);
 		}
 	};
 
@@ -1715,8 +1788,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			xor(regs->getA());
+			static Registers			*regs = cpu->regs();
+			XOR(regs->getA(), cpu);
 		}
 	};
 
@@ -1725,8 +1798,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getB());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getB(), cpu);
 		}
 	};
 
@@ -1735,8 +1808,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getC());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getC(), cpu);
 		}
 	};
 
@@ -1745,8 +1818,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getD());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getD(), cpu);
 		}
 	};
 
@@ -1755,8 +1828,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getE());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getE(), cpu);
 		}
 	};
 
@@ -1765,8 +1838,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getH());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getH(), cpu);
 		}
 	};
 
@@ -1775,8 +1848,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getH());
+			static Registers			*regs = cpu->regs();
+			OR(regs->getH(), cpu);
 		}
 	};
 
@@ -1785,9 +1858,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
+			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			or(mem->getByteAt(regs->getHL));
+			OR(mem->getByteAt(regs->getHL()), cpu);
 		}
 	};
 
@@ -1796,8 +1869,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static regs			*regs = cpu->regs();
-			or(regs->getA());
+			static Registers	*regs = cpu->regs();
+			OR(regs->getA(), cpu);
 		}
 	};
 
@@ -2464,7 +2537,45 @@ void Gbmu::Instructions::execute(uint8_t opcode) {
 	static t_instruction	*instruction;
 	static Registers		*regs = _cpu->regs();
 
-	instruction = &_instructions[opcode];
-	instruction->exec(_cpu);
-	regs->setPC(regs->getPC() + instruction->size);
+	instruction = &_instructions[opcode];				// get correct t_instruction structure
+	instruction->exec(_cpu);							// execute instruction
+	regs->setPC(regs->getPC() + instruction->size);		// add instruction size to current PC
+}
+
+/**
+ * Subfunction for repetitive work
+ */
+void		Gbmu::Instructions::AND(uint8_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+
+	regs->setA(regs->getA() & value);
+	regs->setFz(regs->getA() ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(1);
+	regs->setFc(0);
+	// maybe to optimise by change just F.
+}
+
+void		Gbmu::Instructions::XOR(uint8_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+
+	regs->setA(regs->getA() ^ value);
+	regs->setFz(regs->getA() ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(0);
+	regs->setFc(0);
+	// maybe to optimise by change just F.
+}
+
+void		Gbmu::Instructions::OR(uint8_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+
+	regs->setA(regs->getA() | value);
+	regs->setFz(regs->getA() ? 0 : 1); // set zero flags
+	regs->setFn(0);
+	regs->setFh(0);
+	regs->setFc(0);
 }

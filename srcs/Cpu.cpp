@@ -56,7 +56,3 @@ Gbmu::Cartridge		*Gbmu::Cpu::cartridge(void) const { return (this->_cartridge); 
 
 Gbmu::Registers		*Gbmu::Cpu::regs(void) const { return (_regs); }
 
-uint16_t			Gbmu::Cpu::pc(void) const { return (_pc); }
-
-uint16_t			Gbmu::Cpu::sp(void) const { return (_sp); }
-

@@ -3,11 +3,11 @@
 
 #include "Cpu.class.hpp"
 
-#define FLAG_C8(X)			( ((X) >> 7) & 1 )
-#define FLAG_C16(X, Y)		( ((X) >> 15) & 1 )
-
 #define FLAG_H8(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x10 )
+#define FLAG_C8(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x100 )
 #define FLAG_H16(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x1000 )
+#define FLAG_C16(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x10000 )
+
 
 namespace Gbmu {
 	class Instructions {
@@ -19,14 +19,17 @@ namespace Gbmu {
 		}					t_instruction;
 
 		public:
-			Instructions(Cpu *cpu);
-			virtual		~Instructions(void);
-			void		execute(uint8_t opcode);
+		Instructions(Cpu *cpu);
+		virtual		~Instructions(void);
+		void		execute(uint8_t opcode);
 
 		private:
-			Instructions(void);
-			Cpu				*_cpu;
-			t_instruction	_instructions[0x100];
+		Instructions(void);								// fordib instanciation without Cpu
+		Cpu				*_cpu;
+		t_instruction	_instructions[0x100];
+		static void		AND(uint8_t value, Cpu *cpu);
+		static void		XOR(uint8_t value, Cpu *cpu);
+		static void		OR(uint8_t value, Cpu *cpu);
 	};
 }
 
