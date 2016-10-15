@@ -3,11 +3,17 @@
 
 #include "Cpu.class.hpp"
 
-#define FLAG_H8(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x10 )
-#define FLAG_C8(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x100 )
-#define FLAG_H16(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x1000 )
-#define FLAG_C16(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x10000 )
+#define FLAG_H8_ADD(X, Y)		( (((X) & 0xf) + ((Y) & 0xf)) & 0x10 )
+#define FLAG_H8_SUB(X, Y)		( (((X) & 0xf) - ((Y) & 0xf)) & 0x10 )
 
+#define FLAG_C8_ADD(X, Y)		( (((X) & 0xff) + ((Y) & 0xff)) & 0x100 )
+#define FLAG_C8_SUB(X, Y)		( (((X) & 0xff) - ((Y) & 0xff)) & 0x100 )
+
+#define FLAG_H16_ADD(X, Y)		( (((X) & 0xfff) + ((Y) & 0xfff)) & 0x1000 )
+#define FLAG_H16_SUB(X, Y)		( (((X) & 0xfff) - ((Y) & 0xfff)) & 0x1000 )
+
+#define FLAG_C16_ADD(X, Y)		( (((X) & 0xffff) + ((Y) & 0xffff)) & 0x10000 )
+#define FLAG_C16_SUB(X, Y)		( (((X) & 0xffff) - ((Y) & 0xffff)) & 0x10000 )
 
 namespace Gbmu {
 	class Instructions {
