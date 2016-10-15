@@ -27,8 +27,8 @@ void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model cons
 void Gbmu::Cpu::executeFrame(void) {
 	uint8_t		instruction;
 
-	std::cout << "executeFrame at " << std::hex << _pc << std::endl;
-	instruction = _memory->getByteAt(_pc);
+	std::cout << "executeFrame at " << std::hex << _regs->getPC() << std::endl;
+	instruction = _memory->getByteAt(_regs->getPC());
 	std::cout << " instruction = " << std::hex << static_cast<uint16_t>(instruction) << std::endl;
 	_instructions->execute(instruction);
 }

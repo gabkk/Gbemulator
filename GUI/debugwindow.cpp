@@ -51,7 +51,7 @@ DebugWindow::DebugWindow(QWidget *parent, Gbmu::Gb *gb) :
 	}
 
 	connect(_ui->actionStep, SIGNAL(triggered()), this, SLOT(_onStep()));
-	// connect(_ui->inspectMemory, static_cast<void(QSpinBox::*)(const QString&)>(&QSpinBox::valueChanged), this, &DebugWindow::_onInspectMemory); // valueChanged overloaded so we have to make ugly casts
+    // connect(_ui->inspectMemory, static_cast<void(QSpinBox::*)(const QString&)>(&QSpinBox::valueChanged), this, &DebugWindow::_onInspectMemory); // valueChanged overloaded so we have to make ugly casts
 	connect(_ui->inspectMemory, SIGNAL(editingFinished()), this, SLOT(_onInspectMemory()));
 
 	updateUI(); // update UI once
@@ -83,7 +83,7 @@ void DebugWindow::updateUI() {
 void DebugWindow::_updateMemory() {
 	uint8_t byte;
 
-	qDebug() << "Update memory";
+    qDebug() << "Update memory";
 
 	for (int i = 0; i < _ui->memory->rowCount(); i++) {
 		for (int j = 0; j < 16; j++) {
@@ -103,7 +103,7 @@ void DebugWindow::_updateRegisters() {
 	// TODO: Replace every 0xDEAD with the correct _reg->getXX()
 
 	// Update general registers
-	//_ui->generalRegisters->item(DebugWindow::REG_PC, 0)->setData(Qt::DisplayRole, "0x" + QString::number(regs->getPC(), 16).toUpper());
+    _ui->generalRegisters->item(DebugWindow::REG_PC, 0)->setData(Qt::DisplayRole, "0x" + QString::number(regs->getPC(), 16).toUpper());
 	_ui->generalRegisters->item(DebugWindow::REG_AF, 0)->setData(Qt::DisplayRole, "0x" + QString::number(regs->getAF(), 16).toUpper());
 	_ui->generalRegisters->item(DebugWindow::REG_BC, 0)->setData(Qt::DisplayRole, "0x" + QString::number(regs->getBC(), 16).toUpper());
 	_ui->generalRegisters->item(DebugWindow::REG_DE, 0)->setData(Qt::DisplayRole, "0x" + QString::number(regs->getDE(), 16).toUpper());

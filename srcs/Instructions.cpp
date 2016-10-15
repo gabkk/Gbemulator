@@ -490,7 +490,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8, // 12 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			if (!regs->getFz())
+				regs->setPC(regs->getPC() + static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
 		}
 	};
 
@@ -2747,7 +2751,7 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	 * Z or zero flag           1 if result = 0 else 0
 	 * N flag                   1
 	 * H or half carry flag     1 if borrow from bit 12 else 0
-	*/
+	 */
 	static Registers	*regs = cpu->regs();
 
 	regs->setFz(regs->getA() == value ? 1 : 0); // set zero flags
