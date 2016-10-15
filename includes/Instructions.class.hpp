@@ -30,7 +30,7 @@ namespace Gbmu {
 		void		execute(uint8_t opcode);
 
 		private:
-		Instructions(void);								// fordib instanciation without Cpu
+		Instructions(void);						// fordib instanciation without Cpu
 		Cpu				*_cpu;
 		t_instruction	_instructions[0x100];
 		static void		AND(uint8_t value, Cpu *cpu);
