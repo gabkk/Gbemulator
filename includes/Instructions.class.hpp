@@ -45,4 +45,4 @@ namespace Gbmu {
 	class Instructions;
 }
 
-#endif /* end of include guard: INSTRUCTIONS_CLASS_HPP */
+#endif 
