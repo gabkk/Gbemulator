@@ -1178,81 +1178,121 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0x76] = { 
 		"HALT",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			if (this->onHalt() == true)
+				this->setHALT = false;
+			else
+				this->setHALT = true;
 		}
 	};
 
 	_instructions[0x77] = { 
 		"LD (HL),A",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getA());
 		}
 	};
 
 	_instructions[0x78] = { 
 		"LD A,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getB());
 		}
 	};
 
 	_instructions[0x79] = { 
 		"LD A,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getC());
 		}
 	};
 
 	_instructions[0x7a] = { 
 		"LD A,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getD());
 		}
 	};
 
 	_instructions[0x7b] = { 
 		"LD A,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getE());
 		}
 	};
 
 	_instructions[0x7c] = { 
 		"LD A,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getH());
 		}
 	};
 
 	_instructions[0x7d] = { 
 		"LD A,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getL());
 		}
 	};
 
 	_instructions[0x7e] = { 
 		"LD A,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x7f] = { 
 		"LD A,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(regs->getA());
 		}
 	};
 
