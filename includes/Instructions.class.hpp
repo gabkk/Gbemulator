@@ -7,7 +7,8 @@ namespace Gbmu {
 	class Instructions {
 		typedef struct		s_instruction {
 			std::string		name;
-			uint8_t			cycles;
+			int				size;
+			int				cycles;
 			void			(*exec)(Cpu *cpu);
 		}					t_instruction;
 
@@ -29,4 +30,4 @@ namespace Gbmu {
 	class Instructions;
 }
 
-#endif /* end of include guard: INSTRUCTIONS_CLASS_HPP */
+#endif 

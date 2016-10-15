@@ -530,433 +530,649 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0x40] = { 
 		"LD B,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getB());
 		}
 	};
 
 	_instructions[0x41] = { 
 		"LD B,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getC());
 		}
 	};
 
 	_instructions[0x42] = { 
 		"LD B,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getD());
 		}
 	};
 
 	_instructions[0x43] = { 
 		"LD B,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getE());
 		}
 	};
 
 	_instructions[0x44] = { 
 		"LD B,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getH());
 		}
 	};
 
 	_instructions[0x45] = { 
 		"LD B,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getL());
 		}
 	};
 
 	_instructions[0x46] = { 
 		"LD B,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x47] = { 
 		"LD B,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(regs->getA());
 		}
 	};
 
 	_instructions[0x48] = { 
 		"LD C,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getB());
 		}
 	};
 
 	_instructions[0x49] = { 
 		"LD C,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getC());
 		}
 	};
 
 	_instructions[0x4a] = { 
 		"LD C,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getD());
 		}
 	};
 
 	_instructions[0x4b] = { 
 		"LD C,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getE());
 		}
 	};
 
 	_instructions[0x4c] = { 
 		"LD C,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getH());
 		}
 	};
 
 	_instructions[0x4d] = { 
 		"LD C,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getL());
 		}
 	};
 
 	_instructions[0x4e] = { 
 		"LD C,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x4f] = { 
 		"LD C,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setC(regs->getA());
 		}
 	};
 
 	_instructions[0x50] = { 
 		"LD D,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getB());
 		}
 	};
 
 	_instructions[0x51] = { 
 		"LD D,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getC());
 		}
 	};
 
 	_instructions[0x52] = { 
 		"LD D,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getD());
 		}
 	};
 
 	_instructions[0x53] = { 
 		"LD D,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getE());
 		}
 	};
 
 	_instructions[0x54] = { 
 		"LD D,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getH());
 		}
 	};
 
 	_instructions[0x55] = { 
 		"LD D,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getL());
 		}
 	};
 
 	_instructions[0x56] = { 
 		"LD D,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x57] = { 
 		"LD D,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(regs->getA());
 		}
 	};
 
 	_instructions[0x58] = { 
 		"LD E,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getB());
 		}
 	};
 
 	_instructions[0x59] = { 
 		"LD E,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getC());
 		}
 	};
 
 	_instructions[0x5a] = { 
 		"LD E,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getD());
 		}
 	};
 
 	_instructions[0x5b] = { 
 		"LD E,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getE());
 		}
 	};
 
 	_instructions[0x5c] = { 
 		"LD E,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getH());
 		}
 	};
 
 	_instructions[0x5d] = { 
 		"LD E,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getL());
 		}
 	};
 
 	_instructions[0x5e] = { 
 		"LD E,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x5f] = { 
-		"LE E,A",
+		"LD E,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setE(regs->getA());
 		}
 	};
 
 	_instructions[0x60] = { 
 		"LD H,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getB());
 		}
 	};
 
 	_instructions[0x61] = { 
 		"LD H,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getC());
 		}
 	};
 
 	_instructions[0x62] = { 
 		"LD H,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getD());
 		}
 	};
 
 	_instructions[0x63] = { 
 		"LD H,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getE());
 		}
 	};
 
 	_instructions[0x64] = { 
 		"LD H,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getH());
 		}
 	};
 
 	_instructions[0x65] = { 
 		"LD H,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getL());
 		}
 	};
 
 	_instructions[0x66] = { 
 		"LD H,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(mem->getByteAt(regs->getHL()));
 		}
 	};
 
 	_instructions[0x67] = { 
 		"LD H,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(regs->getA());
 		}
 	};
 
 	_instructions[0x68] = { 
 		"LD L,B",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getB());
 		}
 	};
 
 	_instructions[0x69] = { 
 		"LD L,C",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getC());
 		}
 	};
 
 	_instructions[0x6a] = { 
 		"LD L,D",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getD());
 		}
 	};
 
 	_instructions[0x6b] = { 
 		"LD L,E",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getE());
 		}
 	};
 
 	_instructions[0x6c] = { 
-		"LD L,E",
+		"LD L,H",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getH());
 		}
 	};
 
 	_instructions[0x6d] = { 
 		"LD L,L",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getL());
 		}
 	};
 
 	_instructions[0x6e] = { 
 		"LD L,(HL)",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(mem->getByteAt(regs->getE()));
 		}
 	};
 
 	_instructions[0x6f] = { 
 		"LD L,A",
+		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setL(regs->getA());
 		}
 	};
 
 	_instructions[0x70] = { 
 		"LD (HL),B",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getB());
 		}
 	};
 
 	_instructions[0x71] = { 
 		"LD (HL),C",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getC());
 		}
 	};
 
 	_instructions[0x72] = { 
 		"LD (HL),D",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getD());
 		}
 	};
 
 	_instructions[0x73] = { 
 		"LD (HL),E",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getB());
 		}
 	};
 
 	_instructions[0x74] = { 
 		"LD (HL),H",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getH());
 		}
 	};
 
 	_instructions[0x75] = { 
 		"LD (HL),L",
+		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getHL(), regs->getL());
 		}
 	};
 
@@ -2076,5 +2292,10 @@ Gbmu::Instructions::~Instructions(void) {}
  * @param opcode - The instruction we want to execute
  */
 void Gbmu::Instructions::execute(uint8_t opcode) {
-	_instructions[opcode].exec(_cpu);
+	static t_instruction	*instruction;
+	static Registers		*regs = _cpu->regs();
+
+	instruction = &_instructions[opcode];
+	instruction->exec(_cpu);
+	regs->setPC(regs->getPC() + instruction->size);
 }
