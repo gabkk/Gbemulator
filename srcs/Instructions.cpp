@@ -1165,7 +1165,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 	};
 
 	_instructions[0x6c] = {
-		"LD L,E",
+		"LD L,H",
 		1,
 		4,
 		[](Cpu *cpu) {
