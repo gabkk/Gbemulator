@@ -1519,7 +1519,16 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static uint8_t		a;
+			static uint8_t		c;
+
+			a = regs->getA();
+			c = regs->getC();
+			regs->setFz(((a + c) & 0xff) == 0);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8_ADD(a, c));
+			regs->setFh(FLAG_C8_ADD(a, c));
 		}
 	};
 
