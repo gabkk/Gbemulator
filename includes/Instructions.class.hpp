@@ -37,6 +37,8 @@ namespace Gbmu {
 		static void		XOR(uint8_t value, Cpu *cpu);
 		static void		OR(uint8_t value, Cpu *cpu);
 		static void		CP(uint8_t value, Cpu *cpu);
+		static bool		RET(bool flag, Cpu *cpu);
+		static bool		JP(bool flag, Cpu *cpu);
 	};
 }
 

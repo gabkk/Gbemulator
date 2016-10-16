@@ -2123,9 +2123,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			if (RET(!regs->getFz())){
+			if (RET(!regs->getFz(), cpu)){
 				//cycle += 12
 			}
+		}
 	};
 
 	_instructions[0xc1] = {
@@ -2139,10 +2140,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0xc2] = {
 		"JP NZ,a16",
-		1,
+		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(!regs->getFz(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2151,7 +2155,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			JP(true, cpu);
 		}
 	};
 
@@ -2197,7 +2201,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			if (RET(regs->getFz())){
+			if (RET(regs->getFz(), cpu)){
 				//cycle += 12
 			}
 		}
@@ -2208,7 +2212,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			RET(true);
+			RET(true, cpu);
 		}
 	};
 
@@ -2217,7 +2221,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(regs->getFz(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2272,7 +2279,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			if (RET(!regs->getFc())){
+			if (RET(!regs->getFc(), cpu)){
 				//cycle += 12
 			}
 		}
@@ -2292,7 +2299,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 is jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(!regs->getFc(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2347,7 +2357,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			if (RET(regs->getFc())){
+			if (RET(regs->getFc(), cpu)){
 				//cycle += 12
 			}
 		}
@@ -2367,7 +2377,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(regs->getFc(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2502,7 +2515,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			regs->setPC(regs->getHL());
+			regs->setPC(regs->getPC() - 1);
 		}
 	};
 
@@ -2780,14 +2795,27 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	regs->setFc(value > regs->getA() ? 1 : 0);
 }
 
-bool		Gbmu::Instructions::RET(bool flag)
+bool		Gbmu::Instructions::RET(bool flag, Cpu *cpu)
 {
 	static Registers	*regs = cpu->regs();
 	static Memory		*mem = cpu->memory();
 
 	if (flag){
-		regs->setPC( (mem->getByteAt(regs->getSP())) + mem->getByteAt(regs->getSP() + 1) << 8);
+		regs->setPC( (mem->getByteAt(regs->getSP())) + (mem->getByteAt(regs->getSP() + 1) << 8));
 		regs->incSP(2);
+		return (true);
+	}
+	return (false);
+}
+
+bool		Gbmu::Instructions::JP(bool flag, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	if (flag){
+		regs->setPC((mem->getByteAt(regs->getPC())) + (mem->getByteAt(regs->getPC() + 1) << 8));
+		regs->setPC(regs->getPC() - 3);
 		return (true);
 	}
 	return (false);
