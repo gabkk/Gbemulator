@@ -255,7 +255,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(false);
 			regs->setFn(false);
 			regs->setFh(false);
-			regs->setFc(a & 0x1);
+			regs->setFc(a & 1);
 			regs->setA((a >> 1) | (a << 7));
 		}
 	};
@@ -1533,7 +1533,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setL(mem->getByteAt(regs->getE()));
+			regs->setL(mem->getByteAt(regs->getHL()));
 		}
 	};
 
@@ -1592,7 +1592,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			mem->setByteAt(regs->getHL(), regs->getB());
+			mem->setByteAt(regs->getHL(), regs->getE());
 		}
 	};
 
@@ -2922,583 +2922,751 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 	};
 
 	_cbInstructions[0x0] = {
-		"",
+		"RLC B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_RLC(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1] = {
-		"",
+		"RLC C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_RLC(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2] = {
-		"",
+		"RLC D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_RLC(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3] = {
-		"",
+		"RLC E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_RLC(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x4] = {
-		"",
+		"RLC H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_RLC(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x5] = {
-		"",
+		"RLC L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_RLC(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x6] = {
-		"",
+		"RLC (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_RLC(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x7] = {
-		"",
+		"RLC A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_RLC(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x8] = {
-		"",
+		"RRC B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_RRC(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x9] = {
-		"",
+		"RRC C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_RRC(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0xa] = {
-		"",
+		"RRC D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_RRC(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0xb] = {
-		"",
+		"RRC E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_RRC(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0xc] = {
-		"",
+		"RRC H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_RRC(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0xd] = {
-		"",
+		"RRC L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_RRC(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0xe] = {
-		"",
+		"RRC (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_RRC(value, cpu));
 		}
 	};
 
 	_cbInstructions[0xf] = {
-		"",
+		"RRC A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_RRC(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x10] = {
-		"",
+		"RL B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_RL(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x11] = {
-		"",
+		"RL C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_RL(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x12] = {
-		"",
+		"RL D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_RL(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x13] = {
-		"",
+		"RL E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_RL(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x14] = {
-		"",
+		"RL H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_RL(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x15] = {
-		"",
+		"RL L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_RL(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x16] = {
-		"",
+		"RL (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_RL(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x17] = {
-		"",
+		"RL A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_RL(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x18] = {
-		"",
+		"RR B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_RR(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x19] = {
-		"",
+		"RR C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_RR(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1a] = {
-		"",
+		"RR D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_RR(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1b] = {
-		"",
+		"RR E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_RR(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1c] = {
-		"",
+		"RR H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_RR(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1d] = {
-		"",
+		"RR L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_RR(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x1e] = {
-		"",
+		"RR (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_RR(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x1f] = {
-		"",
+		"RR A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_RR(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x20] = {
-		"",
+		"SLA B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_SLA(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x21] = {
-		"",
+		"SLA C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_SLA(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x22] = {
-		"",
+		"SLA D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_SLA(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x23] = {
-		"",
+		"SLA E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_SLA(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x24] = {
-		"",
+		"SLA H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_SLA(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x25] = {
-		"",
+		"SLA L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_SLA(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x26] = {
-		"",
+		"SLA (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_SLA(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x27] = {
-		"",
+		"SLA A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_SLA(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x28] = {
-		"",
+		"SRA B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_SRA(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x29] = {
-		"",
+		"SRA C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_SRA(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2a] = {
-		"",
+		"SRA D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_SRA(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2b] = {
-		"",
+		"SRA E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_SRA(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2c] = {
-		"",
+		"SRA H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_SRA(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2d] = {
-		"",
+		"SRA L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_SRA(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x2e] = {
-		"",
+		"SRA (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_SRA(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x2f] = {
-		"",
+		"SRA A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_SRA(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x30] = {
-		"",
+		"SWAP B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_SWAP(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x31] = {
-		"",
+		"SWAP C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_SWAP(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x32] = {
-		"",
+		"SWAP D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_SWAP(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x33] = {
-		"",
+		"SWAP E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_SWAP(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x34] = {
-		"",
+		"SWAP H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_SWAP(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x35] = {
-		"",
+		"SWAP L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_SWAP(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x36] = {
-		"",
+		"SWAP (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_SWAP(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x37] = {
-		"",
+		"SWAP A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_SWAP(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x38] = {
-		"",
+		"SRL B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setB(CB_SRL(regs->getB(), cpu));
 		}
 	};
 
 	_cbInstructions[0x39] = {
-		"",
+		"SRL C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setC(CB_SRL(regs->getC(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3a] = {
-		"",
+		"SRL D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setD(CB_SRL(regs->getD(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3b] = {
-		"",
+		"SRL E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setE(CB_SRL(regs->getE(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3c] = {
-		"",
+		"SRL H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setH(CB_SRL(regs->getH(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3d] = {
-		"",
+		"SRL L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setL(CB_SRL(regs->getL(), cpu));
 		}
 	};
 
 	_cbInstructions[0x3e] = {
-		"",
+		"SRL (HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			mem->setByteAt(hl, CB_SRL(value, cpu));
 		}
 	};
 
 	_cbInstructions[0x3f] = {
-		"",
+		"SRL A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setA(CB_SRL(regs->getA(), cpu));
 		}
 	};
 
 	_cbInstructions[0x40] = {
-		"",
+		"BIT 0,B",
 		2,
 		8,
 		[](Cpu *cpu) {
@@ -5300,4 +5468,91 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	regs->setFn(1);
 	regs->setFh(0);
 	regs->setFc(value > regs->getA() ? 1 : 0);
+}
+
+uint8_t		Gbmu::Instructions::CB_RLC(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+
+	regs->setFz((((value << 1) | (value >> 7)) & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value >> 7);
+	return ((value << 1) | (value >> 7));
+}
+
+uint8_t		Gbmu::Instructions::CB_RRC(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+
+	regs->setFz((((value >> 1) | (value << 7)) & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value & 1);
+	return ((value >> 1) | (value << 7));
+}
+
+uint8_t		Gbmu::Instructions::CB_RL(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+	static uint8_t		retval;
+
+	retval = (value << 1) | regs->getFc();
+	regs->setFz((retval & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value >> 7);
+	return (retval);
+}
+
+uint8_t		Gbmu::Instructions::CB_RR(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+	static uint8_t		retval;
+
+	retval = (value >> 1) | regs->getFc();
+	regs->setFz((retval & 0xff) == 0);
+	regs->setFh(false);
+	regs->setFc(value << 7);
+	return (retval);
+}
+
+uint8_t		Gbmu::Instructions::CB_SLA(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+
+	regs->setFz(((value << 1) & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value >> 7);
+	return (value << 1);
+}
+
+uint8_t		Gbmu::Instructions::CB_SRA(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+	static uint8_t		retval;
+
+	retval = (value >> 1) | (value & (1 << 7));
+	regs->setFz((retval & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value >> 1);
+	return ((value >> 1) | (value & (1 << 7)));
+}
+
+uint8_t		Gbmu::Instructions::CB_SWAP(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+	static uint8_t		retval;
+
+	retval = ((value & 0x0f) << 4) | ((value & 0xf0) >> 4);
+	regs->setFz((retval & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(false);
+	return (retval);
+}
+
+uint8_t		Gbmu::Instructions::CB_SRL(uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+
+	regs->setFz(((value >> 1) & 0xff) == 0);
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFc(value << 7);
+	return (value >> 1);
 }

@@ -38,6 +38,15 @@ namespace Gbmu {
 		static void		XOR(uint8_t value, Cpu *cpu);
 		static void		OR(uint8_t value, Cpu *cpu);
 		static void		CP(uint8_t value, Cpu *cpu);
+
+		static uint8_t	CB_RLC(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_RRC(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_RL(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_RR(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_SLA(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_SRA(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_SWAP(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_SRL(uint8_t value, Cpu *cpu);
 	};
 }
 
