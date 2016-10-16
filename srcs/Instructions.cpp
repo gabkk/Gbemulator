@@ -2814,7 +2814,7 @@ bool		Gbmu::Instructions::JP(bool flag, Cpu *cpu)
 	static Memory		*mem = cpu->memory();
 
 	if (flag){
-		regs->setPC((mem->getByteAt(regs->getPC())) + (mem->getByteAt(regs->getPC() + 1) << 8));
+		regs->setPC((mem->getByteAt(regs->getPC() + 1)) + (mem->getByteAt(regs->getPC() + 2) << 8));
 		regs->setPC(regs->getPC() - 3);
 		return (true);
 	}
