@@ -33,6 +33,7 @@ namespace Gbmu {
 		Instructions(void);						// fordib instanciation without Cpu
 		Cpu				*_cpu;
 		t_instruction	_instructions[0x100];
+		t_instruction	_cbInstructions[0x100];
 		static void		ADDA(uint8_t value, Cpu *cpu);
 		static void		ADCA(uint8_t value, Cpu *cpu);
 		static void		SUBA(uint8_t value, Cpu *cpu);
