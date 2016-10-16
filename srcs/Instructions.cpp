@@ -3670,574 +3670,739 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x41] = {
-		"",
+		"BIT 0,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x42] = {
-		"",
+		"BIT 0,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x43] = {
-		"",
+		"BIT 0,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x44] = {
-		"",
+		"BIT 0,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x45] = {
-		"",
+		"BIT 0,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x46] = {
-		"",
+		"BIT 0,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			CB_BIT(0, mem->getByteAt(regs->getHL()), cpu)
 		}
 	};
 
 	_cbInstructions[0x47] = {
-		"",
+		"BIT 0,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(0, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x48] = {
-		"",
+		"BIT 1,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x49] = {
-		"",
+		"BIT 1,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x4a] = {
-		"",
+		"BIT 1,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x4b] = {
-		"",
+		"BIT 1,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x4c] = {
-		"",
+		"BIT 1,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x4d] = {
-		"",
+		"BIT 1,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x4e] = {
-		"",
+		"BIT 1,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(1, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x4f] = {
-		"",
+		"BIT 1,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(1, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x50] = {
-		"",
+		"BIT 2,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x51] = {
-		"",
+		"BIT 2,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x52] = {
-		"",
+		"BIT 2,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x53] = {
-		"",
+		"BIT 2,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x54] = {
-		"",
+		"BIT 2,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x55] = {
-		"",
+		"BIT 2,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x56] = {
-		"",
+		"BIT 2,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(2, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x57] = {
-		"",
+		"BIT 2,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(2, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x58] = {
-		"",
+		"BIT 3,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x59] = {
-		"",
+		"BIT 3,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x5a] = {
-		"",
+		"BIT 3,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x5b] = {
-		"",
+		"BIT 3,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x5c] = {
-		"",
+		"BIT 3,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x5d] = {
-		"",
+		"BIT 3,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x5e] = {
-		"",
+		"BIT 3,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(3, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x5f] = {
-		"",
+		"BIT 3,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(3, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x60] = {
-		"",
+		"BIT 4,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x61] = {
-		"",
+		"BIT 4,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x62] = {
-		"",
+		"BIT 4,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x63] = {
-		"",
+		"BIT 4,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x64] = {
-		"",
+		"BIT 4,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x65] = {
-		"",
+		"BIT 4,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x66] = {
-		"",
+		"BIT 4,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(4, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x67] = {
-		"",
+		"BIT 4,A",
 		2,
 		8,
 		[](Cpu *cpu) {
 			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(4, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x68] = {
-		"",
+		"BIT 5,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x69] = {
-		"",
+		"BIT 5,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x6a] = {
-		"",
+		"BIT 5,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x6b] = {
-		"",
+		"BIT 5,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x6c] = {
-		"",
+		"BIT 5,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x6d] = {
-		"",
+		"BIT 5,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x6e] = {
-		"",
+		"BIT 5,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(5, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x6f] = {
-		"",
+		"BIT 5,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(5, regs->getA(), cpu);
 		}
 	};
 
 	_cbInstructions[0x70] = {
-		"",
+		"BIT 6,B",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x71] = {
-		"",
+		"BIT 6,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x72] = {
-		"",
+		"BIT 6,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x73] = {
-		"",
+		"BIT 6,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x74] = {
-		"",
+		"BIT 6,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x75] = {
-		"",
+		"BIT 6,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x76] = {
-		"",
+		"BIT 6,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
-		}
-	};
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
 
-	_cbInstructions[0x77] = {
-		"",
-		2,
-		8,
-		[](Cpu *cpu) {
-			(void)cpu;
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(6, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x78] = {
-		"",
+		"BIT 6,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(6, regs->getA(), cpu);
+		}
+	};
+
+	_cbInstructions[0x78] = {
+		"BIT 7,B",
+		2,
+		8,
+		[](Cpu *cpu) {
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getB(), cpu);
 		}
 	};
 
 	_cbInstructions[0x79] = {
-		"",
+		"BIT 7,C",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getC(), cpu);
 		}
 	};
 
 	_cbInstructions[0x7a] = {
-		"",
+		"BIT 7,D",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getD(), cpu);
 		}
 	};
 
 	_cbInstructions[0x7b] = {
-		"",
+		"BIT 7,E",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getE(), cpu);
 		}
 	};
 
 	_cbInstructions[0x7c] = {
-		"",
+		"BIT 7,H",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getH(), cpu);
 		}
 	};
 
 	_cbInstructions[0x7d] = {
-		"",
+		"BIT 7,L",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getL(), cpu);
 		}
 	};
 
 	_cbInstructions[0x7e] = {
-		"",
+		"BIT 7,(HL)",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			static uint16_t		hl;
+			static uint8_t		value;
+
+			hl = regs->getHL();
+			value = mem->getByteAt(hl);
+			CB_BIT(7, value, cpu)
 		}
 	};
 
 	_cbInstructions[0x7f] = {
-		"",
+		"BIT 7,A",
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			CB_BIT(7, regs->getA(), cpu);
 		}
 	};
 
@@ -5555,4 +5720,12 @@ uint8_t		Gbmu::Instructions::CB_SRL(uint8_t value, Cpu *cpu) {
 	regs->setFh(false);
 	regs->setFc(value << 7);
 	return (value >> 1);
+}
+
+bool		Gbmu::Instructions::CB_BIT(int pos, uint8_t value, Cpu *cpu) {
+	static Registers	*regs = cpu->regs();
+
+	regs->setFn(false);
+	regs->setFh(false);
+	regs->setFz((value & (1 << pos)) == 0);
 }
