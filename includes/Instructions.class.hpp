@@ -40,6 +40,7 @@ namespace Gbmu {
 		static bool		RET(bool flag, Cpu *cpu);
 		static bool		JP(bool flag, Cpu *cpu);
 		static bool		CALL(bool flag, Cpu *cpu);
+		static void		PUSH(uint16_t value, Cpu *cpu);
 	};
 }
 

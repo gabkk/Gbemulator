@@ -2177,7 +2177,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getBC(), cpu);
 		}
 	};
 
@@ -2340,7 +2341,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getDE(), cpu);
 		}
 	};
 
@@ -2493,7 +2495,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getHL(), cpu);
 		}
 	};
 
@@ -2502,7 +2505,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			AND(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2576,7 +2581,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			XOR(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2639,7 +2646,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getAF(), cpu);
 		}
 	};
 
@@ -2648,7 +2656,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			OR(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2720,7 +2730,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			CP(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2849,3 +2861,14 @@ bool		Gbmu::Instructions::CALL(bool flag, Cpu *cpu)
 	}
 	return (false);
 }
+
+void		Gbmu::Instructions::PUSH(uint16_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	mem->setByteAt(regs->getSP() - 1, value >> 8);
+	mem->setByteAt(regs->getSP() - 2, value & 0xf);
+	regs->setSP(regs->getSP() - 2);
+}
+
