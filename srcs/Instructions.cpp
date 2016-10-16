@@ -2299,7 +2299,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x00, cpu);
 		}
 	};
 
@@ -2371,7 +2371,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x08, cpu);
 		}
 	};
 
@@ -2443,7 +2443,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x10, cpu);
 		}
 	};
 
@@ -2515,7 +2515,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x16, cpu);
 		}
 	};
 
@@ -2587,7 +2587,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x20, cpu);
 		}
 	};
 
@@ -2659,7 +2659,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x28, cpu);
 		}
 	};
 
@@ -2731,7 +2731,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x30, cpu);
 		}
 	};
 
@@ -2803,7 +2803,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RST(0x38, cpu);
 		}
 	};
 }
@@ -2929,11 +2929,11 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 
 void		Gbmu::Instructions::RST(uint8_t value, Cpu *cpu) //compare
 {
-			static Registers	*regs = cpu->regs();
-			static Memory		*mem = cpu->memory();
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
 
-			mem->setByteAt(mem->getByteAt(regs->getSP() - 1), (regs->getPC() & 0xff00) >> 8);
-			mem->setByteAt(mem->getByteAt(regs->getSP() - 2), (regs->getPC() & 0x00ff));
-			regs->setSP(regs->getSP() - 2);
-			regs->setPC((regs->getPC() >> 16 | 0x00ff) & value);
+	mem->setByteAt((regs->getSP() - 1), (regs->getPC() & 0xff00) >> 8);
+	mem->setByteAt((regs->getSP() - 2), (regs->getPC() & 0x00ff));
+	regs->setSP(regs->getSP() - 2);
+	regs->setPC(value);
 }
