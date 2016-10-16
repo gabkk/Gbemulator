@@ -155,8 +155,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 				static Memory		*mem = cpu->memory();
 				uint16_t			addr;
 
-				addr = mem->getByteAt(regs->getPC());					// get higher byte of the 16 bits address
-				addr = (addr << 8) | mem->getByteAt(regs->getPC() + 1);	// shift it and get lower
+				addr = mem->getByteAt(regs->getPC() + 1);				// get higher byte of the 16 bits address
+				addr = (addr << 8) | mem->getByteAt(regs->getPC() + 2);	// shift it and get lower
 				mem->setByteAt(addr, mem->getByteAt(regs->getSP()));	// write SP contents at addr
 			}
 		};
@@ -519,9 +519,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			8,
 			[](Cpu *cpu) {
 				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		hl;
 
-				regs->setHL(regs->getA());
-				regs->setHL(regs->getHL() + 1);
+				hl = regs->getHL();
+				mem->setByteAt(hl, regs->getA());
+				regs->setHL(hl + 1);
 			}
 		};
 
@@ -664,6 +667,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 						regs->setFc(true);
 					}
 				}
+				regs->setFz(regs->getA() == 0);
 				regs->setFh(false);
 			}
 		};
@@ -673,7 +677,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			8, // 12 if jump is taken
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				if (regs->getFz()) {
+					regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+					// cycles += 4
+				}
 			}
 		};
 
@@ -682,7 +692,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static uint16_t		hl;
+
+				hl = regs->getHL();
+				regs->setHL(hl + hl);
+				regs->setFn(false);
+				regs->setFh(FLAG_H16_ADD(hl, hl));
+				regs->setFc(FLAG_C16_ADD(hl, hl));
 			}
 		};
 
@@ -691,7 +708,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Memory		*mem = cpu->memory();
+				static Registers	*regs = cpu->regs();
+				static uint16_t		hl;
+				
+				hl = regs->getHL();
+				regs->setA(mem->getByteAt(hl));
+				regs->setHL(hl + 1);
 			}
 		};
 
@@ -700,7 +723,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setHL(regs->getHL() - 1);
 			}
 		};
 
@@ -709,7 +734,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static uint8_t		l;
+
+				l = regs->getL();
+				regs->setFz(((l + 1) & 0xff) == 0);
+				regs->setFn(false);
+				regs->setFh(FLAG_H8_ADD(l, 1));
+				regs->setL(l + 1);
 			}
 		};
 
@@ -718,7 +750,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static uint8_t		l;
+
+				l = regs->getL();
+				regs->setFz(((l - 1) & 0xff) == 0);
+				regs->setFn(true);
+				regs->setFh(FLAG_H8_SUB(l, 1));
+				regs->setL(l - 1);
 			}
 		};
 
@@ -727,7 +766,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				regs->setL(mem->getByteAt(regs->getPC() + 1));
 			}
 		};
 
@@ -736,7 +778,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setA(~regs->getA());
+				regs->setFn(true);
+				regs->setFh(true);
 			}
 		};
 
@@ -745,7 +791,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			8, // 12 if jump is taken
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				if (!regs->getFc()) {
+					regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+					// cycles += 2
+				}
 			}
 		};
 
@@ -754,7 +806,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			3,
 			12,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		pc;
+
+				pc = regs->getPC();
+				regs->setSP(mem->getByteAt(pc + 1) | (mem->getByteAt(pc + 1) << 8));
 			}
 		};
 
@@ -763,7 +820,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		hl;
+
+				hl = regs->getHL();
+				regs->setByteAt(hl, regs->getA());
+				regs->setHL(hl - 1);
 			}
 		};
 
@@ -772,7 +835,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setSP(regs->getSP() + 1);
 			}
 		};
 
@@ -781,7 +846,16 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			12,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		value, hl;
+
+				hl = regs->getHL();
+				value = mem->getByteAt(hl);
+				regs->setFz(((value + 1) & 0xff) == 0);
+				regs->setFn(false);
+				regs->setFh(FLAG_H8_ADD(value, 1));
+				mem->setByteAt(hl, value + 1);
 			}
 		};
 
@@ -790,7 +864,16 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			12,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		value, hl;
+
+				hl = regs->getHL();
+				value = mem->getByteAt(hl);
+				regs->setFz(((value - 1) & 0xff) == 0);
+				regs->setFn(false);
+				regs->setFh(FLAG_H8_SUB(value, 1));
+				mem->setByteAt(hl, value - 1);
 			}
 		};
 
@@ -799,7 +882,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			12,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				mem->setByteAt(regs->getHL(), mem->getByteAt(regs->getPC() + 1));
 			}
 		};
 
@@ -808,7 +894,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setFn(false);
+				regs->setFh(false);
+				regs->setFc(true);
 			}
 		};
 
@@ -817,7 +907,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			8, // 12 if jump is taken
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				if (regs->getFc()) {
+					regs->setPC(static_cast<int8_t>(mem->getByteAt(cpu->getPC() + 1)));
+				}
 			}
 		};
 
@@ -826,7 +921,15 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Register		*regs = cpu->regs();
+				static uint16_t		hl, sp;
+
+				hl = regs->getHL();
+				sp = regs->getSP();
+				regs->setFn(false);
+				regs->setFh(FLAG_H16_ADD(hl, sp));
+				regs->setFc(FLAG_C16_ADD(hl, sp));
+				regs->setHL(hl + sp);
 			}
 		};
 
@@ -835,7 +938,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+				static uint16_t		hl;
+
+				hl = regs->getHL();
+				regs->setA(mem->getByteAt(hl));
+				regs->setHL(hl - 1);
 			}
 		};
 
@@ -844,7 +953,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setSP(regs->getSP() - 1);
 			}
 		};
 
@@ -853,7 +964,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static uint8_t		a;
+
+				a = regs->getA();
+				regs->setFz(((a + 1) & 0xff) == 0);
+				regs->setFn(false);
+				regs->setFh(FLAG_H8_ADD(a, 1));
+				regs->setA(regs->getA() + 1);
 			}
 		};
 
@@ -862,7 +980,14 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static uint8_t		a;
+
+				a = regs->getA();
+				regs->setFz(((a - 1) & 0xff) == 0);
+				regs->setFn(false);
+				regs->setFh(FLAG_H8_SUB(a, 1));
+				regs->setA(regs->getA() - 1);
 			}
 		};
 
@@ -871,7 +996,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			2,
 			8,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+				static Memory		*mem = cpu->memory();
+
+				regs->setA(mem->getByteAt(cpu->getPC()));
 			}
 		};
 
@@ -880,7 +1008,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) :
 			1,
 			4,
 			[](Cpu *cpu) {
-				(void)cpu;
+				static Registers	*regs = cpu->regs();
+
+				regs->setFn(false);
+				regs->setFh(false);
+				regs->setFc(~regs->getFc());
 			}
 		};
 
