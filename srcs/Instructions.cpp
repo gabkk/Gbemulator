@@ -1580,6 +1580,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
 			uint8_t		hl;
 
 			hl = mem->getByteAt(regs->getHL());
@@ -1596,7 +1597,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			uint8_t		a;
 
 			a = regs->getA();
-			ADD(a, a, cpu);
+			ADD(a, cpu);
 		}
 	};
 
@@ -1606,12 +1607,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		4,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			uint8_t		a;
-			uint8_t		hl;
+			uint8_t		b;
 
-			a = regs->getA();
-			hl = mem->getByteAt(regs->getHL());
-			ADD(a, hl, cpu);
+			b = regs->getB();
+			ADC(b, cpu);
 		}
 	};
 
@@ -1620,7 +1619,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		c;
+
+			c = regs->getC();
+			ADC(c, cpu);
 		}
 	};
 
@@ -1629,7 +1632,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		d;
+
+			d = regs->getD();
+			ADC(d, cpu);
 		}
 	};
 
@@ -1638,7 +1645,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		e;
+
+			e = regs->getE();
+			ADC(e, cpu);
 		}
 	};
 
@@ -1647,7 +1658,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		h;
+
+			h = regs->getH();
+			ADC(h, cpu);
 		}
 	};
 
@@ -1656,7 +1671,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		l;
+
+			l = regs->getL();
+			ADC(l, cpu);
 		}
 	};
 
@@ -1665,7 +1684,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			uint8_t		hl;
+
+			hl = mem->getByteAt(regs->getHL());
+			ADC(hl, cpu);
 		}
 	};
 
@@ -1674,7 +1698,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		a;
+
+			a = regs->getA();
+			ADC(a, cpu);
 		}
 	};
 
@@ -1683,7 +1711,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		b;
+
+			b = regs->getB();
+			SUB(b, cpu);
 		}
 	};
 
@@ -1692,7 +1724,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		c;
+
+			c = regs->getC();
+			SUB(c, cpu);
 		}
 	};
 
@@ -1701,7 +1737,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		d;
+
+			d = regs->getD();
+			SUB(d, cpu);
 		}
 	};
 
@@ -1710,7 +1750,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		e;
+
+			e = regs->getE();
+			SUB(e, cpu);
 		}
 	};
 
@@ -1719,7 +1763,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		h;
+
+			h = regs->getH();
+			SUB(h, cpu);
 		}
 	};
 
@@ -1728,7 +1776,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		l;
+
+			l = regs->getL();
+			SUB(l, cpu);
 		}
 	};
 
@@ -1737,7 +1789,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			uint8_t		hl;
+
+			hl = mem->getByteAt(regs->getHL());
+			SUB(hl, cpu);
 		}
 	};
 
@@ -1746,7 +1803,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		a;
+
+			a = regs->getA();
+			SUB(a, cpu);
 		}
 	};
 
@@ -1755,7 +1816,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		b;
+
+			b = regs->getB();
+			SBC(b, cpu);
 		}
 	};
 
@@ -1764,16 +1829,24 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		c;
+
+			c = regs->getC();
+			SBC(c, cpu);
 		}
 	};
 
 	_instructions[0x9a] = {
-		"SBC A.D",
+		"SBC A,D",
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		d;
+
+			d = regs->getD();
+			SBC(d, cpu);
 		}
 	};
 
@@ -1782,25 +1855,37 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		e;
+
+			e = regs->getE();
+			SBC(e, cpu);
 		}
 	};
 
 	_instructions[0x9c] = {
-		"SBC A,E",
-		1,
-		4,
-		[](Cpu *cpu) {
-			(void)cpu;
-		}
-	};
-
-	_instructions[0x9d] = {
 		"SBC A,H",
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		h;
+
+			h = regs->getH();
+			SBC(h, cpu);
+		}
+	};
+
+	_instructions[0x9d] = {
+		"SBC A,L",
+		1,
+		4,
+		[](Cpu *cpu) {
+			static Registers	*regs = cpu->regs();
+			uint8_t		l;
+
+			l = regs->getL();
+			SBC(l, cpu);
 		}
 	};
 
@@ -1809,7 +1894,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			uint8_t		hl;
+
+			hl = mem->getByteAt(regs->getHL());
+			SBC(hl, cpu);
 		}
 	};
 
@@ -1818,7 +1908,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			uint8_t		a;
+
+			a = regs->getA();
+			SBC(a, cpu);
 		}
 	};
 
@@ -2747,6 +2841,32 @@ void		Gbmu::Instructions::ADD(uint8_t value, Cpu *cpu)
 	regs->setFn(false);
 	regs->setFh(FLAG_H8_ADD(a, value));
 	regs->setFc(FLAG_C8_ADD(a, value));
+	regs->setA(a + value);
+}
+
+void		Gbmu::Instructions::ADC(uint8_t value, Cpu *cpu)
+{
+	value += regs->getFc();
+	ADD(value, cpu);
+}
+
+void		Gbmu::Instructions::SUB(uint8_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	uint8_t		a;
+			
+	a = regs->getA();
+	regs->setFz(((a - value) & 0xff) == 0);
+	regs->setFn(true);
+	regs->setFh(FLAG_H8_SUB(a, -value));
+	regs->setFc(FLAG_C8_SUB(a, -value));
+	regs->setA(a - value);
+}
+
+void		Gbmu::Instructions::SBC(uint8_t value, Cpu *cpu)
+{
+	value += regs->getFc();
+	SUB(value, cpu);
 }
 
 void		Gbmu::Instructions::AND(uint8_t value, Cpu *cpu)
