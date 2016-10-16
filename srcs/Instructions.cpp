@@ -2245,7 +2245,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setB(mem->getByteAt(regs->getSP() + 1));
+			regs->setC(mem->getByteAt(regs->getSP()));
+			regs->setSP(regs->getSP() + 2);
 		}
 	};
 
@@ -2389,7 +2394,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setD(mem->getByteAt(regs->getSP() + 1));
+			regs->setE(mem->getByteAt(regs->getSP()));
+			regs->setSP(regs->getSP() + 2);
 		}
 	};
 
@@ -2533,7 +2543,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setH(mem->getByteAt(regs->getSP() + 1));
+			regs->setL(mem->getByteAt(regs->getSP()));
+			regs->setSP(regs->getSP() + 2);
 		}
 	};
 
@@ -2925,7 +2940,6 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	regs->setFh(0);
 	regs->setFc(value > regs->getA() ? 1 : 0);
 }
-
 
 void		Gbmu::Instructions::RST(uint8_t value, Cpu *cpu) //compare
 {

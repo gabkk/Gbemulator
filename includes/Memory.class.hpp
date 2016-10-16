@@ -126,7 +126,7 @@ public:
 	uint8_t			getByteAt ( uint16_t const& addr ) const;
 	uint16_t		getWordAt ( uint16_t const& addr );
 
-	/*NI*/	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
+	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
 	/*NI*/	void			setWordAt ( uint16_t const& addr, uint16_t const& value );
 
 	/*NI*/	void			onWriteVBK ( uint8_t const& value );
