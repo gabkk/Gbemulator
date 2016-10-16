@@ -2122,8 +2122,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
-		}
+			static Registers	*regs = cpu->regs();
+			if (RET(!regs->getFz())){
+				//cycle += 12
+			}
 	};
 
 	_instructions[0xc1] = {
@@ -2194,7 +2196,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(regs->getFz())){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2203,7 +2208,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RET(true);
 		}
 	};
 
@@ -2266,7 +2271,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(!regs->getFc())){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2338,7 +2346,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(regs->getFc())){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2767,4 +2778,17 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	regs->setFn(1);
 	regs->setFh((value & 0xf) > (regs->getA() & 0xf) ? 1: 0); // maybe not
 	regs->setFc(value > regs->getA() ? 1 : 0);
+}
+
+bool		Gbmu::Instructions::RET(bool flag)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	if (flag){
+		regs->setPC( (mem->getByteAt(regs->getSP())) + mem->getByteAt(regs->getSP() + 1) << 8);
+		regs->incSP(2);
+		return (true);
+	}
+	return (false);
 }
