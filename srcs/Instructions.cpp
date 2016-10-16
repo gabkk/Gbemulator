@@ -2041,7 +2041,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getB(), cpu);
 		}
 	};
 
@@ -2050,7 +2051,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getC(), cpu);
 		}
 	};
 
@@ -2059,7 +2061,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getD(), cpu);
 		}
 	};
 
@@ -2068,7 +2071,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getE(), cpu);
 		}
 	};
 
@@ -2077,7 +2081,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getH(), cpu);
 		}
 	};
 
@@ -2086,7 +2091,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getL(), cpu);
 		}
 	};
 
@@ -2095,7 +2101,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			CP(mem->getByteAt(regs->getB()), cpu);
 		}
 	};
 
@@ -2104,7 +2112,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getA(), cpu);
 		}
 	};
 
@@ -2751,11 +2760,11 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 	 * Z or zero flag           1 if result = 0 else 0
 	 * N flag                   1
 	 * H or half carry flag     1 if borrow from bit 12 else 0
-	 */
-	static Registers	*regs = cpu->regs();
+	*/
+	Registers	*regs = cpu->regs();
 
-	regs->setFz(regs->getA() == value ? 1 : 0); // set zero flags
+	regs->setFz(value == regs->getA() ? 1 : 0); // set zero flags
 	regs->setFn(1);
-	regs->setFh(0);
+	regs->setFh((value & 0xf) > (regs->getA() & 0xf) ? 1: 0); // maybe not
 	regs->setFc(value > regs->getA() ? 1 : 0);
 }
