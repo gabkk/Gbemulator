@@ -52,6 +52,7 @@ namespace Gbmu {
 		static uint8_t	CB_SRA(uint8_t value, Cpu *cpu);
 		static uint8_t	CB_SWAP(uint8_t value, Cpu *cpu);
 		static uint8_t	CB_SRL(uint8_t value, Cpu *cpu);
+		static uint8_t	CB_BIT(int pos, uint8_t value, Cpu *cpu);
 	};
 }
 
