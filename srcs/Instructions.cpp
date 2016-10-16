@@ -2846,6 +2846,8 @@ void		Gbmu::Instructions::ADD(uint8_t value, Cpu *cpu)
 
 void		Gbmu::Instructions::ADC(uint8_t value, Cpu *cpu)
 {
+	static Registers	*regs = cpu->regs();
+	
 	value += regs->getFc();
 	ADD(value, cpu);
 }
@@ -2865,6 +2867,8 @@ void		Gbmu::Instructions::SUB(uint8_t value, Cpu *cpu)
 
 void		Gbmu::Instructions::SBC(uint8_t value, Cpu *cpu)
 {
+	static Registers	*regs = cpu->regs();
+	
 	value += regs->getFc();
 	SUB(value, cpu);
 }
