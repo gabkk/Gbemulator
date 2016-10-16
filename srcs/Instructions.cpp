@@ -1597,7 +1597,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			uint8_t		a;
 
 			a = regs->getA();
-			ADD(a, cpu);
+			ADDA(a, cpu);
 		}
 	};
 
@@ -2929,15 +2929,11 @@ void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
 
 void		Gbmu::Instructions::RST(uint8_t value, Cpu *cpu) //compare
 {
- 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			uint16_t			sp1;
-			uint16_t			sp2;
 
-			mem->setByteAt(mem->getByteAt(regs->getSP() - 1), (regs->getPC() & 0xff00) >> 8))					
-			mem->setByteAt(mem->getByteAt(regs->getSP() - 2), (regs->getPC() & 0x00ff)))
+			mem->setByteAt(mem->getByteAt(regs->getSP() - 1), (regs->getPC() & 0xff00) >> 8);
+			mem->setByteAt(mem->getByteAt(regs->getSP() - 2), (regs->getPC() & 0x00ff));
 			regs->setSP(regs->getSP() - 2);
 			regs->setPC((regs->getPC() >> 16 | 0x00ff) & value);
-		}
 }
