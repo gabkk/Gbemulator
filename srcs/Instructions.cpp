@@ -809,7 +809,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint16_t		pc;
 
 			pc = regs->getPC();
-			regs->setSP(mem->getByteAt(pc + 1) | (mem->getByteAt(pc + 1) << 8));
+			regs->setSP(mem->getByteAt(pc + 1) | (mem->getByteAt(pc + 2) << 8));
 		}
 	};
 
@@ -823,7 +823,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint16_t		hl;
 
 			hl = regs->getHL();
-			regs->setByteAt(hl, regs->getA());
+			mem->setByteAt(hl, regs->getA());
 			regs->setHL(hl - 1);
 		}
 	};
@@ -909,7 +909,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (regs->getFc()) {
-				regs->setPC(static_cast<int8_t>(mem->getByteAt(cpu->getPC() + 1)));
+				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
 			}
 		}
 	};
@@ -919,7 +919,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			static Register		*regs = cpu->regs();
+			static Registers	*regs = cpu->regs();
 			static uint16_t		hl, sp;
 
 			hl = regs->getHL();
@@ -997,7 +997,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setA(mem->getByteAt(cpu->getPC()));
+			regs->setA(mem->getByteAt(regs->getPC() + 1));
 		}
 	};
 
@@ -2920,6 +2920,2311 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			(void)cpu;
 		}
 	};
+
+	_cbInstructions[0x0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x10] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x11] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x12] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x13] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x14] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x15] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x16] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x17] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x18] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x19] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x1f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x20] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x21] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x22] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x23] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x24] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x25] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x26] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x27] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x28] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x29] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x2f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x30] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x31] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x32] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x33] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x34] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x35] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x36] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x37] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x38] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x39] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x3f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x40] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x41] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x42] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x43] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x44] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x45] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x46] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x47] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x48] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x49] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x4f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x50] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x51] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x52] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x53] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x54] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x55] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x56] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x57] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x58] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x59] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x5f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x60] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x61] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x62] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x63] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x64] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x65] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x66] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x67] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x68] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x69] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x6f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x70] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x71] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x72] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x73] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x74] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x75] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x76] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x77] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x78] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x79] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x7f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x80] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x81] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x82] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x83] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x84] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x85] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x86] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x87] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x88] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x89] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x8f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x90] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x91] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x92] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x93] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x94] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x95] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x96] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x97] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x98] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x99] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9a] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9b] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9c] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9d] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9e] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0x9f] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xa9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xaa] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xab] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xac] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xad] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xae] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xaf] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xb9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xba] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xbb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xbc] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xbd] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xbe] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xbf] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xc9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xca] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xcb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xcc] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xcd] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xce] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xcf] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xd9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xda] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xdb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xdc] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xdd] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xde] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xdf] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xe9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xea] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xeb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xec] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xed] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xee] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xef] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf0] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf1] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf2] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf3] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf4] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf5] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf6] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf7] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf8] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xf9] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xfa] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xfb] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xfc] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xfd] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xfe] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
+	_cbInstructions[0xff] = {
+		"",
+		2,
+		8,
+		[](Cpu *cpu) {
+			(void)cpu;
+		}
+	};
+
 }
 
 /**
