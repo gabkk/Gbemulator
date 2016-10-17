@@ -2692,7 +2692,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(mem->getByteAt(regs->getSP() + 1));
+			regs->setF(mem->getByteAt(regs->getSP()));
+			regs->setSP(regs->getSP() + 2);
 		}
 	};
 
