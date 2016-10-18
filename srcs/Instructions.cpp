@@ -2547,7 +2547,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 			uint8_t		a, value;
 
-			value = mem->getByteAt(regs->getSP() + 1);
+			value = mem->getByteAt(regs->getPC() + 1);
 			a = regs->getSP();
 			regs->setFz(false);
 			regs->setFn(false);
@@ -2574,9 +2574,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		16,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			static Memory		*mem = cpu->memory();
 
-			mem->setByteAt((mem->getByteAt(regs->getPC() + 1) << 8)  + (mem->getByteAt(regs->getPC() + 2)), regs->getA());
+			mem->setByteAt((mem->getByteAt(regs->getPC() + 1))  + (mem->getByteAt(regs->getPC() + 2) << 8), regs->getA());
 		}
 	};
 
@@ -2613,7 +2612,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		8,
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
-			static Memory		*mem = cpu->memory();
+			static Memory		*mem = cpu44->memory();
 			XOR(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
@@ -2634,7 +2633,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			regs->setA(mem->getByteAt(0xFF00 + regs->getPC() + 1));
+			regs->setA(mem->getByteAt(0xFF00 + mem->getByteAt(regs->getPC() + 1)));
 		}
 	};
 
@@ -2741,7 +2740,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setA((mem->getByteAt(regs->getPC() + 1) << 8)  + (mem->getByteAt(regs->getPC() + 2)));
+			regs->setA((mem->getByteAt(regs->getPC() + 1))  + (mem->getByteAt(regs->getPC() + 2) << 8));
 		}
 	};
 
