@@ -152,11 +152,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
-			uint16_t			addr;
+			static uint16_t			sp, pc;
 
-			addr = mem->getByteAt(regs->getPC() + 1);				// get higher byte of the 16 bits address
-			addr = (addr << 8) | mem->getByteAt(regs->getPC() + 2);	// shift it and get lower
-			mem->setByteAt(addr, mem->getByteAt(regs->getSP()));	// write SP contents at addr
+			sp = regs->getSP();
+			pc = regs->getPC();
+			mem->setByteAt(pc + 1, sp & 0x00ff);	// write low bits of SP
+			mem->setByteAt(pc + 2, sp & 0xff00);	// write high bits of SP
 		}
 	};
 
@@ -437,7 +438,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(((e + 1) & 0xff) == 0);
 			regs->setFn(false);
 			regs->setFh(FLAG_H8_ADD(e, 1));
-			regs->setE(regs->getE() + 1);
+			regs->setE(e + 1);
 		}
 	};
 
