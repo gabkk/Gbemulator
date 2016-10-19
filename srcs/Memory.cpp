@@ -38,6 +38,14 @@ uint8_t Gbmu::Memory::getByteAt(uint16_t const& addr) const {
 }
 
 /**
+ * Read one word (2 bytes) at address and return it
+ * addr = low byte; addr + 1 = high byte
+ */
+uint16_t	Gbmu::Memory::getWordAt(uint16_t const &addr) {
+	return (_data[addr] | (_data[addr + 1] << 8));
+}
+
+/**
   * Set byte at address
   * @param addr Address at which we set a byte (value)
   * @param value Value we set at addr
