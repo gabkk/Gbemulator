@@ -123,10 +123,10 @@ public:
 
 	/*NI*/	void			reset ( void );
 
-	uint8_t			getByteAt ( uint16_t const& addr ) const;
-	uint16_t		getWordAt ( uint16_t const& addr );
+	uint8_t					getByteAt ( uint16_t const& addr ) const;
+	uint16_t				getWordAt ( uint16_t const& addr );
 
-	void			setByteAt ( uint16_t const& addr, uint8_t const& value );
+	void					setByteAt ( uint16_t const& addr, uint8_t const& value );
 	/*NI*/	void			setWordAt ( uint16_t const& addr, uint16_t const& value );
 
 	/*NI*/	void			onWriteVBK ( uint8_t const& value );
@@ -136,7 +136,7 @@ public:
 	/*NI*/	void			onWriteOCPS ( uint8_t const& value );
 	/*NI*/	void			onWriteOCPD ( uint8_t const& value );
 
-	uint8_t*		data ( void ) const;
+	uint8_t*				data ( void ) const;
 	/*NI*/	uint8_t*		vram ( void ) const;
 	/*NI*/	uint8_t*		vramBankPtr ( void ) const;
 	/*NI*/	uint8_t*		ram ( void ) const;

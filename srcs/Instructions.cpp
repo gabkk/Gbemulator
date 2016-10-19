@@ -55,9 +55,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
+			static uint16_t		pc;
 
-			regs->setB(mem->getByteAt(regs->getPC() + 1));
-			regs->setC(mem->getByteAt(regs->getPC() + 2));
+			pc = regs->getPC();
+			regs->setB(mem->getByteAt(pc + 2));
+			regs->setC(mem->getByteAt(pc + 1));
 		}
 	};
 
@@ -112,7 +114,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(((b - 1) & 0xff) == 0);		// set zero (Z) flag if b == 0 after DEC
 			regs->setFn(true);				// set substract (N) flag
 			regs->setFh(FLAG_H8_SUB(b, -1));	// set half carry flag (H) if borrow from bit 4
-			regs->setB(regs->getB() - 1);	// dec B
+			regs->setB(b - 1);	// dec B
 		}
 	};
 
@@ -213,7 +215,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(((c + 1) & 0xff) == 0);
 			regs->setFn(false);
 			regs->setFh(FLAG_H8_ADD(c, 1));
-			regs->setC(regs->getC() + 1);
+			regs->setC(c + 1);
 		}
 	};
 
@@ -284,9 +286,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
+			static uint16_t		pc;
 
-			regs->setD(mem->getByteAt(regs->getPC() + 1));
-			regs->setE(mem->getByteAt(regs->getPC() + 2));
+			pc = regs->getPC();
+			regs->setD(mem->getByteAt(pc + 2));
+			regs->setE(mem->getByteAt(pc + 1));
 		}
 	};
 
@@ -507,9 +511,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
+			static uint16_t		pc;
 
-			regs->setH(mem->getByteAt(regs->getPC() + 1));
-			regs->setL(mem->getByteAt(regs->getPC() + 2));
+			pc = regs->getPC();
+			regs->setH(mem->getByteAt(pc + 2));
+			regs->setL(mem->getByteAt(pc + 1));
 		}
 	};
 
@@ -811,7 +817,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static uint16_t		pc;
 
 			pc = regs->getPC();
-			regs->setSP(mem->getByteAt(pc + 1) | (mem->getByteAt(pc + 2) << 8));
+			regs->setSP(mem->getWordAt(pc + 1));
 		}
 	};
 
@@ -971,7 +977,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(((a + 1) & 0xff) == 0);
 			regs->setFn(false);
 			regs->setFh(FLAG_H8_ADD(a, 1));
-			regs->setA(regs->getA() + 1);
+			regs->setA(a + 1);
 		}
 	};
 
@@ -987,7 +993,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			regs->setFz(((a - 1) & 0xff) == 0);
 			regs->setFn(false);
 			regs->setFh(FLAG_H8_SUB(a, 1));
-			regs->setA(regs->getA() - 1);
+			regs->setA(a - 1);
 		}
 	};
 
