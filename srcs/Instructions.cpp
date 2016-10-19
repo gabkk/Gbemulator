@@ -159,7 +159,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			sp = regs->getSP();
 			pc = regs->getPC();
 			mem->setByteAt(pc + 1, sp & 0x00ff);	// write low bits of SP
-			mem->setByteAt(pc + 2, sp & 0xff00);	// write high bits of SP
+			mem->setByteAt(pc + 2, (sp & 0xff00) >> 8);	// write high bits of SP
 		}
 	};
 
