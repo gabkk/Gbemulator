@@ -1,0 +1,7 @@
+To start the Graphical User Interface, open GUI.pro in QtCreator and right-click "GUI" in the
+projects list then click "Run qmake". You should now be able to run the GUI with Ctrl+R or the play
+icon in the lower left corner.
+
+If you want to run GUI from console, go to the build-GUI-Desktop-Debug or whatever (:wink:) it is
+named, that should be located at the root of git repo. It contains the GUI executable and Makefile
+generated via qmake (previously ran from QtCreator).
