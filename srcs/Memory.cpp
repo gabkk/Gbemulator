@@ -37,11 +37,6 @@ uint8_t Gbmu::Memory::getByteAt(uint16_t const& addr) const {
 	return _data[addr];
 }
 
-uint16_t Gbmu::Memory::getWordAt(uint16_t const& addr){
-
-	return ((_data[addr] << 8) + _data[addr + 1]);
-}
-
 /**
  * Read one word (2 bytes) at address and return it
  * addr = low byte; addr + 1 = high byte
