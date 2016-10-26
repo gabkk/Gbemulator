@@ -22,15 +22,20 @@ void Gbmu::Cpu::loadCartridge ( std::string const& cartridgePath, Gb::Model cons
 	for (int addr = 0; addr < CARTRIDGE_SIZE; addr++) {
 		_memory->setByteAt(addr, data[addr]);
 	}
+	this->executeFrame();
 }
 
 void Gbmu::Cpu::executeFrame(void) {
 	uint8_t		instruction;
 
-	std::cout << "executeFrame at " << std::hex << _regs->getPC() << std::endl;
-	instruction = _memory->getByteAt(_regs->getPC());
-	std::cout << " instruction = " << std::hex << static_cast<uint16_t>(instruction) << std::endl;
-	_instructions->execute(instruction);
+	while(42)
+	{
+		std::cout << "executeFrame at " << std::hex << _regs->getPC() << std::endl;
+		instruction = _memory->getByteAt(_regs->getPC());
+		std::cout << " instruction = " << std::hex << static_cast<uint16_t>(instruction) << std::endl;
+		_instructions->execute(instruction);
+		usleep(tcycle + 500000);
+	}
 }
 
 void Gbmu::Cpu::setHALT ( bool const& b ) { _HALT = b; }

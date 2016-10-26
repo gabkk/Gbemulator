@@ -687,7 +687,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (regs->getFz()) {
-				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				regs->setPC(regs->getPC() + (~(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)) + 1)));
 				// cycles += 4
 			}
 		}
@@ -2667,7 +2667,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (RET(!regs->getFc(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12; //									TEST
 			}
 		}
 	};
@@ -6121,9 +6121,15 @@ void Gbmu::Instructions::execute(uint8_t opcode) {
 	static t_instruction	*instruction;
 	static Registers		*regs = _cpu->regs();
 
+	_cpu->tcycle = 0;
 	instruction = &_instructions[opcode];				// get correct t_instruction structure
 	instruction->exec(_cpu);							// execute instruction
 	regs->setPC(regs->getPC() + instruction->size);		// add instruction size to current PC
+	_cpu->tcycle += instruction->cycles;
+	std::cout << " instruction = " << instruction->name << std::endl; // DEBUG
+	if (instruction->name[0] ==  'N' && instruction->name[2] == 'P')
+		exit(0);
+
 }
 
 /**
