@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 17:00:37 by hhismans          #+#    #+#             */
-/*   Updated: 2016/10/12 01:24:00 by clement          ###   ########.fr       */
+/*   Updated: 2016/10/16 17:58:16 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void Gbmu::Registers::setPC(uint16_t addr) {
 void Gbmu::Registers::setSP(uint16_t addr) {
 	_sp = addr;
 }
+
+void Gbmu::Registers::incSP(uint16_t incValue) {_sp += incValue;}
 
 void Gbmu::Registers::setFz(bool value){_F |= (value << 7);}
 void Gbmu::Registers::setFn(bool value){_F |= (value << 6);}

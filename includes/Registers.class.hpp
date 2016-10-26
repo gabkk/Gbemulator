@@ -6,7 +6,7 @@
 /*   By: hhismans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 16:55:53 by hhismans          #+#    #+#             */
-/*   Updated: 2016/10/12 01:23:31 by clement          ###   ########.fr       */
+/*   Updated: 2016/10/16 17:57:44 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ namespace Gbmu {
 			void 		setFc(bool value);
 			void		setPC(uint16_t addr);
 			void		setSP(uint16_t addr);
+
+			void		incSP(uint16_t incValue);
 
 		private:
 

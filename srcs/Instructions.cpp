@@ -2286,7 +2286,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getB(), cpu);
 		}
 	};
 
@@ -2295,7 +2296,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getC(), cpu);
 		}
 	};
 
@@ -2304,7 +2306,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getD(), cpu);
 		}
 	};
 
@@ -2313,7 +2316,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getE(), cpu);
 		}
 	};
 
@@ -2322,7 +2326,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getH(), cpu);
 		}
 	};
 
@@ -2331,7 +2336,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getL(), cpu);
 		}
 	};
 
@@ -2340,7 +2346,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			CP(mem->getByteAt(regs->getB()), cpu);
 		}
 	};
 
@@ -2349,7 +2357,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			CP(regs->getA(), cpu);
 		}
 	};
 
@@ -2358,7 +2367,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(!regs->getFz(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2373,10 +2385,13 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 	_instructions[0xc2] = {
 		"JP NZ,a16",
-		1,
+		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(!regs->getFz(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2385,7 +2400,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			JP(true, cpu);
 		}
 	};
 
@@ -2394,7 +2409,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 24 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (CALL(!regs->getFz(), cpu))
+			{
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2403,7 +2422,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getBC(), cpu);
 		}
 	};
 
@@ -2412,7 +2432,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			ADDA(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2430,7 +2453,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(regs->getFz(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2439,7 +2465,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			RET(true, cpu);
 		}
 	};
 
@@ -2448,7 +2474,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(regs->getFz(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2466,7 +2495,11 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 24 if action taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (CALL(regs->getFz(), cpu))
+			{
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2475,7 +2508,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		24,
 		[](Cpu *cpu) {
-			(void)cpu;
+			CALL(true, cpu);
 		}
 	};
 
@@ -2484,7 +2517,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			ADCA(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2502,7 +2538,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(!regs->getFc(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2520,7 +2559,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 is jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(!regs->getFc(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2538,7 +2580,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 24 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (CALL(!regs->getFc(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2547,7 +2592,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getDE(), cpu);
 		}
 	};
 
@@ -2556,7 +2602,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			SUBA(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2574,7 +2623,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8, // 20 if action is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (RET(regs->getFc(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2592,7 +2644,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 16 if jump is taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (JP(regs->getFc(), cpu)){
+				//cycle += 4
+			}
 		}
 	};
 
@@ -2610,7 +2665,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		12, // 24 if actio nis taken
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			if (CALL(regs->getFc(), cpu)){
+				//cycle += 12
+			}
 		}
 	};
 
@@ -2628,7 +2686,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			SBCA(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2646,7 +2707,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(0xFF00 + mem->getByteAt(regs->getPC() + 1), regs->getA());
 		}
 	};
 
@@ -2664,7 +2728,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt(regs->getC(), regs->getA());
 		}
 	};
 
@@ -2691,7 +2758,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getHL(), cpu);
 		}
 	};
 
@@ -2700,7 +2768,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			AND(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2718,7 +2788,17 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			uint8_t		a, value;
+
+			value = mem->getByteAt(regs->getPC() + 1);
+			a = regs->getSP();
+			regs->setFz(false);
+			regs->setFn(false);
+			regs->setFh(FLAG_H8_ADD(a, value));
+			regs->setFc(FLAG_C8_ADD(a, value));
+			regs->setSP(a + value);
 		}
 	};
 
@@ -2727,7 +2807,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			regs->setPC(regs->getHL());
+			regs->setPC(regs->getPC() - 1);
 		}
 	};
 
@@ -2736,7 +2818,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			mem->setByteAt((mem->getByteAt(regs->getPC() + 1))  + (mem->getByteAt(regs->getPC() + 2) << 8), regs->getA());
 		}
 	};
 
@@ -2772,7 +2857,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			XOR(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2790,7 +2877,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			regs->setA(mem->getByteAt(0xFF00 + mem->getByteAt(regs->getPC() + 1)));
 		}
 	};
 
@@ -2808,7 +2897,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA(mem->getByteAt(regs->getC()));
 		}
 	};
 
@@ -2835,7 +2927,8 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			PUSH(regs->getAF(), cpu);
 		}
 	};
 
@@ -2844,7 +2937,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			OR(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -2862,7 +2957,12 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		12,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setHL(regs->getSP() + mem->getByteAt(regs->getPC() + 1));
+			regs->setFh(FLAG_H16_ADD(regs->getSP(), mem->getByteAt(regs->getPC() + 1)));
+			regs->setFc(FLAG_H16_ADD(regs->getSP(), mem->getByteAt(regs->getPC() + 1)));
 		}
 	};
 
@@ -2871,7 +2971,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+
+			regs->setSP(regs->getHL());
 		}
 	};
 
@@ -2880,7 +2982,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		3,
 		16,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+
+			regs->setA((mem->getByteAt(regs->getPC() + 1))  + (mem->getByteAt(regs->getPC() + 2) << 8));
 		}
 	};
 
@@ -2916,7 +3021,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		2,
 		8,
 		[](Cpu *cpu) {
-			(void)cpu;
+			static Registers	*regs = cpu->regs();
+			static Memory		*mem = cpu->memory();
+			CP(mem->getByteAt(regs->getPC() + 1), cpu);
 		}
 	};
 
@@ -5973,24 +6080,6 @@ void		Gbmu::Instructions::OR(uint8_t value, Cpu *cpu)
 	regs->setFc(0);
 }
 
-void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
-{
-	/**
-	 * static gs are affected as follows
-	 *
-	 * C or carry flag          1 if <0 else 0
-	 * Z or zero flag           1 if result = 0 else 0
-	 * N flag                   1
-	 * H or half carry flag     1 if borrow from bit 12 else 0
-	 */
-	static Registers	*regs = cpu->regs();
-
-	regs->setFz(regs->getA() == value ? 1 : 0); // set zero flags
-	regs->setFn(1);
-	regs->setFh(0);
-	regs->setFc(value > regs->getA() ? 1 : 0);
-}
-
 void		Gbmu::Instructions::RST(uint8_t value, Cpu *cpu) //compare
 {
 	static Registers	*regs = cpu->regs();
@@ -6095,3 +6184,73 @@ void		Gbmu::Instructions::CB_BIT(int pos, uint8_t value, Cpu *cpu) {
 	regs->setFh(false);
 	regs->setFz((value & (1 << pos)) == 0);
 }
+
+void		Gbmu::Instructions::CP(uint8_t value, Cpu *cpu) //compare
+{
+	/**
+	 * static gs are affected as follows
+	 *
+	 * C or carry flag          1 if <0 else 0
+	 * Z or zero flag           1 if result = 0 else 0
+	 * N flag                   1
+	 * H or half carry flag     1 if borrow from bit 12 else 0
+	*/
+	Registers	*regs = cpu->regs();
+
+	regs->setFz(value == regs->getA() ? 1 : 0); // set zero flags
+	regs->setFn(1);
+	regs->setFh((value & 0xf) > (regs->getA() & 0xf) ? 1: 0); // maybe not
+	regs->setFc(value > regs->getA() ? 1 : 0);
+}
+
+bool		Gbmu::Instructions::RET(bool flag, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	if (flag){
+		regs->setPC( (mem->getByteAt(regs->getSP())) + (mem->getByteAt(regs->getSP() + 1) << 8));
+		regs->incSP(2);
+		return (true);
+	}
+	return (false);
+}
+
+bool		Gbmu::Instructions::JP(bool flag, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	if (flag){
+		regs->setPC((mem->getByteAt(regs->getPC() + 1)) + (mem->getByteAt(regs->getPC() + 2) << 8));
+		regs->setPC(regs->getPC() - 3);
+		return (true);
+	}
+	return (false);
+}
+
+bool		Gbmu::Instructions::CALL(bool flag, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+	if (flag)
+	{
+		mem->setByteAt(regs->getSP() - 1, regs->getPC() >> 8);
+		mem->setByteAt(regs->getSP() - 2, regs->getPC() & 0xf);
+		regs->setPC((mem->getByteAt(regs->getPC() + 1)) + (mem->getByteAt(regs->getPC() + 2) << 8));
+		regs->setSP(regs->getSP() - 2);
+		return (true);
+	}
+	return (false);
+}
+
+void		Gbmu::Instructions::PUSH(uint16_t value, Cpu *cpu)
+{
+	static Registers	*regs = cpu->regs();
+	static Memory		*mem = cpu->memory();
+
+	mem->setByteAt(regs->getSP() - 1, value >> 8);
+	mem->setByteAt(regs->getSP() - 2, value & 0xf);
+	regs->setSP(regs->getSP() - 2);
+}
+
