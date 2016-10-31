@@ -15,6 +15,7 @@
 #define FLAG_C16_ADD(X, Y)		( (((X) & 0xffff) + ((Y) & 0xffff)) & 0x10000 )
 #define FLAG_C16_SUB(X, Y)		( (((X) & 0xffff) - ((Y) & 0xffff)) & 0x10000 )
 
+#define R8(X)					( ~(X) + 1 ) // get second complement of X
 namespace Gbmu {
 	class Instructions {
 		typedef struct		s_instruction {

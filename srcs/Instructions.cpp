@@ -386,7 +386,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setPC(regs->getPC() + static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+			regs->setPC(regs->getPC() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
 		}
 	};
 
@@ -500,7 +500,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (!regs->getFz())
-				regs->setPC(regs->getPC() + static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				regs->setPC(regs->getPC() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
 		}
 	};
 
@@ -687,7 +687,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (regs->getFz()) {
-				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				regs->setPC(regs->getPC() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
 				// cycles += 4
 			}
 		}
@@ -801,7 +801,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (!regs->getFc()) {
-				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				regs->setPC(regs->getPC() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
 				// cycles += 2
 			}
 		}
@@ -917,7 +917,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (regs->getFc()) {
-				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				regs->setPC(regs->getPC() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
 			}
 		}
 	};
@@ -2919,7 +2919,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 			uint8_t		a, value;
 
-			value = mem->getByteAt(regs->getPC() + 1);
+			value = R8(mem->getByteAt(regs->getPC() + 1));
 			a = regs->getSP();
 			regs->setFz(false);
 			regs->setFn(false);
@@ -3087,9 +3087,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setHL(regs->getSP() + mem->getByteAt(regs->getPC() + 1));
-			regs->setFh(FLAG_H16_ADD(regs->getSP(), mem->getByteAt(regs->getPC() + 1)));
-			regs->setFc(FLAG_H16_ADD(regs->getSP(), mem->getByteAt(regs->getPC() + 1)));
+			regs->setHL(regs->getSP() + R8(mem->getByteAt(regs->getPC() + 1)));
+			regs->setFh(FLAG_H16_ADD(regs->getSP(), R8(mem->getByteAt(regs->getPC() + 1))));
+			regs->setFc(FLAG_H16_ADD(regs->getSP(), R8(mem->getByteAt(regs->getPC() + 1))));
 		}
 	};
 
@@ -3721,7 +3721,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		}
 	};
 
-	_cbInstructions[0x30] = {
+		_cbInstructions[0x30] = {
 		"SWAP B",
 		2,
 		8,
