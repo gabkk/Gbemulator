@@ -2919,7 +2919,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 			uint8_t		a, value;
 
-			value = R8(mem->getByteAt(regs->getPC() + 1));
+			value = R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
 			a = regs->getSP();
 			regs->setFz(false);
 			regs->setFn(false);
@@ -3087,9 +3087,9 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			static Memory		*mem = cpu->memory();
 
-			regs->setHL(regs->getSP() + R8(mem->getByteAt(regs->getPC() + 1)));
-			regs->setFh(FLAG_H16_ADD(regs->getSP(), R8(mem->getByteAt(regs->getPC() + 1))));
-			regs->setFc(FLAG_H16_ADD(regs->getSP(), R8(mem->getByteAt(regs->getPC() + 1))));
+			regs->setHL(regs->getSP() + R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1))));
+			regs->setFh(FLAG_H16_ADD(regs->getSP(), R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)))));
+			regs->setFc(FLAG_H16_ADD(regs->getSP(), R8(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)))));
 		}
 	};
 
