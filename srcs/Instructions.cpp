@@ -620,60 +620,30 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		1,
 		4,
 		[](Cpu *cpu) {
-			static Registers	*regs = cpu->regs();
-			static uint8_t		a, hi, lo;
+					static Registers	*regs = cpu->regs();
+			static uint8_t		hi, lo;
+			static uint16_t     a;// utilisation d'un uint16  pour garder une trace des depassement
 
 			a = regs->getA();
-			hi = a & 0xF0;
+			hi = a & 0xF0 >> 8;
 			lo = a & 0x0F;
 			if (!regs->getFn()) { // if previous instruction was ADD/ADC
-				if (!regs->getFc() && hi <= 8 && !regs->getFh() && lo >= 0xA) {			// (1)
-					regs->setA(a + 0x06);
-					regs->setFc(false);
-				}
-				else if (!regs->getFc() && hi <= 9 && regs->getFh() && lo <= 3) {		// (2)
-					regs->setA(a + 0x06);
-					regs->setFc(false);
-				}
-				else if (!regs->getFc() && hi >= 0xA && !regs->getFh() && lo <= 9) {	// (3)
-					regs->setA(a + 0x60);
-					regs->setFc(true);
-				}
-				else if (!regs->getFc() && hi >= 9 && !regs->getFh() && lo >= 0xA) {	// (4)
-					regs->setA(a + 0x66);
-					regs->setFc(true);
-				}
-				else if (!regs->getFc() && hi >= 0xA && regs->getFh() && lo <= 3) {		// (5)
-					regs->setA(a + 0x66);
-					regs->setFc(true);
-				}
-				else if (regs->getFc() && hi <= 2 && !regs->getFh() && lo <= 9) {		// (6)
-					regs->setA(a + 0x60);
-					regs->setFc(true);
-				}
-				else if (regs->getFc() && hi <= 2 && !regs->getFh() && lo >= 0xA) {		// (7)
-					regs->setA(a + 0x66);
-					regs->setFc(true);
-				}
-				else if (regs->getFc() && hi <= 3 && regs->getFh() && lo <= 3) {		// (8)
-					regs->setA(a + 0x66);
-					regs->setFc(true);
-				}
-			} else {	// if previous instruction was a SUB/SBC
-				if (!regs->getFc() && hi <= 8 && regs->getFh() && lo >= 6) {			// (10)
-					regs->setA(a + 0xfa);
-					regs->setFc(false);
-				}
-				else if (regs->getFc() && hi >= 7 && !regs->getFh() && lo <= 9) {		// (11)
-					regs->setA(a + 0xa0);
-					regs->setFc(true);
-				}
-				else if (regs->getFc() && hi >= 6 && regs->getFh() && lo >= 6) {		// (12)
-					regs->setA(a + 0x9a);
-					regs->setFc(true);
-				}
+				if (regs->getFh() || lo > 9)// si il y a eu un depassement sur le low nibble (ca resulte de l'addition de deux nombre base 10, si il y a eu depassement, l'addition "est passe" en trop abcdef -> il faut ajouter 6 pour compenser)
+					a += 0x06;	// exemple pour le flag h -> 0x09 + 0x09 = 0x12, 0x12 + 0x6 = 0x18 -> et 9+9 = 18
+								// ou si le low est a plus de 9 -> il faut ajouter 6 pour repasser a des nombre base 10, exemple : 0x09 + 0x01 = 0x0a, 0x0a + 6 = 0x10 -> et 9 + 1 = 10
+				if (regs->getFc() || hi > 9) // reflexion semblable a celle pour le low nible
+				a += 0x60;
 			}
-			regs->setFz(regs->getA() == 0);
+			else // sub case
+			{
+				if (regs->getFh())
+					a -= 0x06;
+				if (regs->getFc())
+					a -= 0x60;
+			}
+			regs->setA(a); //cast implicite
+			regs->setFc(a > 0xFF); // depassement ?
+			regs->setFz(regs->getA());
 			regs->setFh(false);
 		}
 	};
