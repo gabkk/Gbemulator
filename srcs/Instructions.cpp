@@ -500,7 +500,10 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Memory		*mem = cpu->memory();
 
 			if (!regs->getFz())
+			{
 				regs->setPC(regs->getPC() + static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				cpu->tcycle = 4;
+			}
 		}
 	};
 
@@ -688,7 +691,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 			if (regs->getFz()) {
 				regs->setPC(regs->getPC() + (~(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)) + 1)));
-				// cycles += 4
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -802,7 +805,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 			if (!regs->getFc()) {
 				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
-				// cycles += 2
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -918,6 +921,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 
 			if (regs->getFc()) {
 				regs->setPC(static_cast<int8_t>(mem->getByteAt(regs->getPC() + 1)));
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -2496,7 +2500,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (RET(!regs->getFz(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2517,7 +2521,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (JP(!regs->getFz(), cpu)){
-				//cycle += 4
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -2539,7 +2543,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			if (CALL(!regs->getFz(), cpu))
 			{
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2582,7 +2586,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (RET(regs->getFz(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2603,7 +2607,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (JP(regs->getFz(), cpu)){
-				//cycle += 4
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -2625,7 +2629,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 			static Registers	*regs = cpu->regs();
 			if (CALL(regs->getFz(), cpu))
 			{
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2667,7 +2671,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (RET(!regs->getFc(), cpu)){
-				cpu->tcycle = 12; //									TEST
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2688,7 +2692,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (JP(!regs->getFc(), cpu)){
-				//cycle += 4
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -2709,7 +2713,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (CALL(!regs->getFc(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2752,7 +2756,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (RET(regs->getFc(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
@@ -2773,7 +2777,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (JP(regs->getFc(), cpu)){
-				//cycle += 4
+				cpu->tcycle = 4;
 			}
 		}
 	};
@@ -2794,7 +2798,7 @@ Gbmu::Instructions::Instructions(Cpu *cpu) : _cpu(cpu) {
 		[](Cpu *cpu) {
 			static Registers	*regs = cpu->regs();
 			if (CALL(regs->getFc(), cpu)){
-				//cycle += 12
+				cpu->tcycle = 12;
 			}
 		}
 	};
