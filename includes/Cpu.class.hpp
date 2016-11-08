@@ -7,6 +7,7 @@
 # include "Cartridge.class.hpp"
 # include "Registers.class.hpp"
 # include "Instructions.class.hpp"
+# include <unistd.h>
 
 namespace Gbmu{
 	class Cpu
@@ -27,10 +28,9 @@ namespace Gbmu{
 			virtual ~Cpu ( void );
 
 			/*NI*/		void		reset ( void );
-			/*NI*/		void		loadCartridge ( std::string const& cartridgePath, Gb::Model const& model );
+			void					loadCartridge ( std::string const& cartridgePath, Gb::Model const& model );
 
-			void		executeFrame ( void );
-			/*NI*/size_t		execute ( void );
+			void					executeFrame ( void );
 
 			/*NI*/		void		onWriteKey1 ( uint8_t const& value );
 			/*NI*/		void		switchSpeed ( void );
@@ -49,6 +49,7 @@ namespace Gbmu{
 
 			/*NI*/		void		saveState ( std::fstream& file );
 			/*NI*/		void		loadState ( std::fstream& file );
+			unsigned int			tcycle;
 	};
 }
 #else

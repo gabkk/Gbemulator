@@ -27,7 +27,7 @@ namespace Gbmu {
 		public:
 		Instructions(Cpu *cpu);
 		virtual		~Instructions(void);
-		void		execute(uint8_t opcode);
+		void			execute(uint8_t opcode);
 
 		private:
 		Instructions(void);						// fordib instanciation without Cpu
